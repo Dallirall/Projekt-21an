@@ -9,7 +9,7 @@ namespace spel21an
     {
         static void Main(string[] args)
         {
-            Tärningssimulator.RunDiceSimulator();
+            Lyckohjul.LyckohjulSpin();
         }
     }
 }
