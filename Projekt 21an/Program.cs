@@ -9,28 +9,24 @@ namespace spel21an
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Välkommen till 21:an!");
-            string? senasteVinnaren = null;
-            string pathToLogFile = @"C:\temp\21an_log.txt";
-            if (File.Exists(pathToLogFile))
-            {
-                senasteVinnaren = File.ReadAllText(pathToLogFile);
-            }
+            _21an_spelet spelet = new _21an_spelet();
+            Console.WriteLine($"Välkommen till {spelet.SpeletsNamn}!");
             bool programRunning = true;
 
             while (programRunning)
             {
-                Console.WriteLine("Välj ett alternativ\r\n1. Spela 21:an\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
+                Console.WriteLine($"\nVälj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
                 string menyVal = Console.ReadLine();
                 switch (menyVal)
                 {
                     case "1":
+                        spelet.RunGame21an();
                         break;
 
                     case "2":
-                        if (senasteVinnaren != null)
+                        if (spelet.Vinnare != null)
                         {
-                            Console.WriteLine($"Senaste vinnaren: {senasteVinnaren}");
+                            Console.WriteLine($"Senaste vinnaren: {spelet.Vinnare}");
                         }
                         else
                         {
@@ -38,7 +34,7 @@ namespace spel21an
                         }
                         break;
                     case "3":
-                        Console.Write("I 21:an kommer du att spela mot datorn och försöka tvinga datorn att få över 21 poäng. Både du och datorn får poäng genom att dra kort, varje kort är värt 1 – 10 poäng. När spelet börjar dras två kort till både dig och datorn. Därefter får du dra hur många kort som du vill tills du är nöjd med din totalpoäng, du vill komma så nära 21 som möjligt utan att få mer än 21 poäng. När du inte vill dra fler kort så kommer datorn att dra kort tills den har mer eller lika många poäng som dig.\r\n\r\nDu vinner om datorn får mer än totalt 21 poäng när den håller på att dra kort. Datorn vinner om den har mer poäng än dig när spelet är slut så länge som datorn inte har mer än 21 poäng. Om det skulle bli lika i poäng så vinner datorn. Om du får mer än 21 poäng när du drar kort så har du förlorat.\n\n");
+                        Console.WriteLine(spelet.Regler);
                         break;
                     case "4":
                         Console.WriteLine("Tack för att du spelade!");
