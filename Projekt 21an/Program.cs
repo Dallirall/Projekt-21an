@@ -11,17 +11,11 @@ namespace spel21an
         {
             _21an_spelet spelet = new _21an_spelet();
             Console.WriteLine($"Välkommen till {spelet.SpeletsNamn}!");
-            string? senasteVinnaren = null;
-            string pathToLogFile = @"C:\temp\c#övningsspel_log.txt";
-            if (File.Exists(pathToLogFile))
-            {
-                senasteVinnaren = File.ReadAllText(pathToLogFile);
-            }
             bool programRunning = true;
 
             while (programRunning)
             {
-                Console.WriteLine("Välj ett alternativ\r\n1. Spela 21:an\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
+                Console.WriteLine($"\nVälj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
                 string menyVal = Console.ReadLine();
                 switch (menyVal)
                 {
@@ -30,9 +24,9 @@ namespace spel21an
                         break;
 
                     case "2":
-                        if (senasteVinnaren != null)
+                        if (spelet.Vinnare != null)
                         {
-                            Console.WriteLine($"Senaste vinnaren: {senasteVinnaren}");
+                            Console.WriteLine($"Senaste vinnaren: {spelet.Vinnare}");
                         }
                         else
                         {
@@ -40,7 +34,7 @@ namespace spel21an
                         }
                         break;
                     case "3":
-                        Console.Write(spelet.Regler);
+                        Console.WriteLine(spelet.Regler);
                         break;
                     case "4":
                         Console.WriteLine("Tack för att du spelade!");
