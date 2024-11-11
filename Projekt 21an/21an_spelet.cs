@@ -10,8 +10,7 @@ namespace Projekt_21an
     {
         private string speletsNamn = "21an";
         public string SpeletsNamn { get { return speletsNamn; } }
-
-        //fixa texten snyggt...
+        
         private string regler = "I 21:an kommer du att spela mot datorn och försöka tvinga datorn att få över 21 poäng. Både du och datorn får poäng genom att dra kort, varje kort är värt 1 – 10 poäng. När spelet börjar dras två kort till både dig och datorn. Därefter får du dra hur många kort som du vill tills du är nöjd med din totalpoäng, du vill komma så nära 21 som möjligt utan att få mer än 21 poäng. När du inte vill dra fler kort så kommer datorn att dra kort tills den har mer eller lika många poäng som dig.\n\nDu vinner om datorn får mer än totalt 21 poäng när den håller på att dra kort. Datorn vinner om den har mer poäng än dig när spelet är slut så länge som datorn inte har mer än 21 poäng. Om det skulle bli lika i poäng så vinner datorn. Om du får mer än 21 poäng när du drar kort så har du förlorat.\n";
         public string Regler { get { return regler; } }
 
@@ -120,32 +119,3 @@ namespace Projekt_21an
         }
     }
 }
-
-// *
-// * 
-// * 21an metoden:
-
-// 
-// * 
-// * if kollapoängen(dinPoäng)
-// * break
-// * 
-// * else 
-// * break
-// * 
-// * if kollapoängen (dinPoäng) == true 
-// * CW Du har förlorat mm...
-// * variabel vinnare = "Datorn" (Lagra i logfil)
-// * else
-// * (datorns tur) while datorns poäng < 21
-// * nyttkort = rand
-// * datorns poäng += nyttkort 
-// * CW kort resultat
-// * CW totalscore 
-// * 
-// * if datorn poäng > 21
-// * CW Du har vunnit, skriv namn mm
-// * RL lagra i logfile 
-// * else if datorn poäng >= din poäng 
-// * CW Du har förlorat mm...
-// * variabel vinnare = "Datorn" (Lagra i logfil)
