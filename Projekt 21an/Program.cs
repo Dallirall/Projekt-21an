@@ -9,14 +9,22 @@ namespace spel21an
     {
         static void Main(string[] args)
         {
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Black;
+
             _21an_spelet spelet = new _21an_spelet();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Välkommen till {spelet.SpeletsNamn}!");
+            Console.ForegroundColor = ConsoleColor.Black;
             bool programRunning = true;
 
             while (programRunning)
             {
-                Console.WriteLine($"\nVälj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
+                Console.Clear();
+                Console.WriteLine($"Välj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
                 string menyVal = Console.ReadLine();
+                Console.WriteLine("");
                 switch (menyVal)
                 {
                     case "1":
@@ -26,18 +34,27 @@ namespace spel21an
                     case "2":
                         if (spelet.Vinnare != null)
                         {
-                            Console.WriteLine($"Senaste vinnaren: {spelet.Vinnare}");
+                            Console.Write($"Senaste vinnaren: ");
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write($"{ spelet.Vinnare}\n");
+                            Console.ForegroundColor = ConsoleColor.Black;
+                            Console.ReadKey();
                         }
                         else
                         {
                             Console.WriteLine("Det finns ännu ingen vinnare.");
+                            Console.ReadKey();
                         }
                         break;
                     case "3":
                         Console.WriteLine(spelet.Regler);
+                        Console.ReadKey();
                         break;
                     case "4":
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Tack för att du spelade!");
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.ReadKey();
                         programRunning = false;
                         break;
                     default:

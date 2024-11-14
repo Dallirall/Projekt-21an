@@ -33,34 +33,58 @@ namespace Projekt_21an
                 }
             } 
         }
+        private int kortMaxVärde = 10;
+        public int KortMaxVärde { get {return kortMaxVärde;} }
+        private int kortMinVärde = 1;
+        public int KortMinVärde { get {return kortMinVärde;}}
 
         public void RunGame21an()
         {
             Console.WriteLine("Nu kommer två kort dras per spelare.");
+            Console.ReadKey();
             int dinPoäng = RandomCard();
             dinPoäng += RandomCard();
             int datornsPoäng = RandomCard();
             datornsPoäng += RandomCard();
             int nyttKort = 0;
             bool draKort = true;
+            bool förlorat = false;
 
             while (draKort)
             {
-                Console.WriteLine($"Din poäng: {dinPoäng}");
-                Console.WriteLine($"Datorns poäng: {datornsPoäng}");
+                Console.Write($"Din poäng:");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"{ dinPoäng}\n");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write($"Datorns poäng:");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{datornsPoäng}\n");
+                Console.ForegroundColor = ConsoleColor.Black;
                 Console.WriteLine("Vill du ha ett till kort? (j/n)");   
                 if (Console.ReadLine().ToLower() == "j")
                 {
                     nyttKort = RandomCard();
                     dinPoäng += nyttKort;
-                    Console.WriteLine($"Ditt nya kort är värt {nyttKort} poäng");
-                    Console.WriteLine($"Din totalpoäng är {dinPoäng}");
+                    Console.Write("Ditt nya kort är värt ");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    Console.Write($"{nyttKort}");
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(" poäng\n");
+                    Console.WriteLine($"Din totalpoäng är ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write($"{dinPoäng}\n");
+                    Console.ForegroundColor = ConsoleColor.Black;
                     if (ÄrPoängenÖver21(dinPoäng))
                     {
-                        Console.WriteLine("Din poäng har överskridit 21. Du har förlorat.\n");
+                        Console.WriteLine("Din poäng har överskridit 21.");
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Du har förlorat.\n");
+                        Console.ForegroundColor = ConsoleColor.Black;
                         vinnare = "Datorn";
                         RegistreraVinnaren(vinnare);
                         draKort = false;
+                        förlorat = true;
+                        Console.ReadKey();
                     }
                 }
                 else
@@ -69,28 +93,54 @@ namespace Projekt_21an
                 }
             }
             draKort = true;
-            while (draKort)
+            while (draKort && !förlorat)
             {
-                Thread.Sleep(2000);
+                Console.WriteLine("Nu drar datorn kort!");
+                Thread.Sleep(1000);
+                Console.Write(".");
+                Thread.Sleep(1000);
+                Console.Write(".");
+                Thread.Sleep(1000);
+                Console.Write(".");
+                Thread.Sleep(1000);
+                Console.Write(".");
+                Thread.Sleep(1000);
                 nyttKort = RandomCard();
                 datornsPoäng += nyttKort;
-                Console.WriteLine($"\nDatorn drog ett kort värt {nyttKort}");
-                Console.WriteLine($"Din poäng: {dinPoäng}");
-                Console.WriteLine($"Datorns poäng: {datornsPoäng}");
+                Console.Write($"\n\nDatorn drog ett kort värt ");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write($"{nyttKort}\n");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write($"Din poäng:");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write($"{dinPoäng}\n");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write($"Datorns poäng:");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write($"{datornsPoäng}\n");
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.ReadKey();
                 if (ÄrPoängenÖver21(datornsPoäng))
                 {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("Du har vunnit!");
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.WriteLine("Skriv in ditt namn: ");
                     vinnare = Console.ReadLine();
                     RegistreraVinnaren(vinnare);
+                    Console.WriteLine($"Grattis {vinnare}!");
                     draKort = false;
+                    Console.ReadKey();
                 }
                 else if (datornsPoäng >= dinPoäng)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Datorn har vunnit!");
+                    Console.ForegroundColor = ConsoleColor.Black;
                     vinnare = "Datorn";
                     RegistreraVinnaren(vinnare);
                     draKort = false;
+                    Console.ReadKey();
                 }
             }
 
@@ -100,7 +150,7 @@ namespace Projekt_21an
         public int RandomCard()
         {
             Random slumpKort = new Random();
-            return slumpKort.Next(1, 11);
+            return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
         }
 
         public bool ÄrPoängenÖver21(int resultat)
