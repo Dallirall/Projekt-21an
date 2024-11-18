@@ -5,23 +5,20 @@ using Projekt_21an;
 
 namespace spel21an
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;
-
             _21an_spelet spelet = new _21an_spelet();
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Välkommen till {spelet.SpeletsNamn}!");
-            Console.ForegroundColor = ConsoleColor.Black;
             bool programRunning = true;
 
             while (programRunning)
             {
                 Console.Clear();
+                SkrivUtIFärg($"Välkommen till {spelet.SpeletsNamn}!\n", ConsoleColor.Green);
                 Console.WriteLine($"Välj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
                 string menyVal = Console.ReadLine();
                 Console.WriteLine("");
@@ -35,9 +32,7 @@ namespace spel21an
                         if (spelet.Vinnare != null)
                         {
                             Console.Write($"Senaste vinnaren: ");
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.Write($"{ spelet.Vinnare}\n");
-                            Console.ForegroundColor = ConsoleColor.Black;
+                            SkrivUtIFärg($"{spelet.Vinnare}\n", ConsoleColor.Green);
                             Console.ReadKey();
                         }
                         else
@@ -51,9 +46,7 @@ namespace spel21an
                         Console.ReadKey();
                         break;
                     case "4":
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("Tack för att du spelade!");
-                        Console.ForegroundColor = ConsoleColor.Black;
+                        SkrivUtIFärg("Tack för att du spelade!", ConsoleColor.Green);
                         Console.ReadKey();
                         programRunning = false;
                         break;
@@ -64,6 +57,12 @@ namespace spel21an
             }
 
 
+        }
+        public static void SkrivUtIFärg(string textAttSkrivaUt, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(textAttSkrivaUt);
+            Console.ForegroundColor = ConsoleColor.Black;
         }
     }
 }
