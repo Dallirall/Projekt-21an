@@ -8,12 +8,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Projekt_21an
 {
-    public class _21an_spelet
+    public class _21an_spelet : IGame
     {
         private string speletsNamn = "21an";
         public string SpeletsNamn { get { return speletsNamn; } }
         
-        private string regler = "I 21:an kommer du att spela mot datorn och försöka tvinga datorn att få över 21 poäng. Både du och datorn får poäng genom att dra kort, varje kort är värt 1 – 10 poäng. När spelet börjar dras två kort till både dig och datorn. Därefter får du dra hur många kort som du vill tills du är nöjd med din totalpoäng, du vill komma så nära 21 som möjligt utan att få mer än 21 poäng. När du inte vill dra fler kort så kommer datorn att dra kort tills den har mer eller lika många poäng som dig.\n\nDu vinner om datorn får mer än totalt 21 poäng när den håller på att dra kort. Datorn vinner om den har mer poäng än dig när spelet är slut så länge som datorn inte har mer än 21 poäng. Om det skulle bli lika i poäng så vinner datorn. Om du får mer än 21 poäng när du drar kort så har du förlorat.\n";
+        private string regler = $"I 21:an kommer du att spela mot datorn och försöka tvinga datorn att få över 21 poäng. Både du och datorn får poäng genom att dra kort. När spelet börjar dras kort till både dig och datorn. Därefter får du dra hur många kort som du vill tills du är nöjd med din totalpoäng, du vill komma så nära 21 som möjligt utan att få mer än 21 poäng. När du inte vill dra fler kort så kommer datorn att dra kort tills den har mer eller lika många poäng som dig.\n\nDu vinner om datorn får mer än totalt 21 poäng när den håller på att dra kort. Datorn vinner om den har mer poäng än dig när spelet är slut så länge som datorn inte har mer än 21 poäng. Om du får mer än 21 poäng när du drar kort så har du förlorat.\n";
         public string Regler { get { return regler; } }
 
         private string pathToLogFile = @"C:\temp\21an_vinnarlog.txt";
@@ -36,25 +36,41 @@ namespace Projekt_21an
             } 
         }
         private int kortMaxVärde = 10;
-        public int KortMaxVärde { get {return kortMaxVärde;} }
+        public int KortMaxVärde { get { return kortMaxVärde; } set { kortMaxVärde = value; } }
+
         private int kortMinVärde = 1;
-        public int KortMinVärde { get {return kortMinVärde;}}
+        public int KortMinVärde { get { return kortMinVärde; } set { kortMinVärde = value; } }
 
-        public int Svårighetsgrad { get; set; }
+        private int svårighetsgrad = 1;
+        public int Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
 
-        public void RunGame21an()
+        private int antalKortAttBörjaMed = 2;
+        public int AntalKortAttBörjaMed { get { return antalKortAttBörjaMed; } set { antalKortAttBörjaMed = value; } }
+
+        private bool möjligtMedOavgjort = false;
+        public bool MöjligtMedOavgjort { get { return möjligtMedOavgjort; } set { möjligtMedOavgjort = value; } }
+
+        public int datornSlutarDraKortVid = 21;
+
+        public int DatornSlutarDraKortVid { get {return datornSlutarDraKortVid;} set {datornSlutarDraKortVid = value; } }
+
+
+        public void RunGame()
         {
-            Console.WriteLine("Välj svårighetsgrad: (1 = Lätt, 2 = Medel, 3 = Svår, 4 = Mer eller mindre omöjlig) ");
-            Svårighetsgrad = int.Parse(Console.ReadLine());
-            Console.WriteLine("\nNu kommer två kort dras per spelare.");
+            
+            Console.WriteLine($"\nNu kommer {AntalKortAttBörjaMed} kort dras per spelare.");
             Console.ReadKey();
-            int dinPoäng = RandomCard();
-            dinPoäng += RandomCard();
-            int datornsPoäng = RandomCard();
-            datornsPoäng += RandomCard();
+            int dinPoäng = 0;
+            int datornsPoäng = 0;
+            for (int i = 0; i < AntalKortAttBörjaMed; i++)
+            {
+                dinPoäng += RandomCard();
+                datornsPoäng += RandomCard();
+            }
             int nyttKort = 0;
             bool draKort = true;
-            bool förlorat = false;
+            bool duHarFörlorat = false;
+            bool datornHarFörlorat = false;
 
             while (draKort)
             {
@@ -62,34 +78,63 @@ namespace Projekt_21an
                 Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
                 Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
-                Console.WriteLine("Vill du ha ett till kort? (j/n)");   
-                if (Console.ReadLine().ToLower() == "j")
+                duHarFörlorat = ÄrPoängenÖver21(dinPoäng);
+                datornHarFörlorat = ÄrPoängenÖver21(datornsPoäng);
+                if (duHarFörlorat && datornHarFörlorat)
                 {
-                    nyttKort = RandomCard();
-                    dinPoäng += nyttKort;
-                    Console.Write("Ditt nya kort är värt ");
-                    Program.SkrivUtIFärg($"{nyttKort}", ConsoleColor.DarkCyan);
-                    Console.Write(" poäng\n");
-                    Console.Write($"Din totalpoäng är ");
-                    Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
-                    if (ÄrPoängenÖver21(dinPoäng))
+                    if (MöjligtMedOavgjort)
                     {
-                        Console.WriteLine("Din poäng har överskridit 21.");
-                        Program.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
-                        vinnare = "Datorn";
-                        RegistreraVinnaren(vinnare);
-                        draKort = false;
-                        förlorat = true;
+                        RegistreraVinnaren("Båda överskridna");
                         Console.ReadKey();
                     }
+                    else
+                    {
+                        RegistreraVinnaren("Datorn");
+                        Console.ReadKey();
+                    }
+                    draKort = false;
+                }
+                else if (duHarFörlorat)
+                {
+                    RegistreraVinnaren("Datorn");
+                    Console.ReadKey();
+                    draKort = false;
+                }
+                else if (datornHarFörlorat)
+                {
+                    RegistreraVinnaren("Du");
+                    Console.ReadKey();
+                    draKort = false;
                 }
                 else
                 {
-                    draKort = false;
+                    Console.WriteLine("Vill du ha ett till kort? (j/n)");
+                    string choice = Console.ReadLine().ToLower();
+                    if (choice == "j")
+                    {
+                        nyttKort = RandomCard();
+                        dinPoäng += nyttKort;
+                        Console.Write("Ditt nya kort är värt ");
+                        Program.SkrivUtIFärg($"{nyttKort}", ConsoleColor.DarkCyan);
+                        Console.Write(" poäng\n");
+                        Console.Write($"Din totalpoäng är ");
+                        Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
+                        //duHarFörlorat = ÄrPoängenÖver21(dinPoäng);
+                        //if (duHarFörlorat)
+                        //{
+                        //    RegistreraVinnaren("Datorn");
+                        //    draKort = false;
+                        //}
+                    }
+                    else
+                    {
+                        draKort = false;
+                    }
                 }
+                
             }
             draKort = true;
-            while (draKort && !förlorat)
+            while (draKort && !duHarFörlorat && !datornHarFörlorat)
             {
                 Console.WriteLine("Nu drar datorn kort!");
                 Thread.Sleep(1000);
@@ -110,29 +155,57 @@ namespace Projekt_21an
                 Console.Write($"Datorns poäng: ");
                 Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
                 Console.ReadKey();
-                if (ÄrPoängenÖver21(datornsPoäng))
+                datornHarFörlorat = ÄrPoängenÖver21(datornsPoäng);
+                if (datornHarFörlorat)
                 {
-                    Program.SkrivUtIFärg("Du har vunnit!\n", ConsoleColor.Cyan);
-                    Console.WriteLine("Skriv in ditt namn: ");
-                    vinnare = Console.ReadLine();
-                    RegistreraVinnaren(vinnare);
-                    Console.WriteLine($"Grattis {vinnare}!");
+                    RegistreraVinnaren("Du, datorn överskred");
                     draKort = false;
                     Console.ReadKey();
                 }
-                else if (datornsPoäng >= dinPoäng)
+                if (!datornHarFörlorat && datornsPoäng > dinPoäng)
                 {
-                    Program.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
-                    vinnare = "Datorn";
-                    RegistreraVinnaren(vinnare);
+                    RegistreraVinnaren("Datorn närmast 21");
                     draKort = false;
                     Console.ReadKey();
+                }
+                else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
+                    {
+                    RegistreraVinnaren("Du, du närmast 21");
+                    draKort = false;
+                    Console.ReadKey();
+                }
+                else if (!datornHarFörlorat && datornsPoäng < DatornSlutarDraKortVid)
+                {
+                    continue;
+                }
+                else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
+                {
+                    if (MöjligtMedOavgjort)
+                    {
+                        RegistreraVinnaren("Samma poäng");
+                        draKort = false;
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        RegistreraVinnaren("Datorn, oavgjort");
+                        draKort = false;
+                        Console.ReadKey();
+                    }
+                    
                 }
             }
 
 
         }
-
+        // resultat jag 21, datorn 20 datornslutar20
+        // resultat jag 20 datorn 20 datornslutar20
+        // res jag 21 dator 21, datorslutar20
+        //resultat jag 13, datorn 13
+        // jag 21 datorn 20
+        // if datorn mindra än mig men under slutardrakort
+        //om datorn är under slutadrakort men != 21
+        //if we are tied == , men inte likmed 21 och under datornsluteardrakort (20)
         public int RandomCard()
         {
             Random slumpKort = new Random();
@@ -150,6 +223,50 @@ namespace Projekt_21an
 
         public void RegistreraVinnaren(string vinnare)
         {
+            switch (vinnare)
+            {
+                case "Datorn":
+                    Console.WriteLine("Din poäng har överskridit 21.");
+                    Program.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
+                    vinnare = "Datorn";
+                    break;
+                case "Datorn närmast 21":
+                    Console.WriteLine("Datorns poäng är närmast 21. ");
+                    Program.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
+                    vinnare = "Datorn";
+                    break;
+                case "Båda överskridna":
+                    Console.WriteLine("Både din och datorns poäng har överskridit 21.");
+                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.Gray);
+                    vinnare = "Oavgjort";
+                    break;
+                case "Samma poäng":
+                    Console.WriteLine("Du och datorn har landat på samma poäng.");
+                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.Gray);
+                    vinnare = "Oavgjort";
+                    break;
+                case "Du, datorn överskred":
+                    Console.WriteLine("Datorns poäng har överskridit 21.");
+                    Program.SkrivUtIFärg("Du har vunnit!\n", ConsoleColor.Cyan);
+                    Console.WriteLine("Skriv in ditt namn: ");
+                    vinnare = Console.ReadLine();
+                    Console.WriteLine($"Grattis {vinnare}!");
+                    break;
+                case "Du, du närmast 21":
+                    Console.WriteLine("Din poäng är närmast 21. ");
+                    Program.SkrivUtIFärg("Du har vunnit!\n", ConsoleColor.Cyan);
+                    Console.WriteLine("Skriv in ditt namn: ");
+                    vinnare = Console.ReadLine();
+                    Console.WriteLine($"Grattis {vinnare}!");
+                    break;
+                case "Datorn, oavgjort":
+                    Console.WriteLine("Samma poäng. Då vinner ");
+                    Program.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
+                    vinnare = "Datorn";
+                    break;
+                default:
+                    break;
+            }
             string path = @"C:\temp\21an_vinnarlog.txt";
             File.WriteAllText(path, vinnare);
         }

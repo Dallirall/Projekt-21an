@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using Projekt_21an;
+using static Projekt_21an._21an_spelet;
 
 namespace spel21an
 {
@@ -19,13 +20,13 @@ namespace spel21an
             {
                 Console.Clear();
                 SkrivUtIFärg($"Välkommen till {spelet.SpeletsNamn}!\n", ConsoleColor.Green);
-                Console.WriteLine($"Välj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa senaste vinnaren\r\n3. Spelets regler\r\n4. Avsluta programmet");
+                Console.WriteLine($"Välj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa vinnarstatistik\r\n3. Spelets regler\r\n4. Inställningar\r\n5. Avsluta programmet");
                 string menyVal = Console.ReadLine();
                 Console.WriteLine("");
                 switch (menyVal)
                 {
                     case "1":
-                        spelet.RunGame21an();
+                        spelet.RunGame();
                         break;
 
                     case "2":
@@ -46,6 +47,27 @@ namespace spel21an
                         Console.ReadKey();
                         break;
                     case "4":
+                        Console.WriteLine("Välj svårighetsgrad: (1 = Lätt, 2 = Medel, 3 = Svår, 4 = Mer eller mindre omöjlig) ");
+                        spelet.Svårighetsgrad = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Välj antal kort som varje spelare ska dra i början av spelet (default 2)");
+                        spelet.AntalKortAttBörjaMed = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Välj maxvärdet på korten som dras (default 10)");
+                        spelet.KortMaxVärde = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Skriv \"ja\" om du vill att det ska kunna bli oavgjort. Annars skriv \"nej\", så kommer datorn vinna vid lika resultat.");
+                        if (Console.ReadLine() == "ja")
+                        {
+                            spelet.MöjligtMedOavgjort = true;
+                        }
+                        else
+                        {
+                            spelet.MöjligtMedOavgjort = false;
+                        }
+                        Console.WriteLine("Välj det värde då datorn ska sluta dra kort (default 21)");
+                        spelet.DatornSlutarDraKortVid = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Inställningar sparade!");
+                        Console.ReadKey();
+                        break;
+                    case "5":
                         SkrivUtIFärg("Tack för att du spelade!", ConsoleColor.Green);
                         Console.ReadKey();
                         programRunning = false;
