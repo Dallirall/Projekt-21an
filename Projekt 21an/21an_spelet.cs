@@ -1,6 +1,7 @@
 ﻿using spel21an;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,13 +65,14 @@ namespace Projekt_21an
             int datornsPoäng = 0;
             for (int i = 0; i < AntalKortAttBörjaMed; i++)
             {
-                dinPoäng += RandomCard();
-                datornsPoäng += RandomCard();
+                dinPoäng += RandomCardTillMig();
+                datornsPoäng += RandomCardTillDatorn();
             }
             int nyttKort = 0;
             bool draKort = true;
             bool duHarFörlorat = false;
             bool datornHarFörlorat = false;
+            Func<int, bool> ärPoängenÖver21 = poäng => poäng > 21;
 
             while (draKort)
             {
@@ -78,8 +80,8 @@ namespace Projekt_21an
                 Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
                 Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
-                duHarFörlorat = ÄrPoängenÖver21(dinPoäng);
-                datornHarFörlorat = ÄrPoängenÖver21(datornsPoäng);
+                duHarFörlorat = ärPoängenÖver21(dinPoäng);
+                datornHarFörlorat = ärPoängenÖver21(datornsPoäng);
                 if (duHarFörlorat && datornHarFörlorat)
                 {
                     if (MöjligtMedOavgjort)
@@ -112,19 +114,13 @@ namespace Projekt_21an
                     string choice = Console.ReadLine().ToLower();
                     if (choice == "j")
                     {
-                        nyttKort = RandomCard();
+                        nyttKort = RandomCardTillMig();
                         dinPoäng += nyttKort;
                         Console.Write("Ditt nya kort är värt ");
                         Program.SkrivUtIFärg($"{nyttKort}", ConsoleColor.DarkCyan);
                         Console.Write(" poäng\n");
                         Console.Write($"Din totalpoäng är ");
                         Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
-                        //duHarFörlorat = ÄrPoängenÖver21(dinPoäng);
-                        //if (duHarFörlorat)
-                        //{
-                        //    RegistreraVinnaren("Datorn");
-                        //    draKort = false;
-                        //}
                     }
                     else
                     {
@@ -136,17 +132,18 @@ namespace Projekt_21an
             draKort = true;
             while (draKort && !duHarFörlorat && !datornHarFörlorat)
             {
-                Console.WriteLine("Nu drar datorn kort!");
-                Thread.Sleep(1000);
+                //Checka här om datorn har vunnit (t.ex vid att datorn dra till 21 eller datornslutardravid från början)
+                Console.WriteLine("\nNu drar datorn kort!");
+                Thread.Sleep(500);
                 Console.Write(".");
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 Console.Write(".");
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 Console.Write(".");
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
                 Console.Write(".");
-                Thread.Sleep(1000);
-                nyttKort = RandomCard();
+                Thread.Sleep(500);
+                nyttKort = RandomCardTillDatorn();
                 datornsPoäng += nyttKort;
                 Console.Write($"\n\nDatorn drog ett kort värt ");
                 Program.SkrivUtIFärg($"{nyttKort}\n", ConsoleColor.DarkCyan);
@@ -155,7 +152,7 @@ namespace Projekt_21an
                 Console.Write($"Datorns poäng: ");
                 Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
                 Console.ReadKey();
-                datornHarFörlorat = ÄrPoängenÖver21(datornsPoäng);
+                datornHarFörlorat = ärPoängenÖver21(datornsPoäng);
                 if (datornHarFörlorat)
                 {
                     RegistreraVinnaren("Du, datorn överskred");
@@ -203,23 +200,132 @@ namespace Projekt_21an
         // res jag 21 dator 21, datorslutar20
         //resultat jag 13, datorn 13
         // jag 21 datorn 20
-        // if datorn mindra än mig men under slutardrakort
+        // if datorn mindre än mig men under slutardrakort
         //om datorn är under slutadrakort men != 21
         //if we are tied == , men inte likmed 21 och under datornsluteardrakort (20)
-        public int RandomCard()
+
+        //
+        public bool checkaVinst(bool datornHarFörlorat, bool duHarFörlorat, int datornsPoäng, int dinPoäng)
         {
-            Random slumpKort = new Random();
-            return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+
+            if (!datornHarFörlorat && datornsPoäng > dinPoäng)
+            {
+                RegistreraVinnaren("Datorn närmast 21");
+                draKort = false;
+                Console.ReadKey();
+            }
+            else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
+            {
+                RegistreraVinnaren("Du, du närmast 21");
+                draKort = false;
+                Console.ReadKey();
+            }
+            else if (!datornHarFörlorat && datornsPoäng < DatornSlutarDraKortVid)
+            {
+                continue;
+            }
+            else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
+            {
+                if (MöjligtMedOavgjort)
+                {
+                    RegistreraVinnaren("Samma poäng");
+                    draKort = false;
+                    Console.ReadKey();
+                }
+                else
+                {
+                    RegistreraVinnaren("Datorn, oavgjort");
+                    draKort = false;
+                    Console.ReadKey();
+                }
+
+            }
+
         }
 
-        public bool ÄrPoängenÖver21(int resultat)
+        public int RandomCardTillMig()
         {
-            if (resultat > 21)
+            Random slumpKort = new Random();
+            
+            switch (Svårighetsgrad)
             {
-                return true;
+                case 0:
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 1:
+                    if (slumpKort.NextDouble() < 0.5)
+                    {
+                        return slumpKort.Next(KortMinVärde, 3);
+                    }
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 2:
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 3:
+                    if (slumpKort.NextDouble() < 0.15)
+                    {
+                        return slumpKort.Next(6, (KortMaxVärde + 1));
+                    }
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 4:
+                    double procent = slumpKort.NextDouble();
+                    if (procent < 0.1)
+                    {
+                        return slumpKort.Next(8, (KortMaxVärde + 1));
+                    }
+                    else if (procent < 0.5)
+                    {
+                        return slumpKort.Next(6, (KortMaxVärde + 1));
+                    }
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                default:
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
             }
-            return false;
         }
+        //svårighetsgrader: Lätt = 50% chans för mina kort att bli 1-2, 10% för datorn att bli över 3. Datorn drar kort till 18. Kortmaxvärde 10.
+        //Medel = Defaultläge, slutardrakortvid 20
+        //Svår = maxvärde kort: 13, slutardrakortvid 21,  15% chans för mina kort att bli över 5
+        //Omöjlig = 50% mina kort över 5, 10% över 8, datorn 40% under 3, 70% under 5
+        public int RandomCardTillDatorn()
+        {
+            Random slumpKort = new Random();
+
+            switch (Svårighetsgrad)
+            {
+                case 0:
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 1:
+                    if (slumpKort.NextDouble() < 0.1)
+                    {
+                        return slumpKort.Next(4, (KortMaxVärde + 1));
+                    }
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 2:
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 3:
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                case 4:
+                    double procent = slumpKort.NextDouble();
+                    if (procent < 0.4)
+                    {
+                        return slumpKort.Next(KortMinVärde, 3);
+                    }
+                    else if (procent < 0.7)
+                    {
+                        return slumpKort.Next(KortMinVärde, 5);
+                    }
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                default:
+                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+            }
+        }
+
+        //public bool ÄrPoängenÖver21(int resultat)
+        //{
+        //    if (resultat > 21)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         public void RegistreraVinnaren(string vinnare)
         {
@@ -282,3 +388,4 @@ namespace Projekt_21an
         
     }
 }
+
