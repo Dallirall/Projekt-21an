@@ -69,12 +69,12 @@ namespace Projekt_21an
                 datornsPoäng += RandomCardTillDatorn();
             }
             int nyttKort = 0;
-            bool draKort = true;
+            bool avgjort = false;
             bool duHarFörlorat = false;
             bool datornHarFörlorat = false;
             Func<int, bool> ärPoängenÖver21 = poäng => poäng > 21;
 
-            while (draKort)
+            while (!avgjort)
             {
                 Console.Write($"Din poäng: ");
                 Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
@@ -82,31 +82,10 @@ namespace Projekt_21an
                 Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
                 duHarFörlorat = ärPoängenÖver21(dinPoäng);
                 datornHarFörlorat = ärPoängenÖver21(datornsPoäng);
-                if (duHarFörlorat && datornHarFörlorat)
+                avgjort = checkaVinst(datornHarFörlorat, duHarFörlorat, datornsPoäng, dinPoäng);
+                if (avgjort)
                 {
-                    if (MöjligtMedOavgjort)
-                    {
-                        RegistreraVinnaren("Båda överskridna");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        RegistreraVinnaren("Datorn");
-                        Console.ReadKey();
-                    }
-                    draKort = false;
-                }
-                else if (duHarFörlorat)
-                {
-                    RegistreraVinnaren("Datorn");
-                    Console.ReadKey();
-                    draKort = false;
-                }
-                else if (datornHarFörlorat)
-                {
-                    RegistreraVinnaren("Du");
-                    Console.ReadKey();
-                    draKort = false;
+                    break;
                 }
                 else
                 {
@@ -124,13 +103,13 @@ namespace Projekt_21an
                     }
                     else
                     {
-                        draKort = false;
+                        break;
                     }
                 }
                 
             }
-            draKort = true;
-            while (draKort && !duHarFörlorat && !datornHarFörlorat)
+            avgjort = checkaVinst(datornHarFörlorat, duHarFörlorat, datornsPoäng, dinPoäng);
+            while (!avgjort && !duHarFörlorat && !datornHarFörlorat)
             {
                 //Checka här om datorn har vunnit (t.ex vid att datorn dra till 21 eller datornslutardravid från början)
                 Console.WriteLine("\nNu drar datorn kort!");
@@ -204,42 +183,80 @@ namespace Projekt_21an
         //om datorn är under slutadrakort men != 21
         //if we are tied == , men inte likmed 21 och under datornsluteardrakort (20)
 
-        //
+        //Jag drar 2 kort, datorn drar 2.
+        //chacka vinst. Ex:
+        //  Jag     datorn
+        //  1       1
+        //  1       5
+        //  1       21
+        //  5       1
+        //  21      1
+        //  21      20 (slutardrakort)
+        //  21      21
+        //  25      1
+        //  1       25
         public bool checkaVinst(bool datornHarFörlorat, bool duHarFörlorat, int datornsPoäng, int dinPoäng)
         {
-
+            if (duHarFörlorat && datornHarFörlorat)
+            {
+                if (MöjligtMedOavgjort)
+                {
+                    RegistreraVinnaren("Båda överskridna");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    RegistreraVinnaren("Datorn");
+                    Console.ReadKey();
+                }
+                return true;
+            }
+            else if (duHarFörlorat)
+            {   
+                RegistreraVinnaren("Datorn");
+                Console.ReadKey();
+                return true;
+            }
+            else if (datornHarFörlorat)
+            {
+                //registrera vinnaren, specificera, funkar det både i början och när datorn drar ?
+                RegistreraVinnaren("Du");
+                Console.ReadKey();
+                return true;
+            }
             if (!datornHarFörlorat && datornsPoäng > dinPoäng)
             {
                 RegistreraVinnaren("Datorn närmast 21");
-                draKort = false;
+                return true;
                 Console.ReadKey();
             }
             else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
             {
                 RegistreraVinnaren("Du, du närmast 21");
-                draKort = false;
+                return true;
                 Console.ReadKey();
             }
             else if (!datornHarFörlorat && datornsPoäng < DatornSlutarDraKortVid)
             {
-                continue;
+                return false;
             }
             else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
             {
                 if (MöjligtMedOavgjort)
                 {
                     RegistreraVinnaren("Samma poäng");
-                    draKort = false;
+                    return true;
                     Console.ReadKey();
                 }
                 else
                 {
                     RegistreraVinnaren("Datorn, oavgjort");
-                    draKort = false;
+                    return true;
                     Console.ReadKey();
                 }
 
             }
+            
 
         }
 
@@ -288,6 +305,7 @@ namespace Projekt_21an
         {
             Random slumpKort = new Random();
 
+            //Fixa enum
             switch (Svårighetsgrad)
             {
                 case 0:
@@ -380,10 +398,11 @@ namespace Projekt_21an
 
         public enum Svårighetsgrader
         {
-            Lätt = 1,
-            Medel = 2,
-            Svår = 3,
-            Mer_eller_mindre_omöjlig = 4
+            Custom,
+            Lätt,
+            Medel,
+            Svår,
+            Mer_eller_mindre_omöjlig
         }
         
     }
