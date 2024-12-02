@@ -82,7 +82,7 @@ namespace Projekt_21an
                 Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
                 duHarFörlorat = ärPoängenÖver21(dinPoäng);
                 datornHarFörlorat = ärPoängenÖver21(datornsPoäng);
-                avgjort = checkaVinst(datornHarFörlorat, duHarFörlorat, datornsPoäng, dinPoäng);
+                avgjort = överskridit21poäng(datornHarFörlorat, duHarFörlorat);
                 if (avgjort)
                 {
                     break;
@@ -108,8 +108,16 @@ namespace Projekt_21an
                 }
                 
             }
-            avgjort = checkaVinst(datornHarFörlorat, duHarFörlorat, datornsPoäng, dinPoäng);
-            while (!avgjort && !duHarFörlorat && !datornHarFörlorat)
+            if (avgjort)
+            {
+
+            }
+            else
+            {
+                avgjort = checkaVinstConditions(datornsPoäng, dinPoäng);
+            }
+            
+            while (!avgjort)
             {
                 //Checka här om datorn har vunnit (t.ex vid att datorn dra till 21 eller datornslutardravid från början)
                 Console.WriteLine("\nNu drar datorn kort!");
@@ -132,44 +140,53 @@ namespace Projekt_21an
                 Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
                 Console.ReadKey();
                 datornHarFörlorat = ärPoängenÖver21(datornsPoäng);
-                if (datornHarFörlorat)
+                avgjort = överskridit21poäng(datornHarFörlorat, duHarFörlorat);
+                if (avgjort)
                 {
-                    RegistreraVinnaren("Du, datorn överskred");
-                    draKort = false;
-                    Console.ReadKey();
+                    break;
                 }
-                if (!datornHarFörlorat && datornsPoäng > dinPoäng)
+                else
                 {
-                    RegistreraVinnaren("Datorn närmast 21");
-                    draKort = false;
-                    Console.ReadKey();
+                    avgjort = checkaVinstConditions(datornsPoäng, dinPoäng);
                 }
-                else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
-                    {
-                    RegistreraVinnaren("Du, du närmast 21");
-                    draKort = false;
-                    Console.ReadKey();
-                }
-                else if (!datornHarFörlorat && datornsPoäng < DatornSlutarDraKortVid)
-                {
-                    continue;
-                }
-                else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
-                {
-                    if (MöjligtMedOavgjort)
-                    {
-                        RegistreraVinnaren("Samma poäng");
-                        draKort = false;
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        RegistreraVinnaren("Datorn, oavgjort");
-                        draKort = false;
-                        Console.ReadKey();
-                    }
-                    
-                }
+                //if (datornHarFörlorat)
+                //{
+                //    RegistreraVinnaren("Du, datorn överskred");
+                //    draKort = false;
+                //    Console.ReadKey();
+                //}
+                //if (!datornHarFörlorat && datornsPoäng > dinPoäng)
+                //{
+                //    RegistreraVinnaren("Datorn närmast 21");
+                //    draKort = false;
+                //    Console.ReadKey();
+                //}
+                //else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
+                //    {
+                //    RegistreraVinnaren("Du, du närmast 21");
+                //    draKort = false;
+                //    Console.ReadKey();
+                //}
+                //else if (!datornHarFörlorat && datornsPoäng < DatornSlutarDraKortVid)
+                //{
+                //    continue;
+                //}
+                //else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
+                //{
+                //    if (MöjligtMedOavgjort)
+                //    {
+                //        RegistreraVinnaren("Samma poäng");
+                //        draKort = false;
+                //        Console.ReadKey();
+                //    }
+                //    else
+                //    {
+                //        RegistreraVinnaren("Datorn, oavgjort");
+                //        draKort = false;
+                //        Console.ReadKey();
+                //    }
+
+                //}
             }
 
 
@@ -195,7 +212,9 @@ namespace Projekt_21an
         //  21      21
         //  25      1
         //  1       25
-        public bool checkaVinst(bool datornHarFörlorat, bool duHarFörlorat, int datornsPoäng, int dinPoäng)
+        //  18      18 (slutar 20)
+
+        public bool överskridit21poäng(bool datornHarFörlorat, bool duHarFörlorat)
         {
             if (duHarFörlorat && datornHarFörlorat)
             {
@@ -206,41 +225,47 @@ namespace Projekt_21an
                 }
                 else
                 {
-                    RegistreraVinnaren("Datorn");
+                    RegistreraVinnaren("Datorn, du över 21");
                     Console.ReadKey();
                 }
                 return true;
             }
             else if (duHarFörlorat)
-            {   
-                RegistreraVinnaren("Datorn");
+            {
+                RegistreraVinnaren("Datorn, du över 21");
                 Console.ReadKey();
                 return true;
             }
             else if (datornHarFörlorat)
             {
                 //registrera vinnaren, specificera, funkar det både i början och när datorn drar ?
-                RegistreraVinnaren("Du");
+                RegistreraVinnaren("Du, datorn överskred");
                 Console.ReadKey();
                 return true;
             }
-            if (!datornHarFörlorat && datornsPoäng > dinPoäng)
+            return false;
+        }
+
+        public bool checkaVinstConditions(int datornsPoäng, int dinPoäng)
+        {
+           
+            if (datornsPoäng > dinPoäng)
             {
                 RegistreraVinnaren("Datorn närmast 21");
                 return true;
                 Console.ReadKey();
             }
-            else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
+            else if (datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
             {
                 RegistreraVinnaren("Du, du närmast 21");
                 return true;
                 Console.ReadKey();
             }
-            else if (!datornHarFörlorat && datornsPoäng < DatornSlutarDraKortVid)
+            else if (datornsPoäng < DatornSlutarDraKortVid)
             {
                 return false;
             }
-            else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
+            else if (datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
             {
                 if (MöjligtMedOavgjort)
                 {
@@ -254,8 +279,8 @@ namespace Projekt_21an
                     return true;
                     Console.ReadKey();
                 }
-
             }
+            return false;
             
 
         }
@@ -349,7 +374,7 @@ namespace Projekt_21an
         {
             switch (vinnare)
             {
-                case "Datorn":
+                case "Datorn, du över 21":
                     Console.WriteLine("Din poäng har överskridit 21.");
                     Program.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
                     vinnare = "Datorn";

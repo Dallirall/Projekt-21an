@@ -29,7 +29,7 @@ namespace spel21an
                         while (true)
                         {
                             spelet.RunGame();
-                            Console.WriteLine("Spela igen? (j/n): ");
+                            Console.WriteLine("\nSpela igen? (j/n): ");
                             if (Console.ReadLine() != "j")
                             {
                                 break;
