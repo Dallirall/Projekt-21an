@@ -60,11 +60,12 @@ namespace spel21an
                         switch (spelet.Svårighetsgrad)
                         {
                             case 0:
+                                //Fixa maxvärden
                                 Console.WriteLine("Välj antal kort som varje spelare ska dra i början av spelet (default 2)");
                                 spelet.AntalKortAttBörjaMed = int.Parse(Console.ReadLine());
-                                Console.WriteLine("Välj maxvärdet på korten som dras (default 10)");
+                                Console.WriteLine("Välj maxvärdet på korten som dras (default 10, max 13)");
                                 spelet.KortMaxVärde = int.Parse(Console.ReadLine());
-                                Console.WriteLine("Välj det värde då datorn ska sluta dra kort (default 21)");
+                                Console.WriteLine("Välj det värde då datorn ska sluta dra kort (default 21, max 21)");
                                 spelet.DatornSlutarDraKortVid = int.Parse(Console.ReadLine());
                                 break;
                             case 1:

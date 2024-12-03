@@ -255,17 +255,18 @@ namespace Projekt_21an
                 return true;
                 Console.ReadKey();
             }
-            else if (datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
+            else if (datornsPoäng < DatornSlutarDraKortVid)
+            {
+                return false;
+            }
+            else if (/*datornsPoäng >= DatornSlutarDraKortVid &&*/ datornsPoäng < dinPoäng)
             {
                 RegistreraVinnaren("Du, du närmast 21");
                 return true;
                 Console.ReadKey();
             }
-            else if (datornsPoäng < DatornSlutarDraKortVid)
-            {
-                return false;
-            }
-            else if (datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
+            
+            else if (/*datornsPoäng >= DatornSlutarDraKortVid &&*/ datornsPoäng == dinPoäng)
             {
                 if (MöjligtMedOavgjort)
                 {
