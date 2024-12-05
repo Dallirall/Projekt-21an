@@ -55,52 +55,8 @@ namespace spel21an
                         Console.ReadKey();
                         break;
                     case "4":
-                        Console.WriteLine("Välj svårighetsgrad: \r\n1. Lätt \r\n2. Medel \r\n3. Svår \r\n4. Mer eller mindre omöjlig \r\nVill du inte ha en förinställd nivå utan justera inställningar själv, skriv '0'. ");
-                        spelet.Svårighetsgrad = int.Parse(Console.ReadLine());
-                        switch (spelet.Svårighetsgrad)
-                        {
-                            case 0:
-                                //Fixa maxvärden
-                                Console.WriteLine("Välj antal kort som varje spelare ska dra i början av spelet (default 2)");
-                                spelet.AntalKortAttBörjaMed = int.Parse(Console.ReadLine());
-                                Console.WriteLine("Välj maxvärdet på korten som dras (default 10, max 13)");
-                                spelet.KortMaxVärde = int.Parse(Console.ReadLine());
-                                Console.WriteLine("Välj det värde då datorn ska sluta dra kort (default 21, max 21)");
-                                spelet.DatornSlutarDraKortVid = int.Parse(Console.ReadLine());
-                                break;
-                            case 1:
-                                spelet.AntalKortAttBörjaMed = 2;
-                                spelet.DatornSlutarDraKortVid = 18;
-                                spelet.KortMaxVärde = 10;
-                                break;
-                            case 2:
-                                spelet.AntalKortAttBörjaMed = 2;
-                                spelet.DatornSlutarDraKortVid = 20;
-                                spelet.KortMaxVärde = 10;
-                                break;
-                            case 3:
-                                spelet.AntalKortAttBörjaMed = 2;
-                                spelet.DatornSlutarDraKortVid = 21;
-                                spelet.KortMaxVärde = 13;
-                                break;
-                            case 4:
-                                spelet.AntalKortAttBörjaMed = 2;
-                                spelet.DatornSlutarDraKortVid = 21;
-                                spelet.KortMaxVärde = 13;
-                                break;
-                            default: break;
-                        }
-                        Console.WriteLine("Skriv 'ja' om du vill att det ska kunna bli oavgjort. Annars skriv 'nej', så kommer datorn vinna vid lika resultat.");
-                        if (Console.ReadLine() == "ja")
-                        {
-                            spelet.MöjligtMedOavgjort = true;
-                        }
-                        else
-                        {
-                            spelet.MöjligtMedOavgjort = false;
-                        }
-                        Console.WriteLine("Inställningar sparade!");
-                        Console.ReadKey();
+                        spelet.Spelinställningar();
+
                         break;
                     case "5":
                         SkrivUtIFärg("Tack för att du spelade!", ConsoleColor.Green);
@@ -121,6 +77,7 @@ namespace spel21an
             Console.Write(textAttSkrivaUt);
             Console.ForegroundColor = ConsoleColor.Black;
         }
-    }
+
+    }    
 }
 

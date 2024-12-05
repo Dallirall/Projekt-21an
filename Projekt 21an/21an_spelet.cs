@@ -42,8 +42,8 @@ namespace Projekt_21an
         private int kortMinVärde = 1;
         public int KortMinVärde { get { return kortMinVärde; } set { kortMinVärde = value; } }
 
-        private int svårighetsgrad = 1;
-        public int Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
+        private Svårighetsgrader svårighetsgrad = Svårighetsgrader.Lätt;
+        public Svårighetsgrader Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
 
         private int antalKortAttBörjaMed = 2;
         public int AntalKortAttBörjaMed { get { return antalKortAttBörjaMed; } set { antalKortAttBörjaMed = value; } }
@@ -56,9 +56,77 @@ namespace Projekt_21an
         public int DatornSlutarDraKortVid { get {return datornSlutarDraKortVid;} set {datornSlutarDraKortVid = value; } }
 
 
+
+        public void Spelinställningar()
+        {
+            Console.WriteLine("Skriv siffra för att välja svårighetsgrad: \r\n1. Lätt \r\n2. Medel \r\n3. Svår \r\n4. Mer eller mindre omöjlig \r\nVill du inte ha en förinställd nivå utan justera inställningar själv, skriv '0'. ");
+            
+            Svårighetsgrad = (Svårighetsgrader)int.Parse(Console.ReadLine());
+            switch (Svårighetsgrad)
+            {
+                case Svårighetsgrader.Custom:
+                    Console.WriteLine($"Välj antal kort som varje spelare ska dra i början av spelet (default 2, max {(int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed})");
+                    AntalKortAttBörjaMed = int.Parse(Console.ReadLine());
+                    if (AntalKortAttBörjaMed > (int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed)
+                    {
+                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed}");
+                        AntalKortAttBörjaMed = (int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed;
+                    }
+
+                    Console.WriteLine($"Välj maxvärdet på korten som dras (default 10, max {(int)SettingsMaxvärden.MaxLimit_KortMaxVärde})");
+                    KortMaxVärde = int.Parse(Console.ReadLine());
+                    if (KortMaxVärde > (int)SettingsMaxvärden.MaxLimit_KortMaxVärde)
+                    {
+                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)SettingsMaxvärden.MaxLimit_KortMaxVärde}");
+                        KortMaxVärde = (int)SettingsMaxvärden.MaxLimit_KortMaxVärde;
+                    }
+
+                    Console.WriteLine($"Välj det värde då datorn ska sluta dra kort (default 21, max {(int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid})");
+                    DatornSlutarDraKortVid = int.Parse(Console.ReadLine());
+                    if (DatornSlutarDraKortVid > (int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid)
+                    {
+                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid}");
+                        DatornSlutarDraKortVid = (int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid;
+                    }
+                    break;
+                case Svårighetsgrader.Lätt:
+                    AntalKortAttBörjaMed = 2;
+                    DatornSlutarDraKortVid = 18;
+                    KortMaxVärde = 10;
+                    break;
+                case Svårighetsgrader.Medel:
+                    AntalKortAttBörjaMed = 2;
+                    DatornSlutarDraKortVid = 20;
+                    KortMaxVärde = 10;
+                    break;
+                case Svårighetsgrader.Svår:
+                    AntalKortAttBörjaMed = 2;
+                    DatornSlutarDraKortVid = 21;
+                    KortMaxVärde = 13;
+                    break;
+                case Svårighetsgrader.Mer_eller_mindre_omöjlig:
+                    AntalKortAttBörjaMed = 2;
+                    DatornSlutarDraKortVid = 21;
+                    KortMaxVärde = 13;
+                    break;
+                default: break;
+            }
+            Console.WriteLine("Skriv 'j' om du vill att det ska kunna bli oavgjort. Annars skriv 'n', så kommer datorn vinna vid lika resultat.");
+            if (Console.ReadLine() == "j")
+            {
+                MöjligtMedOavgjort = true;
+            }
+            else
+            {
+                MöjligtMedOavgjort = false;
+            }
+            Console.WriteLine("Inställningar sparade!");
+            Console.ReadKey();
+        }
+
+
         public void RunGame()
         {
-            
             Console.WriteLine($"\nNu kommer {AntalKortAttBörjaMed} kort dras per spelare.");
             Console.ReadKey();
             int dinPoäng = 0;
@@ -106,7 +174,6 @@ namespace Projekt_21an
                         break;
                     }
                 }
-                
             }
             if (avgjort)
             {
@@ -119,7 +186,6 @@ namespace Projekt_21an
             
             while (!avgjort)
             {
-                //Checka här om datorn har vunnit (t.ex vid att datorn dra till 21 eller datornslutardravid från början)
                 Console.WriteLine("\nNu drar datorn kort!");
                 Thread.Sleep(500);
                 Console.Write(".");
@@ -148,45 +214,7 @@ namespace Projekt_21an
                 else
                 {
                     avgjort = checkaVinstConditions(datornsPoäng, dinPoäng);
-                }
-                //if (datornHarFörlorat)
-                //{
-                //    RegistreraVinnaren("Du, datorn överskred");
-                //    draKort = false;
-                //    Console.ReadKey();
-                //}
-                //if (!datornHarFörlorat && datornsPoäng > dinPoäng)
-                //{
-                //    RegistreraVinnaren("Datorn närmast 21");
-                //    draKort = false;
-                //    Console.ReadKey();
-                //}
-                //else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng < dinPoäng)
-                //    {
-                //    RegistreraVinnaren("Du, du närmast 21");
-                //    draKort = false;
-                //    Console.ReadKey();
-                //}
-                //else if (!datornHarFörlorat && datornsPoäng < DatornSlutarDraKortVid)
-                //{
-                //    continue;
-                //}
-                //else if (!datornHarFörlorat && datornsPoäng >= DatornSlutarDraKortVid && datornsPoäng == dinPoäng)
-                //{
-                //    if (MöjligtMedOavgjort)
-                //    {
-                //        RegistreraVinnaren("Samma poäng");
-                //        draKort = false;
-                //        Console.ReadKey();
-                //    }
-                //    else
-                //    {
-                //        RegistreraVinnaren("Datorn, oavgjort");
-                //        draKort = false;
-                //        Console.ReadKey();
-                //    }
-
-                //}
+                }   
             }
 
 
@@ -221,26 +249,21 @@ namespace Projekt_21an
                 if (MöjligtMedOavgjort)
                 {
                     RegistreraVinnaren("Båda överskridna");
-                    Console.ReadKey();
                 }
                 else
                 {
                     RegistreraVinnaren("Datorn, du över 21");
-                    Console.ReadKey();
                 }
                 return true;
             }
             else if (duHarFörlorat)
             {
                 RegistreraVinnaren("Datorn, du över 21");
-                Console.ReadKey();
                 return true;
             }
             else if (datornHarFörlorat)
             {
-                //registrera vinnaren, specificera, funkar det både i början och när datorn drar ?
                 RegistreraVinnaren("Du, datorn överskred");
-                Console.ReadKey();
                 return true;
             }
             return false;
@@ -253,37 +276,31 @@ namespace Projekt_21an
             {
                 RegistreraVinnaren("Datorn närmast 21");
                 return true;
-                Console.ReadKey();
             }
             else if (datornsPoäng < DatornSlutarDraKortVid)
             {
                 return false;
             }
-            else if (/*datornsPoäng >= DatornSlutarDraKortVid &&*/ datornsPoäng < dinPoäng)
+            else if (datornsPoäng < dinPoäng)
             {
                 RegistreraVinnaren("Du, du närmast 21");
                 return true;
-                Console.ReadKey();
             }
             
-            else if (/*datornsPoäng >= DatornSlutarDraKortVid &&*/ datornsPoäng == dinPoäng)
+            else if (datornsPoäng == dinPoäng)
             {
                 if (MöjligtMedOavgjort)
                 {
                     RegistreraVinnaren("Samma poäng");
-                    return true;
-                    Console.ReadKey();
+                    return true; 
                 }
                 else
                 {
                     RegistreraVinnaren("Datorn, oavgjort");
                     return true;
-                    Console.ReadKey();
                 }
             }
             return false;
-            
-
         }
 
         public int RandomCardTillMig()
@@ -292,23 +309,23 @@ namespace Projekt_21an
             
             switch (Svårighetsgrad)
             {
-                case 0:
+                case Svårighetsgrader.Custom:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 1:
+                case Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.5)
                     {
                         return slumpKort.Next(KortMinVärde, 3);
                     }
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 2:
+                case Svårighetsgrader.Medel:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 3:
+                case Svårighetsgrader.Svår:
                     if (slumpKort.NextDouble() < 0.15)
                     {
                         return slumpKort.Next(6, (KortMaxVärde + 1));
                     }
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 4:
+                case Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = slumpKort.NextDouble();
                     if (procent < 0.1)
                     {
@@ -334,19 +351,19 @@ namespace Projekt_21an
             //Fixa enum
             switch (Svårighetsgrad)
             {
-                case 0:
+                case Svårighetsgrader.Custom:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 1:
+                case Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.1)
                     {
                         return slumpKort.Next(4, (KortMaxVärde + 1));
                     }
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 2:
+                case Svårighetsgrader.Medel:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 3:
+                case Svårighetsgrader.Svår:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case 4:
+                case Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = slumpKort.NextDouble();
                     if (procent < 0.4)
                     {
@@ -361,15 +378,6 @@ namespace Projekt_21an
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
             }
         }
-
-        //public bool ÄrPoängenÖver21(int resultat)
-        //{
-        //    if (resultat > 21)
-        //    {
-        //        return true;
-        //    }
-        //    return false;
-        //}
 
         public void RegistreraVinnaren(string vinnare)
         {
@@ -387,12 +395,12 @@ namespace Projekt_21an
                     break;
                 case "Båda överskridna":
                     Console.WriteLine("Både din och datorns poäng har överskridit 21.");
-                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.Gray);
+                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
                     vinnare = "Oavgjort";
                     break;
                 case "Samma poäng":
                     Console.WriteLine("Du och datorn har landat på samma poäng.");
-                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.Gray);
+                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
                     vinnare = "Oavgjort";
                     break;
                 case "Du, datorn överskred":
@@ -419,18 +427,25 @@ namespace Projekt_21an
             }
             string path = @"C:\temp\21an_vinnarlog.txt";
             File.WriteAllText(path, vinnare);
+            Console.ReadKey();
         }
 
 
         public enum Svårighetsgrader
         {
-            Custom,
+            Custom = 0,
             Lätt,
             Medel,
             Svår,
             Mer_eller_mindre_omöjlig
         }
         
+        public enum SettingsMaxvärden
+        {
+            MaxLimit_AntalKortAttBörjaMed = 5,
+            MaxLimit_KortMaxVärde = 13,
+            MaxLimit_DatornSlutarDraKortVid = 21
+        }
     }
 }
 

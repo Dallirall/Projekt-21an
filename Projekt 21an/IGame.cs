@@ -12,6 +12,8 @@ namespace Projekt_21an
         string Regler { get; }
         string? Vinnare { get; }
 
+        void Spelinställningar();
+
         void RunGame();
     }
 }
