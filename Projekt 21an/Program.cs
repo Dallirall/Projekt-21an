@@ -3,6 +3,8 @@ using System.IO;
 using System.Collections.Generic;
 using Projekt_21an;
 using static Projekt_21an._21an_spelet;
+using Microsoft.Data.SqlClient;
+using Dapper;
 
 namespace spel21an
 {
@@ -10,6 +12,44 @@ namespace spel21an
     {
         static void Main(string[] args)
         {
+            //try
+            //{
+            //    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            //    builder.DataSource = "DESKTOP-US1L7JK.database.windows.net";
+            //    //builder.UserID = "sa";
+            //    //builder.Password = "plokij";
+            //    builder.InitialCatalog = "_21anDB";
+            //    builder.TrustServerCertificate = true;
+
+            //    using (SqlConnection connection = new SqlConnection())
+            //    {
+            //        Console.WriteLine("\nQuery data example:");
+            //        Console.WriteLine("=========================================\n");
+
+            //        String sql = "SELECT namn FROM vinststatistik";
+
+            //        using (SqlCommand command = new SqlCommand(sql, connection))
+            //        {
+            //            connection.Open();
+            //            using (SqlDataReader reader = command.ExecuteReader())
+            //            {
+            //                while (reader.Read())
+            //                {
+            //                    Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            //catch (SqlException e)
+            //{
+            //    Console.WriteLine(e.ToString());
+            //}
+
+            
+
+            
+
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;
@@ -77,6 +117,8 @@ namespace spel21an
             Console.Write(textAttSkrivaUt);
             Console.ForegroundColor = ConsoleColor.Black;
         }
+
+        
 
     }    
 }

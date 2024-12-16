@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using System.Data.SqlClient;
 
 namespace Projekt_21an
 {
@@ -127,6 +128,8 @@ namespace Projekt_21an
 
         public void RunGame()
         {
+            Console.WriteLine("Skriv in ditt spelarnamn: ");
+            Spelare.Namn = Console.ReadLine();
             Console.WriteLine($"\nNu kommer {AntalKortAttBörjaMed} kort dras per spelare.");
             Console.ReadKey();
             int dinPoäng = 0;
@@ -405,17 +408,13 @@ namespace Projekt_21an
                     break;
                 case "Du, datorn överskred":
                     Console.WriteLine("Datorns poäng har överskridit 21.");
-                    Program.SkrivUtIFärg("Du har vunnit!\n", ConsoleColor.Cyan);
-                    Console.WriteLine("Skriv in ditt namn: ");
-                    vinnare = Console.ReadLine();
-                    Console.WriteLine($"Grattis {vinnare}!");
+                    Program.SkrivUtIFärg($"Grattis {Spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                    vinnare = Spelare.Namn;
                     break;
                 case "Du, du närmast 21":
                     Console.WriteLine("Din poäng är närmast 21. ");
-                    Program.SkrivUtIFärg("Du har vunnit!\n", ConsoleColor.Cyan);
-                    Console.WriteLine("Skriv in ditt namn: ");
-                    vinnare = Console.ReadLine();
-                    Console.WriteLine($"Grattis {vinnare}!");
+                    Program.SkrivUtIFärg($"Grattis {Spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                    vinnare = Spelare.Namn;
                     break;
                 case "Datorn, oavgjort":
                     Console.WriteLine("Samma poäng. Då vinner ");
