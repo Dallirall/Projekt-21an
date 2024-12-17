@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_21an
 {
-    public static class Spelare
+    public class Spelare
     {
 
         //public Spelare(string namn) 
@@ -16,9 +16,9 @@ namespace Projekt_21an
         //    //förluster = Förluster;
         //    //oavgjort = Oavgjort;
         //}
-        public static string Namn { get; set; }
-        public static int Vinster { get; set; }
-        public static int Förluster { get; set; }
-        public static int Oavgjort { get; set; }
+        public string Namn { get; set; }
+        public int Vinster { get; set; }
+        public int Förluster { get; set; }
+        public int Oavgjort { get; set; }
     }
 }

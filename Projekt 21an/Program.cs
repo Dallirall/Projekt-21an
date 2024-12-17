@@ -46,8 +46,9 @@ namespace spel21an
             //    Console.WriteLine(e.ToString());
             //}
 
-            
-
+            string result = (SqlMetoder.ExistsInDatabaseCheck("Datorn")) ? "Datorn finns i databasen" : "Finns ej"; 
+            Console.WriteLine(result);
+            Console.ReadKey();
             
 
             Console.BackgroundColor = ConsoleColor.White;

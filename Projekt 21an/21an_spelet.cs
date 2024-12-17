@@ -129,7 +129,8 @@ namespace Projekt_21an
         public void RunGame()
         {
             Console.WriteLine("Skriv in ditt spelarnamn: ");
-            Spelare.Namn = Console.ReadLine();
+            Spelare spelare = new Spelare();
+            spelare.Namn = Console.ReadLine();
             Console.WriteLine($"\nNu kommer {AntalKortAttBörjaMed} kort dras per spelare.");
             Console.ReadKey();
             int dinPoäng = 0;
@@ -382,11 +383,11 @@ namespace Projekt_21an
             }
         }
 
-        public void RegistreraVinnaren(string vinnare)
+        public void RegistreraVinnaren(Resultat resultat, Spelare vinnare, Spelare förlorare)
         {
-            switch (vinnare)
+            switch (resultat)
             {
-                case "Datorn, du över 21":
+                case Resultat.PoängÖverskridit21:
                     Console.WriteLine("Din poäng har överskridit 21.");
                     Program.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
                     vinnare = "Datorn";
@@ -399,22 +400,22 @@ namespace Projekt_21an
                 case "Båda överskridna":
                     Console.WriteLine("Både din och datorns poäng har överskridit 21.");
                     Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                    vinnare = "Oavgjort";
+                    resultat = "Oavgjort";
                     break;
                 case "Samma poäng":
                     Console.WriteLine("Du och datorn har landat på samma poäng.");
                     Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                    vinnare = "Oavgjort";
+                    resultat = "Oavgjort";
                     break;
                 case "Du, datorn överskred":
                     Console.WriteLine("Datorns poäng har överskridit 21.");
-                    Program.SkrivUtIFärg($"Grattis {Spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                    vinnare = Spelare.Namn;
+                    Program.SkrivUtIFärg($"Grattis {spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                    vinnare = spelare.Namn;
                     break;
                 case "Du, du närmast 21":
                     Console.WriteLine("Din poäng är närmast 21. ");
-                    Program.SkrivUtIFärg($"Grattis {Spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                    vinnare = Spelare.Namn;
+                    Program.SkrivUtIFärg($"Grattis {spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                    vinnare = spelare.Namn;
                     break;
                 case "Datorn, oavgjort":
                     Console.WriteLine("Samma poäng. Då vinner ");
@@ -425,7 +426,7 @@ namespace Projekt_21an
                     break;
             }
             string path = @"C:\temp\21an_vinnarlog.txt";
-            File.WriteAllText(path, vinnare);
+            File.WriteAllText(path, resultat);
             Console.ReadKey();
         }
 
@@ -444,6 +445,15 @@ namespace Projekt_21an
             MaxLimit_AntalKortAttBörjaMed = 5,
             MaxLimit_KortMaxVärde = 13,
             MaxLimit_DatornSlutarDraKortVid = 21
+        }
+
+        public enum Resultat
+        {
+            PoängÖverskridit21,
+            PoängNärmast21,
+            BådaÖver21,
+            BådaSammaPoäng
+            //SammaPoängOavgjortDisabled
         }
     }
 }
