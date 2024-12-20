@@ -46,10 +46,15 @@ namespace spel21an
             //    Console.WriteLine(e.ToString());
             //}
 
-            string result = (SqlMetoder.ExistsInDatabaseCheck("Datorn")) ? "Datorn finns i databasen" : "Finns ej"; 
-            Console.WriteLine(result);
-            Console.ReadKey();
-            
+            //string result = (SqlMetoder.ExistsInDatabaseCheck("Datorn")) ? "Datorn finns i databasen" : "Finns ej"; 
+            //Console.WriteLine(result);
+            //Console.ReadKey();
+
+            //Spelare datorn = new Spelare("Datorn");
+            //Spelare test = new Spelare("Test");
+            //SqlMetoder.ExistsInDatabaseCheck(test.Namn);
+
+
 
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();

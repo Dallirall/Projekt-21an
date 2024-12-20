@@ -43,8 +43,8 @@ namespace Projekt_21an
         private int kortMinVärde = 1;
         public int KortMinVärde { get { return kortMinVärde; } set { kortMinVärde = value; } }
 
-        private Svårighetsgrader svårighetsgrad = Svårighetsgrader.Lätt;
-        public Svårighetsgrader Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
+        private EnumVärden.Svårighetsgrader svårighetsgrad = EnumVärden.Svårighetsgrader.Lätt;
+        public EnumVärden.Svårighetsgrader Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
 
         private int antalKortAttBörjaMed = 2;
         public int AntalKortAttBörjaMed { get { return antalKortAttBörjaMed; } set { antalKortAttBörjaMed = value; } }
@@ -62,50 +62,50 @@ namespace Projekt_21an
         {
             Console.WriteLine("Skriv siffra för att välja svårighetsgrad: \r\n1. Lätt \r\n2. Medel \r\n3. Svår \r\n4. Mer eller mindre omöjlig \r\nVill du inte ha en förinställd nivå utan justera inställningar själv, skriv '0'. ");
             
-            Svårighetsgrad = (Svårighetsgrader)int.Parse(Console.ReadLine());
+            Svårighetsgrad = (EnumVärden.Svårighetsgrader)int.Parse(Console.ReadLine());
             switch (Svårighetsgrad)
             {
-                case Svårighetsgrader.Custom:
-                    Console.WriteLine($"Välj antal kort som varje spelare ska dra i början av spelet (default 2, max {(int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed})");
+                case EnumVärden.Svårighetsgrader.Custom:
+                    Console.WriteLine($"Välj antal kort som varje spelare ska dra i början av spelet (default 2, max {(int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed})");
                     AntalKortAttBörjaMed = int.Parse(Console.ReadLine());
-                    if (AntalKortAttBörjaMed > (int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed)
+                    if (AntalKortAttBörjaMed > (int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed)
                     {
-                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed}");
-                        AntalKortAttBörjaMed = (int)SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed;
+                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed}");
+                        AntalKortAttBörjaMed = (int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed;
                     }
 
-                    Console.WriteLine($"Välj maxvärdet på korten som dras (default 10, max {(int)SettingsMaxvärden.MaxLimit_KortMaxVärde})");
+                    Console.WriteLine($"Välj maxvärdet på korten som dras (default 10, max {(int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde})");
                     KortMaxVärde = int.Parse(Console.ReadLine());
-                    if (KortMaxVärde > (int)SettingsMaxvärden.MaxLimit_KortMaxVärde)
+                    if (KortMaxVärde > (int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde)
                     {
-                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)SettingsMaxvärden.MaxLimit_KortMaxVärde}");
-                        KortMaxVärde = (int)SettingsMaxvärden.MaxLimit_KortMaxVärde;
+                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde}");
+                        KortMaxVärde = (int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde;
                     }
 
-                    Console.WriteLine($"Välj det värde då datorn ska sluta dra kort (default 21, max {(int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid})");
+                    Console.WriteLine($"Välj det värde då datorn ska sluta dra kort (default 21, max {(int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid})");
                     DatornSlutarDraKortVid = int.Parse(Console.ReadLine());
-                    if (DatornSlutarDraKortVid > (int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid)
+                    if (DatornSlutarDraKortVid > (int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid)
                     {
-                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid}");
-                        DatornSlutarDraKortVid = (int)SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid;
+                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid}");
+                        DatornSlutarDraKortVid = (int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid;
                     }
                     break;
-                case Svårighetsgrader.Lätt:
+                case EnumVärden.Svårighetsgrader.Lätt:
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 18;
                     KortMaxVärde = 10;
                     break;
-                case Svårighetsgrader.Medel:
+                case EnumVärden.Svårighetsgrader.Medel:
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 20;
                     KortMaxVärde = 10;
                     break;
-                case Svårighetsgrader.Svår:
+                case EnumVärden.Svårighetsgrader.Svår:
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
                     KortMaxVärde = 13;
                     break;
-                case Svårighetsgrader.Mer_eller_mindre_omöjlig:
+                case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
                     KortMaxVärde = 13;
@@ -128,17 +128,22 @@ namespace Projekt_21an
 
         public void RunGame()
         {
+            Spelare datorn = new Spelare("Datorn");
             Console.WriteLine("Skriv in ditt spelarnamn: ");
-            Spelare spelare = new Spelare();
-            spelare.Namn = Console.ReadLine();
+            Spelare spelare = new Spelare(Console.ReadLine());
+            if (!SqlMetoder.ExistsInDatabaseCheck(spelare.Namn))
+            {
+                SqlMetoder.RegistreraNySpelareIDatabasen(spelare);
+            }
+
             Console.WriteLine($"\nNu kommer {AntalKortAttBörjaMed} kort dras per spelare.");
             Console.ReadKey();
-            int dinPoäng = 0;
-            int datornsPoäng = 0;
+            spelare.Poäng = 0;
+            datorn.Poäng = 0;
             for (int i = 0; i < AntalKortAttBörjaMed; i++)
             {
-                dinPoäng += RandomCardTillMig();
-                datornsPoäng += RandomCardTillDatorn();
+                spelare.Poäng += RandomCardTillSpelaren();
+                datorn.Poäng += RandomCardTillDatorn();
             }
             int nyttKort = 0;
             bool avgjort = false;
@@ -149,12 +154,12 @@ namespace Projekt_21an
             while (!avgjort)
             {
                 Console.Write($"Din poäng: ");
-                Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
+                Program.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
-                Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
-                duHarFörlorat = ärPoängenÖver21(dinPoäng);
-                datornHarFörlorat = ärPoängenÖver21(datornsPoäng);
-                avgjort = överskridit21poäng(datornHarFörlorat, duHarFörlorat);
+                Program.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
+                duHarFörlorat = ärPoängenÖver21(spelare.Poäng);
+                datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
+                avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
                 if (avgjort)
                 {
                     break;
@@ -165,13 +170,13 @@ namespace Projekt_21an
                     string choice = Console.ReadLine().ToLower();
                     if (choice == "j")
                     {
-                        nyttKort = RandomCardTillMig();
-                        dinPoäng += nyttKort;
+                        nyttKort = RandomCardTillSpelaren();
+                        spelare.Poäng += nyttKort;
                         Console.Write("Ditt nya kort är värt ");
                         Program.SkrivUtIFärg($"{nyttKort}", ConsoleColor.DarkCyan);
                         Console.Write(" poäng\n");
                         Console.Write($"Din totalpoäng är ");
-                        Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
+                        Program.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                     }
                     else
                     {
@@ -185,7 +190,7 @@ namespace Projekt_21an
             }
             else
             {
-                avgjort = checkaVinstConditions(datornsPoäng, dinPoäng);
+                avgjort = checkaVinstConditions(datorn, spelare);
             }
             
             while (!avgjort)
@@ -201,23 +206,23 @@ namespace Projekt_21an
                 Console.Write(".");
                 Thread.Sleep(500);
                 nyttKort = RandomCardTillDatorn();
-                datornsPoäng += nyttKort;
+                datorn.Poäng += nyttKort;
                 Console.Write($"\n\nDatorn drog ett kort värt ");
                 Program.SkrivUtIFärg($"{nyttKort}\n", ConsoleColor.DarkCyan);
                 Console.Write($"Din poäng: ");
-                Program.SkrivUtIFärg($"{dinPoäng}\n", ConsoleColor.Green);
+                Program.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
-                Program.SkrivUtIFärg($"{datornsPoäng}\n", ConsoleColor.Red);
+                Program.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 Console.ReadKey();
-                datornHarFörlorat = ärPoängenÖver21(datornsPoäng);
-                avgjort = överskridit21poäng(datornHarFörlorat, duHarFörlorat);
+                datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
+                avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
                 if (avgjort)
                 {
                     break;
                 }
                 else
                 {
-                    avgjort = checkaVinstConditions(datornsPoäng, dinPoäng);
+                    avgjort = checkaVinstConditions(datorn, spelare);
                 }   
             }
 
@@ -246,90 +251,89 @@ namespace Projekt_21an
         //  1       25
         //  18      18 (slutar 20)
 
-        public bool överskridit21poäng(bool datornHarFörlorat, bool duHarFörlorat)
+        public bool HarÖverskridit21poäng(bool datornHarFörlorat, bool duHarFörlorat, Spelare spelaren, Spelare datorn)
         {
             if (duHarFörlorat && datornHarFörlorat)
             {
                 if (MöjligtMedOavgjort)
                 {
-                    RegistreraVinnaren("Båda överskridna");
+                    RegistreraVinnaren(EnumVärden.Resultat.BådaÖver21, spelaren, datorn);
                 }
                 else
                 {
-                    RegistreraVinnaren("Datorn, du över 21");
+                    RegistreraVinnaren(EnumVärden.Resultat.PoängÖverskridit21, datorn, spelaren);
                 }
                 return true;
             }
             else if (duHarFörlorat)
             {
-                RegistreraVinnaren("Datorn, du över 21");
+                RegistreraVinnaren(EnumVärden.Resultat.PoängÖverskridit21, datorn, spelaren);
                 return true;
             }
             else if (datornHarFörlorat)
             {
-                RegistreraVinnaren("Du, datorn överskred");
+                RegistreraVinnaren(EnumVärden.Resultat.PoängÖverskridit21, spelaren, datorn);
                 return true;
             }
             return false;
         }
 
-        public bool checkaVinstConditions(int datornsPoäng, int dinPoäng)
+        public bool checkaVinstConditions(Spelare datorn, Spelare spelare)
         {
            
-            if (datornsPoäng > dinPoäng)
+            if (datorn.Poäng > spelare.Poäng)
             {
-                RegistreraVinnaren("Datorn närmast 21");
+                RegistreraVinnaren(EnumVärden.Resultat.PoängNärmast21, datorn, spelare);
                 return true;
             }
-            else if (datornsPoäng < DatornSlutarDraKortVid)
+            else if (datorn.Poäng < DatornSlutarDraKortVid)
             {
                 return false;
             }
-            else if (datornsPoäng < dinPoäng)
+            else if (datorn.Poäng < spelare.Poäng)
             {
-                RegistreraVinnaren("Du, du närmast 21");
+                RegistreraVinnaren(EnumVärden.Resultat.PoängNärmast21, spelare, datorn);
                 return true;
             }
-            
-            else if (datornsPoäng == dinPoäng)
+            else if (datorn.Poäng == spelare.Poäng)
             {
                 if (MöjligtMedOavgjort)
                 {
-                    RegistreraVinnaren("Samma poäng");
+                    RegistreraVinnaren(EnumVärden.Resultat.BådaSammaPoäng, spelare, datorn);
                     return true; 
                 }
                 else
                 {
-                    RegistreraVinnaren("Datorn, oavgjort");
+                    RegistreraVinnaren(EnumVärden.Resultat.BådaSammaPoäng, datorn, spelare);
                     return true;
                 }
             }
             return false;
         }
 
-        public int RandomCardTillMig()
+        public int RandomCardTillSpelaren()
         {
             Random slumpKort = new Random();
             
             switch (Svårighetsgrad)
             {
-                case Svårighetsgrader.Custom:
+                case EnumVärden.Svårighetsgrader.Custom:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Lätt:
+                case EnumVärden.Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.5)
                     {
                         return slumpKort.Next(KortMinVärde, 3);
                     }
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Medel:
+                case EnumVärden.Svårighetsgrader.Medel:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Svår:
+                case EnumVärden.Svårighetsgrader.Svår:
                     if (slumpKort.NextDouble() < 0.15)
                     {
                         return slumpKort.Next(6, (KortMaxVärde + 1));
                     }
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Mer_eller_mindre_omöjlig:
+                case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = slumpKort.NextDouble();
                     if (procent < 0.1)
                     {
@@ -355,19 +359,19 @@ namespace Projekt_21an
             //Fixa enum
             switch (Svårighetsgrad)
             {
-                case Svårighetsgrader.Custom:
+                case EnumVärden.Svårighetsgrader.Custom:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Lätt:
+                case EnumVärden.Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.1)
                     {
                         return slumpKort.Next(4, (KortMaxVärde + 1));
                     }
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Medel:
+                case EnumVärden.Svårighetsgrader.Medel:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Svår:
+                case EnumVärden.Svårighetsgrader.Svår:
                     return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
-                case Svårighetsgrader.Mer_eller_mindre_omöjlig:
+                case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = slumpKort.NextDouble();
                     if (procent < 0.4)
                     {
@@ -383,78 +387,68 @@ namespace Projekt_21an
             }
         }
 
-        public void RegistreraVinnaren(Resultat resultat, Spelare vinnare, Spelare förlorare)
+        public void RegistreraVinnaren(EnumVärden.Resultat resultat, Spelare vinnare, Spelare förlorare)
         {
+            bool oavgjort = false;  
             switch (resultat)
             {
-                case Resultat.PoängÖverskridit21:
-                    Console.WriteLine("Din poäng har överskridit 21.");
-                    Program.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
-                    vinnare = "Datorn";
+                case EnumVärden.Resultat.PoängÖverskridit21:
+                    if (förlorare.Namn == "Datorn")
+                    {
+                        Console.WriteLine("Datorns poäng har överskridit 21.");
+                        Program.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Din poäng har överskridit 21.");
+                        Program.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
                     break;
-                case "Datorn närmast 21":
-                    Console.WriteLine("Datorns poäng är närmast 21. ");
-                    Program.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
-                    vinnare = "Datorn";
+                case EnumVärden.Resultat.PoängNärmast21:
+                    if (vinnare.Namn == "Datorn")
+                    {
+                        Console.WriteLine("Datorns poäng är närmast 21. ");
+                        Program.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Din poäng är närmast 21. ");
+                        Program.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
                     break;
-                case "Båda överskridna":
+                case EnumVärden.Resultat.BådaÖver21:
                     Console.WriteLine("Både din och datorns poäng har överskridit 21.");
                     Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                    resultat = "Oavgjort";
+                    oavgjort = true;
+                    SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     break;
-                case "Samma poäng":
-                    Console.WriteLine("Du och datorn har landat på samma poäng.");
-                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                    resultat = "Oavgjort";
-                    break;
-                case "Du, datorn överskred":
-                    Console.WriteLine("Datorns poäng har överskridit 21.");
-                    Program.SkrivUtIFärg($"Grattis {spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                    vinnare = spelare.Namn;
-                    break;
-                case "Du, du närmast 21":
-                    Console.WriteLine("Din poäng är närmast 21. ");
-                    Program.SkrivUtIFärg($"Grattis {spelare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                    vinnare = spelare.Namn;
-                    break;
-                case "Datorn, oavgjort":
-                    Console.WriteLine("Samma poäng. Då vinner ");
-                    Program.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
-                    vinnare = "Datorn";
+                case EnumVärden.Resultat.BådaSammaPoäng:
+                    if (MöjligtMedOavgjort)
+                    {
+                        Console.WriteLine("Du och datorn har landat på samma poäng.");
+                        Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
+                        oavgjort = true;
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Samma poäng. Då vinner ");
+                        Program.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
                     break;
                 default:
                     break;
             }
-            string path = @"C:\temp\21an_vinnarlog.txt";
-            File.WriteAllText(path, resultat);
             Console.ReadKey();
         }
 
 
-        public enum Svårighetsgrader
-        {
-            Custom = 0,
-            Lätt,
-            Medel,
-            Svår,
-            Mer_eller_mindre_omöjlig
-        }
         
-        public enum SettingsMaxvärden
-        {
-            MaxLimit_AntalKortAttBörjaMed = 5,
-            MaxLimit_KortMaxVärde = 13,
-            MaxLimit_DatornSlutarDraKortVid = 21
-        }
-
-        public enum Resultat
-        {
-            PoängÖverskridit21,
-            PoängNärmast21,
-            BådaÖver21,
-            BådaSammaPoäng
-            //SammaPoängOavgjortDisabled
-        }
     }
 }
 
