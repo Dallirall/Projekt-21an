@@ -53,6 +53,10 @@ namespace spel21an
             //Spelare datorn = new Spelare("Datorn");
             //Spelare test = new Spelare("Test");
             //SqlMetoder.ExistsInDatabaseCheck(test.Namn);
+            //SqlMetoder.DisplayaVinststatistik();
+
+            //SqlMetoder.TestaLite();
+
 
 
 
@@ -71,6 +75,7 @@ namespace spel21an
                 Console.WriteLine("");
                 switch (menyVal)
                 {
+                    //fixa const values till enum
                     case "1":
                         while (true)
                         {
@@ -84,31 +89,25 @@ namespace spel21an
                         break;
 
                     case "2":
-                        if (spelet.Vinnare != null)
-                        {
-                            Console.Write($"Senaste vinnaren: ");
-                            SkrivUtIFärg($"{spelet.Vinnare}\n", ConsoleColor.Green);
-                            Console.ReadKey();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Det finns ännu ingen vinnare.");
-                            Console.ReadKey();
-                        }
+                        SqlMetoder.DisplayaVinststatistik();
+                        Console.ReadKey();
                         break;
+
                     case "3":
                         Console.WriteLine(spelet.Regler);
                         Console.ReadKey();
                         break;
+
                     case "4":
                         spelet.Spelinställningar();
-
                         break;
+
                     case "5":
                         SkrivUtIFärg("Tack för att du spelade!", ConsoleColor.Green);
                         Console.ReadKey();
                         programRunning = false;
                         break;
+
                     default:
                         break;
                 }

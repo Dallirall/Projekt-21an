@@ -10,7 +10,6 @@ namespace Projekt_21an
     {
         string SpeletsNamn { get; }
         string Regler { get; }
-        string? Vinnare { get; }
 
         void Spelinställningar();
 

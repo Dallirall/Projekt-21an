@@ -22,21 +22,6 @@ namespace Projekt_21an
 
         public string PathToLogFile { get { return pathToLogFile; } }
 
-        private string? vinnare;
-        public string? Vinnare 
-        { 
-            get
-            {
-                if (File.Exists(pathToLogFile))
-                {
-                    return File.ReadAllText(pathToLogFile);
-                }
-                else
-                {
-                    return null;
-                }
-            } 
-        }
         private int kortMaxVärde = 10;
         public int KortMaxVärde { get { return kortMaxVärde; } set { kortMaxVärde = value; } }
 
@@ -128,9 +113,11 @@ namespace Projekt_21an
 
         public void RunGame()
         {
-            Spelare datorn = new Spelare("Datorn");
+            Spelare datorn = new Spelare();
+            datorn.Namn = "Datorn";
             Console.WriteLine("Skriv in ditt spelarnamn: ");
-            Spelare spelare = new Spelare(Console.ReadLine());
+            Spelare spelare = new Spelare();
+            spelare.Namn = Console.ReadLine();
             if (!SqlMetoder.ExistsInDatabaseCheck(spelare.Namn))
             {
                 SqlMetoder.RegistreraNySpelareIDatabasen(spelare);
@@ -225,31 +212,7 @@ namespace Projekt_21an
                     avgjort = checkaVinstConditions(datorn, spelare);
                 }   
             }
-
-
         }
-        // resultat jag 21, datorn 20 datornslutar20
-        // resultat jag 20 datorn 20 datornslutar20
-        // res jag 21 dator 21, datorslutar20
-        //resultat jag 13, datorn 13
-        // jag 21 datorn 20
-        // if datorn mindre än mig men under slutardrakort
-        //om datorn är under slutadrakort men != 21
-        //if we are tied == , men inte likmed 21 och under datornsluteardrakort (20)
-
-        //Jag drar 2 kort, datorn drar 2.
-        //chacka vinst. Ex:
-        //  Jag     datorn
-        //  1       1
-        //  1       5
-        //  1       21
-        //  5       1
-        //  21      1
-        //  21      20 (slutardrakort)
-        //  21      21
-        //  25      1
-        //  1       25
-        //  18      18 (slutar 20)
 
         public bool HarÖverskridit21poäng(bool datornHarFörlorat, bool duHarFörlorat, Spelare spelaren, Spelare datorn)
         {
