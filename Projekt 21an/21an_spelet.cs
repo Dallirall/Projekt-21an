@@ -31,6 +31,7 @@ namespace Projekt_21an
                 SqlMetoder.RegistreraNySpelareIDatabasen(spelare);
             }
 
+            //Spelfas 1: Utdelning av starthand
             Console.WriteLine($"\nNu kommer {Spelinställningar.AntalKortAttBörjaMed} kort dras per spelare.");
             Console.ReadKey();
             spelare.Poäng = 0;
@@ -46,6 +47,7 @@ namespace Projekt_21an
             bool datornHarFörlorat = false;
             Func<int, bool> ärPoängenÖver21 = poäng => poäng > 21;
 
+            //Spelfas 2: Spelaren drar kort
             while (!avgjort)
             {
                 Console.Write($"Din poäng: ");
@@ -87,7 +89,8 @@ namespace Projekt_21an
             {
                 avgjort = checkaVinstConditions(datorn, spelare);
             }
-            
+
+            //Spelfas 3: Datorn drar kort
             while (!avgjort)
             {
                 Console.WriteLine("\nNu drar datorn kort!");
@@ -163,6 +166,7 @@ namespace Projekt_21an
             }
             else if (datorn.Poäng < spelare.Poäng)
             {
+                Console.WriteLine("\nDatorn väljer att inte dra fler kort. \n");
                 RegistreraVinnaren(EnumVärden.Resultat.PoängNärmast21, spelare, datorn);
                 return true;
             }
