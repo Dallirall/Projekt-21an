@@ -17,100 +17,8 @@ namespace Projekt_21an
         
         private string regler = $"I 21:an kommer du att spela mot datorn och försöka tvinga datorn att få över 21 poäng. Både du och datorn får poäng genom att dra kort. När spelet börjar dras kort till både dig och datorn. Därefter får du dra hur många kort som du vill tills du är nöjd med din totalpoäng, du vill komma så nära 21 som möjligt utan att få mer än 21 poäng. När du inte vill dra fler kort så kommer datorn att dra kort tills den har mer eller lika många poäng som dig.\n\nDu vinner om datorn får mer än totalt 21 poäng när den håller på att dra kort. Datorn vinner om den har mer poäng än dig när spelet är slut så länge som datorn inte har mer än 21 poäng. Om du får mer än 21 poäng när du drar kort så har du förlorat.\n";
         public string Regler { get { return regler; } }
-
-        private string pathToLogFile = @"C:\temp\21an_vinnarlog.txt";
-
-        public string PathToLogFile { get { return pathToLogFile; } }
-
-        private int kortMaxVärde = 10;
-        public int KortMaxVärde { get { return kortMaxVärde; } set { kortMaxVärde = value; } }
-
-        private int kortMinVärde = 1;
-        public int KortMinVärde { get { return kortMinVärde; } set { kortMinVärde = value; } }
-
-        private EnumVärden.Svårighetsgrader svårighetsgrad = EnumVärden.Svårighetsgrader.Lätt;
-        public EnumVärden.Svårighetsgrader Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
-
-        private int antalKortAttBörjaMed = 2;
-        public int AntalKortAttBörjaMed { get { return antalKortAttBörjaMed; } set { antalKortAttBörjaMed = value; } }
-
-        private bool möjligtMedOavgjort = false;
-        public bool MöjligtMedOavgjort { get { return möjligtMedOavgjort; } set { möjligtMedOavgjort = value; } }
-
-        public int datornSlutarDraKortVid = 21;
-
-        public int DatornSlutarDraKortVid { get {return datornSlutarDraKortVid;} set {datornSlutarDraKortVid = value; } }
-
-
-
-        public void Spelinställningar()
-        {
-            Console.WriteLine("Skriv siffra för att välja svårighetsgrad: \r\n1. Lätt \r\n2. Medel \r\n3. Svår \r\n4. Mer eller mindre omöjlig \r\nVill du inte ha en förinställd nivå utan justera inställningar själv, skriv '0'. ");
-            
-            Svårighetsgrad = (EnumVärden.Svårighetsgrader)int.Parse(Console.ReadLine());
-            switch (Svårighetsgrad)
-            {
-                case EnumVärden.Svårighetsgrader.Custom:
-                    Console.WriteLine($"Välj antal kort som varje spelare ska dra i början av spelet (default 2, max {(int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed})");
-                    AntalKortAttBörjaMed = int.Parse(Console.ReadLine());
-                    if (AntalKortAttBörjaMed > (int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed)
-                    {
-                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed}");
-                        AntalKortAttBörjaMed = (int)EnumVärden.SettingsMaxvärden.MaxLimit_AntalKortAttBörjaMed;
-                    }
-
-                    Console.WriteLine($"Välj maxvärdet på korten som dras (default 10, max {(int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde})");
-                    KortMaxVärde = int.Parse(Console.ReadLine());
-                    if (KortMaxVärde > (int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde)
-                    {
-                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde}");
-                        KortMaxVärde = (int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde;
-                    }
-
-                    Console.WriteLine($"Välj det värde då datorn ska sluta dra kort (default 21, max {(int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid})");
-                    DatornSlutarDraKortVid = int.Parse(Console.ReadLine());
-                    if (DatornSlutarDraKortVid > (int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid)
-                    {
-                        Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid}");
-                        DatornSlutarDraKortVid = (int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid;
-                    }
-                    break;
-                case EnumVärden.Svårighetsgrader.Lätt:
-                    AntalKortAttBörjaMed = 2;
-                    DatornSlutarDraKortVid = 18;
-                    KortMaxVärde = 10;
-                    break;
-                case EnumVärden.Svårighetsgrader.Medel:
-                    AntalKortAttBörjaMed = 2;
-                    DatornSlutarDraKortVid = 20;
-                    KortMaxVärde = 10;
-                    break;
-                case EnumVärden.Svårighetsgrader.Svår:
-                    AntalKortAttBörjaMed = 2;
-                    DatornSlutarDraKortVid = 21;
-                    KortMaxVärde = 13;
-                    break;
-                case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
-                    AntalKortAttBörjaMed = 2;
-                    DatornSlutarDraKortVid = 21;
-                    KortMaxVärde = 13;
-                    break;
-                default: break;
-            }
-            Console.WriteLine("Skriv 'j' om du vill att det ska kunna bli oavgjort. Annars skriv 'n', så kommer datorn vinna vid lika resultat.");
-            if (Console.ReadLine() == "j")
-            {
-                MöjligtMedOavgjort = true;
-            }
-            else
-            {
-                MöjligtMedOavgjort = false;
-            }
-            Console.WriteLine("Inställningar sparade!");
-            Console.ReadKey();
-        }
-
-
+        
+        
         public void RunGame()
         {
             Spelare datorn = new Spelare();
@@ -123,11 +31,11 @@ namespace Projekt_21an
                 SqlMetoder.RegistreraNySpelareIDatabasen(spelare);
             }
 
-            Console.WriteLine($"\nNu kommer {AntalKortAttBörjaMed} kort dras per spelare.");
+            Console.WriteLine($"\nNu kommer {Spelinställningar.AntalKortAttBörjaMed} kort dras per spelare.");
             Console.ReadKey();
             spelare.Poäng = 0;
             datorn.Poäng = 0;
-            for (int i = 0; i < AntalKortAttBörjaMed; i++)
+            for (int i = 0; i < Spelinställningar.AntalKortAttBörjaMed; i++)
             {
                 spelare.Poäng += RandomCardTillSpelaren();
                 datorn.Poäng += RandomCardTillDatorn();
@@ -218,7 +126,7 @@ namespace Projekt_21an
         {
             if (duHarFörlorat && datornHarFörlorat)
             {
-                if (MöjligtMedOavgjort)
+                if (Spelinställningar.MöjligtMedOavgjort)
                 {
                     RegistreraVinnaren(EnumVärden.Resultat.BådaÖver21, spelaren, datorn);
                 }
@@ -249,7 +157,7 @@ namespace Projekt_21an
                 RegistreraVinnaren(EnumVärden.Resultat.PoängNärmast21, datorn, spelare);
                 return true;
             }
-            else if (datorn.Poäng < DatornSlutarDraKortVid)
+            else if (datorn.Poäng < Spelinställningar.DatornSlutarDraKortVid)
             {
                 return false;
             }
@@ -260,7 +168,7 @@ namespace Projekt_21an
             }
             else if (datorn.Poäng == spelare.Poäng)
             {
-                if (MöjligtMedOavgjort)
+                if (Spelinställningar.MöjligtMedOavgjort)
                 {
                     RegistreraVinnaren(EnumVärden.Resultat.BådaSammaPoäng, spelare, datorn);
                     return true; 
@@ -278,37 +186,37 @@ namespace Projekt_21an
         {
             Random slumpKort = new Random();
             
-            switch (Svårighetsgrad)
+            switch (Spelinställningar.Svårighetsgrad)
             {
                 case EnumVärden.Svårighetsgrader.Custom:
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.5)
                     {
-                        return slumpKort.Next(KortMinVärde, 3);
+                        return slumpKort.Next(Spelinställningar.KortMinVärde, 3);
                     }
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Medel:
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Svår:
                     if (slumpKort.NextDouble() < 0.15)
                     {
-                        return slumpKort.Next(6, (KortMaxVärde + 1));
+                        return slumpKort.Next(6, (Spelinställningar.KortMaxVärde + 1));
                     }
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = slumpKort.NextDouble();
                     if (procent < 0.1)
                     {
-                        return slumpKort.Next(8, (KortMaxVärde + 1));
+                        return slumpKort.Next(8, (Spelinställningar.KortMaxVärde + 1));
                     }
                     else if (procent < 0.5)
                     {
-                        return slumpKort.Next(6, (KortMaxVärde + 1));
+                        return slumpKort.Next(6, (Spelinställningar.KortMaxVärde + 1));
                     }
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 default:
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
             }
         }
         //svårighetsgrader: Lätt = 50% chans för mina kort att bli 1-2, 10% för datorn att bli över 3. Datorn drar kort till 18. Kortmaxvärde 10.
@@ -319,34 +227,33 @@ namespace Projekt_21an
         {
             Random slumpKort = new Random();
 
-            //Fixa enum
-            switch (Svårighetsgrad)
+            switch (Spelinställningar.Svårighetsgrad)
             {
                 case EnumVärden.Svårighetsgrader.Custom:
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.1)
                     {
-                        return slumpKort.Next(4, (KortMaxVärde + 1));
+                        return slumpKort.Next(4, (Spelinställningar.KortMaxVärde + 1));
                     }
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Medel:
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Svår:
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = slumpKort.NextDouble();
                     if (procent < 0.4)
                     {
-                        return slumpKort.Next(KortMinVärde, 3);
+                        return slumpKort.Next(Spelinställningar.KortMinVärde, 3);
                     }
                     else if (procent < 0.7)
                     {
-                        return slumpKort.Next(KortMinVärde, 5);
+                        return slumpKort.Next(Spelinställningar.KortMinVärde, 5);
                     }
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 default:
-                    return slumpKort.Next(KortMinVärde, (KortMaxVärde + 1));
+                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
             }
         }
 
@@ -390,7 +297,7 @@ namespace Projekt_21an
                     SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     break;
                 case EnumVärden.Resultat.BådaSammaPoäng:
-                    if (MöjligtMedOavgjort)
+                    if (Spelinställningar.MöjligtMedOavgjort)
                     {
                         Console.WriteLine("Du och datorn har landat på samma poäng.");
                         Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
@@ -409,9 +316,6 @@ namespace Projekt_21an
             }
             Console.ReadKey();
         }
-
-
-        
     }
 }
 

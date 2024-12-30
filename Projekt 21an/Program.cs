@@ -71,12 +71,11 @@ namespace spel21an
                 Console.Clear();
                 SkrivUtIFärg($"Välkommen till {spelet.SpeletsNamn}!\n", ConsoleColor.Green);
                 Console.WriteLine($"Välj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa vinnarstatistik\r\n3. Spelets regler\r\n4. Inställningar\r\n5. Avsluta programmet");
-                string menyVal = Console.ReadLine();
+                EnumVärden.StartmenyVal menyVal = (EnumVärden.StartmenyVal)int.Parse(Console.ReadLine());
                 Console.WriteLine("");
                 switch (menyVal)
                 {
-                    //fixa const values till enum
-                    case "1":
+                    case EnumVärden.StartmenyVal.Val_spela_spelet:
                         while (true)
                         {
                             spelet.RunGame();
@@ -88,21 +87,21 @@ namespace spel21an
                         }
                         break;
 
-                    case "2":
+                    case EnumVärden.StartmenyVal.Val_visa_vinnarstatistik:
                         SqlMetoder.DisplayaVinststatistik();
                         Console.ReadKey();
                         break;
 
-                    case "3":
+                    case EnumVärden.StartmenyVal.Val_spelets_regler:
                         Console.WriteLine(spelet.Regler);
                         Console.ReadKey();
                         break;
 
-                    case "4":
-                        spelet.Spelinställningar();
+                    case EnumVärden.StartmenyVal.Val_inställningar:
+                        Spelinställningar.Inställningar();
                         break;
 
-                    case "5":
+                    case EnumVärden.StartmenyVal.Val_avsluta_programmet:
                         SkrivUtIFärg("Tack för att du spelade!", ConsoleColor.Green);
                         Console.ReadKey();
                         programRunning = false;

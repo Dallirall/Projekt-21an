@@ -41,24 +41,6 @@ namespace Projekt_21an
             }
         }
 
-        //public static void TestaLite()
-        //{
-
-
-        //    using (SqlConnection connection = new SqlConnection(ConnectionString))
-        //    {
-                
-        //        string selectQuery = "SELECT * FROM vinststatistik";
-        //        IEnumerable<Spelare> result = connection.Query<Spelare>(selectQuery);
-        //        Console.WriteLine("Namn\t\tVinster\tFörluster\tOavgjort\n");
-        //        foreach (Spelare spelare in result)
-        //        {
-        //            Console.WriteLine($"{spelare.Namn}\t\t{spelare.Vinster}\t{spelare.Förluster}\t\t{spelare.Oavgjort}\n");
-        //        }
-        //        Console.ReadKey();
-        //    }
-        //}
-
         public static void RegistreraNySpelareIDatabasen(Spelare nySpelare)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))

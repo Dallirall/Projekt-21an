@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace Projekt_21an
 {
-    interface IGame
+    internal interface IGameSettings
     {
-        string SpeletsNamn { get; }
-        string Regler { get; }
-
-        //void Spelinställningar();
-
-        void RunGame();
+        void Spelinställningar();
     }
 }

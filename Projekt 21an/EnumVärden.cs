@@ -10,7 +10,7 @@ namespace Projekt_21an
     {
         public enum Svårighetsgrader
         {
-            Custom = 0,
+            Custom,
             Lätt,
             Medel,
             Svår,
@@ -24,13 +24,21 @@ namespace Projekt_21an
             MaxLimit_DatornSlutarDraKortVid = 21
         }
 
+        public enum StartmenyVal
+        {
+            Val_spela_spelet = 1,
+            Val_visa_vinnarstatistik,
+            Val_spelets_regler,
+            Val_inställningar,
+            Val_avsluta_programmet
+        }
+
         public enum Resultat
         {
             PoängÖverskridit21,
             PoängNärmast21,
             BådaÖver21,
             BådaSammaPoäng
-            //SammaPoängOavgjortDisabled
         }
     }
 }
