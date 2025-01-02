@@ -24,12 +24,10 @@ namespace Projekt_21an
             {
                 
                 string selectQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'vinststatistik'";
-                //var columnTitlar = connection.Query<dynamic>(selectQuery).FirstOrDefault();
                                 
                 string[] kolumner = connection.Query<string>(selectQuery).ToArray();
-                Console.WriteLine(kolumner[0].Substring(0, 1).ToUpper());
+                Console.WriteLine(StringManipulationMethods.CapitalizeFirstLetter(kolumner[0]));
                 Console.WriteLine(kolumner[1]);
-                //.ToPascalCase()??
 
                 selectQuery = "SELECT * FROM vinststatistik";
                 List<Spelare> spelareLista = connection.Query<Spelare>(selectQuery).ToList();
@@ -38,15 +36,14 @@ namespace Projekt_21an
                 {
                     Console.WriteLine("\nVinststatistik\n\n");
 
-                    //Console.WriteLine(columnTitlar.columnNamn);
-                    //foreach (var titel in columnTitlar)
-                    //{
-                    //    Program.SkrivUtIFärg($"{titel.Namn}\t\t", ConsoleColor.DarkBlue);
-                    //}
-                    //Program.SkrivUtIFärg($"Namn\t\tVinster\t\tFörluster\tOavgjort\n\n", ConsoleColor.DarkBlue);
+                    foreach (string kolumn in kolumner)
+                    {
+                        Program.SkrivUtIFärg($"{StringManipulationMethods.CapitalizeFirstLetter(kolumn)}\t\t", ConsoleColor.DarkBlue);
+                    }
+                    Console.WriteLine("");
                     foreach (Spelare spelare in spelareLista)
                     {
-                        Console.WriteLine($"{spelare.Namn}\t\t{spelare.Vinster}\t\t{spelare.Förluster}\t\t{spelare.Oavgjort}\n");
+                        Console.WriteLine($"{spelare.Namn}\t\t{spelare.Vinster}\t\t{spelare.Förluster}\t\t\t{spelare.Oavgjort}\n");
                     }
                 }
                 else
