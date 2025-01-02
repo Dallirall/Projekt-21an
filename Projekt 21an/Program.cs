@@ -69,7 +69,7 @@ namespace spel21an
             while (programRunning)
             {
                 Console.Clear();
-                SkrivUtIFärg($"Välkommen till {spelet.SpeletsNamn}!\n", ConsoleColor.Green);
+                StringManipulationMethods.SkrivUtIFärg($"Välkommen till {spelet.SpeletsNamn}!\n", ConsoleColor.Green);
                 Console.WriteLine($"Välj ett alternativ\r\n1. Spela {spelet.SpeletsNamn}\r\n2. Visa vinnarstatistik\r\n3. Spelets regler\r\n4. Inställningar\r\n5. Avsluta programmet");
                 EnumVärden.StartmenyVal menyVal = (EnumVärden.StartmenyVal)int.Parse(Console.ReadLine());
                 Console.WriteLine("");
@@ -102,7 +102,7 @@ namespace spel21an
                         break;
 
                     case EnumVärden.StartmenyVal.Val_avsluta_programmet:
-                        SkrivUtIFärg("Tack för att du spelade!", ConsoleColor.Green);
+                        StringManipulationMethods.SkrivUtIFärg("Tack för att du spelade!", ConsoleColor.Green);
                         Console.ReadKey();
                         programRunning = false;
                         break;
@@ -115,12 +115,7 @@ namespace spel21an
 
 
         }
-        public static void SkrivUtIFärg(string textAttSkrivaUt, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.Write(textAttSkrivaUt);
-            Console.ForegroundColor = ConsoleColor.Black;
-        }
+        
 
         
 

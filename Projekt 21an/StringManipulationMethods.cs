@@ -19,5 +19,12 @@ namespace Projekt_21an
             return char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
 
+        public static void SkrivUtIFärg(string textAttSkrivaUt, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.Write(textAttSkrivaUt);
+            Console.ForegroundColor = ConsoleColor.Black;
+        }
+
     }
 }

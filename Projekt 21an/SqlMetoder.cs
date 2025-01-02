@@ -38,7 +38,7 @@ namespace Projekt_21an
 
                     foreach (string kolumn in kolumner)
                     {
-                        Program.SkrivUtIFärg($"{StringManipulationMethods.CapitalizeFirstLetter(kolumn)}\t\t", ConsoleColor.DarkBlue);
+                        StringManipulationMethods.SkrivUtIFärg($"{StringManipulationMethods.CapitalizeFirstLetter(kolumn)}\t\t", ConsoleColor.DarkBlue);
                     }
                     Console.WriteLine("");
                     foreach (Spelare spelare in spelareLista)

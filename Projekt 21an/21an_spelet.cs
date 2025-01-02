@@ -51,9 +51,9 @@ namespace Projekt_21an
             while (!avgjort)
             {
                 Console.Write($"Din poäng: ");
-                Program.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
+                StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
-                Program.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
+                StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 duHarFörlorat = ärPoängenÖver21(spelare.Poäng);
                 datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
                 avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
@@ -70,10 +70,10 @@ namespace Projekt_21an
                         nyttKort = RandomCardTillSpelaren();
                         spelare.Poäng += nyttKort;
                         Console.Write("Ditt nya kort är värt ");
-                        Program.SkrivUtIFärg($"{nyttKort}", ConsoleColor.DarkCyan);
+                        StringManipulationMethods.SkrivUtIFärg($"{nyttKort}", ConsoleColor.DarkCyan);
                         Console.Write(" poäng\n");
                         Console.Write($"Din totalpoäng är ");
-                        Program.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
+                        StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                     }
                     else
                     {
@@ -106,11 +106,11 @@ namespace Projekt_21an
                 nyttKort = RandomCardTillDatorn();
                 datorn.Poäng += nyttKort;
                 Console.Write($"\n\nDatorn drog ett kort värt ");
-                Program.SkrivUtIFärg($"{nyttKort}\n", ConsoleColor.DarkCyan);
+                StringManipulationMethods.SkrivUtIFärg($"{nyttKort}\n", ConsoleColor.DarkCyan);
                 Console.Write($"Din poäng: ");
-                Program.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
+                StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
-                Program.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
+                StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 Console.ReadKey();
                 datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
                 avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
@@ -270,13 +270,13 @@ namespace Projekt_21an
                     if (förlorare.Namn == "Datorn")
                     {
                         Console.WriteLine("Datorns poäng har överskridit 21.");
-                        Program.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
                         SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     }
                     else
                     {
                         Console.WriteLine("Din poäng har överskridit 21.");
-                        Program.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
+                        StringManipulationMethods.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
                         SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     }
                     break;
@@ -284,19 +284,19 @@ namespace Projekt_21an
                     if (vinnare.Namn == "Datorn")
                     {
                         Console.WriteLine("Datorns poäng är närmast 21. ");
-                        Program.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
+                        StringManipulationMethods.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
                         SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     }
                     else
                     {
                         Console.WriteLine("Din poäng är närmast 21. ");
-                        Program.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
                         SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     }
                     break;
                 case EnumVärden.Resultat.BådaÖver21:
                     Console.WriteLine("Både din och datorns poäng har överskridit 21.");
-                    Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
+                    StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
                     oavgjort = true;
                     SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     break;
@@ -304,14 +304,14 @@ namespace Projekt_21an
                     if (Spelinställningar.MöjligtMedOavgjort)
                     {
                         Console.WriteLine("Du och datorn har landat på samma poäng.");
-                        Program.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
+                        StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
                         oavgjort = true;
                         SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     }
                     else
                     {
                         Console.WriteLine("Samma poäng. Då vinner ");
-                        Program.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
+                        StringManipulationMethods.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
                         SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
                     }
                     break;
