@@ -87,7 +87,6 @@ namespace Projekt_21an
             
         }
 
-        //ToDo: Se om jag kan öva LINQ här.
         public static bool ExistsInDatabaseCheck(string spelarnamn)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -95,14 +94,7 @@ namespace Projekt_21an
                 string selectQuery = "SELECT Namn FROM vinststatistik";
 
                 List<string> spelareNamn = connection.Query<string>(selectQuery).ToList();
-                if (spelareNamn.Contains(spelarnamn))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return spelareNamn.Any(namn => namn == spelarnamn);
             }
             
             
