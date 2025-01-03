@@ -20,21 +20,29 @@ namespace CardGames
             }
             set
             {
-                for (int i = 0; i < Enum.GetValues(typeof(CardSuits)).Length; i++)
+                deck = new List<Card>();
+                foreach (CardSuits suit in Enum.GetValues(typeof(CardSuits)))
                 {
-                    CardSuits suit = (CardSuits)i;
-
-                    for (int j = 0; j < Enum.GetValues(typeof(CardValueName)).Length; j++)
+                    foreach (CardValueName cardValueName in Enum.GetValues(typeof(CardValueName)))
                     {
-                        string cardValueName = Enum.GetName(typeof(CardValueName), (j + 1));
-                        Deck.Add(Card((j + 1), suit, $"{cardValueName} of {suit}"));
+                        int cardValue = (int)cardValueName;
+                        deck.Add(new Card(cardValue, suit, $"{cardValueName} of {suit}"));
                     }
                 }
             }
         }
 
+        public Card DrawACard()
+        {
+            Random rnd = new Random();
+            return Deck[rnd.Next(0, (Deck.Count + 1))];
+        }
 
-
+        public void DisplayDrawnCardValues()
+        {
+            Card card = DrawACard();
+            Console.WriteLine($"Your card is {card.CardName}. ");
+        }
 
         public struct Card
         {

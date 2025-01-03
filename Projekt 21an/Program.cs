@@ -5,6 +5,7 @@ using Projekt_21an;
 using static Projekt_21an._21an_spelet;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using CardGames;
 
 namespace spel21an
 {
@@ -57,7 +58,10 @@ namespace spel21an
 
             //SqlMetoder.TestaLite();
 
+            CardDeck cardDeck = new CardDeck();
+            cardDeck.DisplayDrawnCardValues();
 
+            Console.ReadKey();
 
 
             Console.BackgroundColor = ConsoleColor.White;

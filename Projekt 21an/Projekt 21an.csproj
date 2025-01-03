@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.0-preview3.24332.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CardGames\CardGames.csproj" />
+  </ItemGroup>
+
 </Project>
