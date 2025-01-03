@@ -8,26 +8,20 @@ namespace CardGames
 {
     public class CardDeck
     {
-        //public string[] suit = { "Spades", "Hearts, Diamonds", "Clubs" };
-        //public string[] Suit { get { return suit; } }
 
         public List<Card> deck;
-        public List<Card> Deck 
-        { 
-            get 
+        public List<Card> Deck { get { return deck; } private set { deck = value; } }          
+        
+
+        public CardDeck()
+        {
+            deck = new List<Card>();
+            foreach (CardSuits suit in Enum.GetValues(typeof(CardSuits)))
             {
-                return deck;
-            }
-            set
-            {
-                deck = new List<Card>();
-                foreach (CardSuits suit in Enum.GetValues(typeof(CardSuits)))
+                foreach (CardValueName cardValueName in Enum.GetValues(typeof(CardValueName)))
                 {
-                    foreach (CardValueName cardValueName in Enum.GetValues(typeof(CardValueName)))
-                    {
-                        int cardValue = (int)cardValueName;
-                        deck.Add(new Card(cardValue, suit, $"{cardValueName} of {suit}"));
-                    }
+                    int cardValue = (int)cardValueName;
+                    deck.Add(new Card(cardValue, suit, $"{cardValueName} of {suit}"));
                 }
             }
         }
