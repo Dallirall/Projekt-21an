@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace Projekt_21an
 {
-    public class _21an_spelet : IGame
+    public class _21an_spelet : IKonsolKortspel
     {
         private string speletsNamn = "21an";
         public string SpeletsNamn { get { return speletsNamn; } }

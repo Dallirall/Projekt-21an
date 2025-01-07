@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Projekt_21an
 {
-    interface IGame
+    interface IKonsolKortspel
     {
         string SpeletsNamn { get; }
         string Regler { get; }
 
-        //void Spelinställningar();
+
 
         void RunGame();
     }

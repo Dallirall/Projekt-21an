@@ -25,6 +25,6 @@ namespace Projekt_21an
             Console.Write(textAttSkrivaUt);
             Console.ForegroundColor = ConsoleColor.Black;
         }
-
+                
     }
 }

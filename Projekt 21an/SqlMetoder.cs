@@ -82,9 +82,7 @@ namespace Projekt_21an
                     updateQuery = $"UPDATE vinststatistik SET Förluster = Förluster + 1 WHERE Namn = @Namn";
                     connection.Execute(updateQuery, new {Namn = $"{förlorare.Namn}"});
                 }
-            }
-
-            
+            }            
         }
 
         public static bool ExistsInDatabaseCheck(string spelarnamn)
@@ -95,11 +93,7 @@ namespace Projekt_21an
 
                 List<string> spelareNamn = connection.Query<string>(selectQuery).ToList();
                 return spelareNamn.Any(namn => namn == spelarnamn);
-            }
-            
-            
-        }
-
-        
+            }                  
+        }        
     }
 }

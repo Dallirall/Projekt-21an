@@ -9,19 +9,19 @@ namespace CardGames
     public class CardDeck
     {
 
-        public List<Card> deck;
-        public List<Card> Deck { get { return deck; } private set { deck = value; } }          
+        private List<Card> _deck;
+        public List<Card> Deck { get { return _deck; } private set { _deck = value; } }          
         
 
         public CardDeck()
         {
-            deck = new List<Card>();
+            Deck = new List<Card>();
             foreach (CardSuits suit in Enum.GetValues(typeof(CardSuits)))
             {
                 foreach (CardValueName cardValueName in Enum.GetValues(typeof(CardValueName)))
                 {
                     int cardValue = (int)cardValueName;
-                    deck.Add(new Card(cardValue, suit, $"{cardValueName} of {suit}"));
+                    Deck.Add(new Card(cardValue, suit, $"{cardValueName} of {suit}"));
                 }
             }
         }
