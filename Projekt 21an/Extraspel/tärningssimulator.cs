@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Projekt_21an
+namespace Projekt_21an.Extraspel
 {
     public static class Tärningssimulator
     {
@@ -18,12 +18,12 @@ namespace Projekt_21an
             Console.WriteLine("Kastar... ");
             for (int i = 0; i < valtAntalTärningar; i++)
             {
-                Console.WriteLine($"Tärning {(i + 1)}: {slumpgenerator.Next(1, (valtAntalTärningssidor + 1))}");
+                Console.WriteLine($"Tärning {i + 1}: {slumpgenerator.Next(1, valtAntalTärningssidor + 1)}");
             }
 
 
             Console.ReadKey();
-            
+
 
         }
     }
