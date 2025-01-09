@@ -10,72 +10,40 @@ namespace CardGames
     {
 
         private List<Card> _deck;
-        public List<Card> Deck { get { return _deck; } private set { _deck = value; } }          
+        public virtual List<Card> Deck { get { return _deck; } private set { _deck = value; } }          
         
 
         public CardDeck()
         {
+            InitializeDeck();
+        }
+
+        public virtual void InitializeDeck()
+        {
             Deck = new List<Card>();
-            foreach (CardSuits suit in Enum.GetValues(typeof(CardSuits)))
+
+            foreach (CardConstants.CardSuits suit in Enum.GetValues(typeof(CardConstants.CardSuits)))
             {
-                foreach (CardValueName cardValueName in Enum.GetValues(typeof(CardValueName)))
+                foreach (CardConstants.CardValueName cardValueName in Enum.GetValues(typeof(CardConstants.CardValueName)))
                 {
                     int cardValue = (int)cardValueName;
-                    Deck.Add(new Card(cardValue, suit, $"{cardValueName} of {suit}"));
+                    Deck.Add(new Card(cardValue, suit.ToString(), $"{cardValueName} of {suit}"));
                 }
             }
         }
 
-        public Card DrawACard()
+        public virtual Card DrawACardFromDeck()
         {
             Random rnd = new Random();
             return Deck[rnd.Next(0, (Deck.Count + 1))];
         }
 
-        public void DisplayDrawnCardValues()
+        public virtual void DisplayDrawnCardValues()
         {
-            Card card = DrawACard();
+            Card card = DrawACardFromDeck();
             Console.WriteLine($"Your card is {card.CardName}. ");
         }
-
-        public struct Card
-        {
-            public int CardValue;
-            public CardSuits Suit;
-            public string CardName;
-
-            public Card(int cardValue, CardSuits suit, string cardName)
-            {
-                CardValue = cardValue;
-                Suit = suit;
-                CardName = cardName;
-            }
-        }
-        
-        public enum CardSuits
-        {
-            Spades,
-            Hearts,
-            Diamonds,
-            Clubs
-        }
-        
-        public enum CardValueName
-        {
-            Ace = 1,
-            Two,
-            Three,
-            Four,
-            Five,
-            Six,
-            Seven,
-            Eight,
-            Nine,
-            Ten,
-            Jack,
-            Queen,
-            King
-        }
+       
     }
 }
 
