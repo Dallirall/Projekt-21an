@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_21an
 {
-    interface IKonsolKortspel
+    public interface IKonsolKortspel
     {
         string SpeletsNamn { get; }
         string Regler { get; }
