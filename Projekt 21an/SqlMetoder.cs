@@ -24,11 +24,8 @@ namespace Projekt_21an
             {
                 
                 string selectQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'vinststatistik'";
-                                
                 string[] kolumner = connection.Query<string>(selectQuery).ToArray();
-                Console.WriteLine(StringManipulationMethods.CapitalizeFirstLetter(kolumner[0]));
-                Console.WriteLine(kolumner[1]);
-
+                
                 selectQuery = "SELECT * FROM vinststatistik";
                 List<Spelare> spelareLista = connection.Query<Spelare>(selectQuery).ToList();
                 

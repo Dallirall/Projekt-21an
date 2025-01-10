@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CardGames;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -95,6 +96,11 @@ namespace Projekt_21an
             }
             Console.WriteLine("Inställningar sparade!");
             Console.ReadKey();
+        }
+
+        public void SorteraKortlekEfterSvårighetsgrad(EnumVärden.Svårighetsgrader svårighetsgrad, List<Card> nuvarandeKortlek)
+        {
+
         }
     }
 }

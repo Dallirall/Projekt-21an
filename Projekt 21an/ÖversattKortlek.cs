@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using CardGames;
 
-namespace Projekt_21an.ÖversättningAvKortlek
+namespace Projekt_21an
 {
-    public class ÖversättningAvKortlek : CardDeck
+    public class ÖversattKortlek : CardDeck
     {
         private List<Card> _kortlek;
-        public List<Card> Kortlek { get { return _kortlek; } private set { _kortlek = value; } }
+        public List<Card> Kortlek { get { return _kortlek; } set { _kortlek = value; } }
 
         //public IDictionary<CardSuits, Kortsviter> SvitÖversättningDict { get; set; }
 
@@ -30,7 +30,7 @@ namespace Projekt_21an.ÖversättningAvKortlek
         //    }
         //}
 
-        public ÖversättningAvKortlek()
+        public ÖversattKortlek()
         {
             InitializeDeck();
 
@@ -90,7 +90,7 @@ namespace Projekt_21an.ÖversättningAvKortlek
         public override Card DrawACardFromDeck()
         {
             Random rnd = new Random();
-            return Kortlek[rnd.Next(0, (Kortlek.Count + 1))];
+            return Kortlek[rnd.Next(0, Kortlek.Count + 1)];
         }
 
         public override void DisplayDrawnCardValues()

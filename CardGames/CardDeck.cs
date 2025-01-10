@@ -10,7 +10,7 @@ namespace CardGames
     {
 
         private List<Card> _deck;
-        public virtual List<Card> Deck { get { return _deck; } private set { _deck = value; } }          
+        public virtual List<Card> Deck { get { return _deck; } set { _deck = value; } }          
         
 
         public CardDeck()
@@ -42,6 +42,15 @@ namespace CardGames
         {
             Card card = DrawACardFromDeck();
             Console.WriteLine($"Your card is {card.CardName}. ");
+        }
+
+        public virtual List<Card> SortAwayUnwantedCards(List<Card> deck, string[] unwantedSuits, int[] unwantedValues)
+        {
+            List<Card> sortedDeck = new List<Card>();
+
+            sortedDeck = deck.Where(card => (!unwantedSuits.Contains(card.Suit) && (!unwantedValues.Contains(card.CardValue)))).ToList();
+
+            return sortedDeck;
         }
        
     }

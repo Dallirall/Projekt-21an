@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CardGames\CardGames.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ÖversattKortlek\" />
+  </ItemGroup>
+
 </Project>

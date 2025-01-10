@@ -14,10 +14,11 @@ namespace Projekt_21an
         public int Förluster { get; set; }
         public int Oavgjort { get; set; }
         public int Poäng { get; set; }
-        //public Spelare(string namn)
-        //{
-        //    Namn = namn;
-        //}
         
+        public Spelare(string namn)
+        {
+            Namn = namn;
+        }
+
     }
 }

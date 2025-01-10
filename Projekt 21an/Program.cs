@@ -6,64 +6,22 @@ using static Projekt_21an._21an_spelet;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using CardGames;
-using Projekt_21an.ÖversättningAvKortlek;
+
 
 namespace spel21an
 {
     public class Program
     {
         static void Main(string[] args)
-        {
-            //try
-            //{
-            //    SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-            //    builder.DataSource = "DESKTOP-US1L7JK.database.windows.net";
-            //    //builder.UserID = "sa";
-            //    //builder.Password = "plokij";
-            //    builder.InitialCatalog = "_21anDB";
-            //    builder.TrustServerCertificate = true;
+        {            
+            //CardDeck cardDeck = new CardDeck();
+            //cardDeck.DisplayDrawnCardValues();
 
-            //    using (SqlConnection connection = new SqlConnection())
-            //    {
-            //        Console.WriteLine("\nQuery data example:");
-            //        Console.WriteLine("=========================================\n");
-
-            //        String sql = "SELECT namn FROM vinststatistik";
-
-            //        using (SqlCommand command = new SqlCommand(sql, connection))
-            //        {
-            //            connection.Open();
-            //            using (SqlDataReader reader = command.ExecuteReader())
-            //            {
-            //                while (reader.Read())
-            //                {
-            //                    Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-            //catch (SqlException e)
-            //{
-            //    Console.WriteLine(e.ToString());
-            //}
-
-            //string result = (SqlMetoder.ExistsInDatabaseCheck("Datorn")) ? "Datorn finns i databasen" : "Finns ej"; 
-            //Console.WriteLine(result);
-            //Console.ReadKey();
-
-            //Spelare datorn = new Spelare("Datorn");
-            //Spelare test = new Spelare("Test");
-            //SqlMetoder.ExistsInDatabaseCheck(test.Namn);
-            //SqlMetoder.DisplayaVinststatistik();
-
-            //SqlMetoder.TestaLite();
-
-            CardDeck cardDeck = new CardDeck();
-            cardDeck.DisplayDrawnCardValues();
-
-            var kortlek = new ÖversättningAvKortlek();
-            kortlek.DisplayDrawnCardValues();
+            //var kortlek = new ÖversattKortlek();
+            //kortlek.DisplayDrawnCardValues();
+            //CardDeck sortedDeck = new();
+            //sortedDeck.Deck = cardDeck.SortAwayUnwantedCards(cardDeck.Deck, new string[] { CardGames.CardConstants.CardSuits.Spades.ToString(), CardGames.CardConstants.CardSuits.Clubs.ToString() }, new int[] { 11, 12, 13 });
+            //sortedDeck.DisplayDrawnCardValues();
 
             Console.ReadKey();
 
