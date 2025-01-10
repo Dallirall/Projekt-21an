@@ -9,8 +9,8 @@ namespace Projekt_21an.ÖversättningAvKortlek
 {
     public class ÖversättningAvKortlek : CardDeck
     {
-        private List<Card> _deck;
-        public virtual List<Card> Deck { get { return _deck; } private set { _deck = value; } }
+        private List<Card> _kortlek;
+        public List<Card> Kortlek { get { return _kortlek; } private set { _kortlek = value; } }
 
         //public IDictionary<CardSuits, Kortsviter> SvitÖversättningDict { get; set; }
 
@@ -62,14 +62,14 @@ namespace Projekt_21an.ÖversättningAvKortlek
 
         public override void InitializeDeck()
         {
-            Deck = new List<Card>();
+            Kortlek = new List<Card>();
 
             foreach (Kortsviter svit in Enum.GetValues(typeof(Kortsviter)))
             {
                 foreach (Kortvalörer kortValör in Enum.GetValues(typeof(Kortvalörer)))
                 {
                     int valör = (int)kortValör;
-                    Deck.Add(new Card(valör, svit.ToString(), $"{svit} {kortValör}"));
+                    Kortlek.Add(new Card(valör, svit.ToString(), $"{svit} {kortValör}"));
                 }
             }
         }
@@ -87,6 +87,17 @@ namespace Projekt_21an.ÖversättningAvKortlek
         //    return
         //}
 
+        public override Card DrawACardFromDeck()
+        {
+            Random rnd = new Random();
+            return Kortlek[rnd.Next(0, (Kortlek.Count + 1))];
+        }
+
+        public override void DisplayDrawnCardValues()
+        {
+            Card card = DrawACardFromDeck();
+            Console.WriteLine($"Ditt kort är {card.CardName}. ");
+        }
 
         public enum Kortsviter
         {

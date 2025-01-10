@@ -6,6 +6,7 @@ using static Projekt_21an._21an_spelet;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using CardGames;
+using Projekt_21an.ÖversättningAvKortlek;
 
 namespace spel21an
 {
@@ -60,6 +61,9 @@ namespace spel21an
 
             CardDeck cardDeck = new CardDeck();
             cardDeck.DisplayDrawnCardValues();
+
+            var kortlek = new ÖversättningAvKortlek();
+            kortlek.DisplayDrawnCardValues();
 
             Console.ReadKey();
 
