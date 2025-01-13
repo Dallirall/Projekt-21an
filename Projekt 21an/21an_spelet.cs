@@ -24,8 +24,7 @@ namespace Projekt_21an
 
         public _21an_spelet()
         {
-            Kortspel = new ÖversattKortlek();
-            
+            Kortspel = new ÖversattKortlek();            
         }
 
         public void RunGame()
@@ -53,8 +52,16 @@ namespace Projekt_21an
             for (int i = 0; i < Spelinställningar.AntalKortAttBörjaMed; i++)
             {
                 spelare.Poäng += RandomCardTillSpelaren();
+                Console.Write($"Din poäng: ");
+                StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
+                Console.ReadKey();
+
                 datorn.Poäng += RandomCardTillDatorn();
+                Console.Write($"Datorns poäng: ");
+                StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
+                Console.ReadKey();
             }
+
             int nyttKort = 0;
             bool avgjort = false;
             bool duHarFörlorat = false;
@@ -204,16 +211,25 @@ namespace Projekt_21an
         {
             Random slumpKort = new Random();
             
+            
+            //
+            //cw du har dragit Card.Name
+            //return Card.Value
             switch (Spelinställningar.Svårighetsgrad)
             {
                 case EnumVärden.Svårighetsgrader.Custom:
-                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+
+                    Card dragetKort = Kortspel.DrawACardFromDeck();
+                    Console.WriteLine($"Du drog {dragetKort.CardName}. ");
+                    return dragetKort.CardValue;
+
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.5)
                     {
                         return slumpKort.Next(Spelinställningar.KortMinVärde, 3);
                     }
                     return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+
                 case EnumVärden.Svårighetsgrader.Medel:
                     return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Svår:
@@ -222,6 +238,7 @@ namespace Projekt_21an
                         return slumpKort.Next(6, (Spelinställningar.KortMaxVärde + 1));
                     }
                     return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = slumpKort.NextDouble();
                     if (procent < 0.1)
@@ -248,7 +265,10 @@ namespace Projekt_21an
             switch (Spelinställningar.Svårighetsgrad)
             {
                 case EnumVärden.Svårighetsgrader.Custom:
-                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+                    Card dragetKort = Kortspel.DrawACardFromDeck();
+                    Console.WriteLine($"Datorn drog {dragetKort.CardName}. ");
+                    return dragetKort.CardValue;
+
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.1)
                     {

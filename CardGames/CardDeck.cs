@@ -52,7 +52,17 @@ namespace CardGames
 
             return sortedDeck;
         }
-       
+
+        public virtual Card DrawCardOfSpecificValue(int cardValue)
+        {
+            //Debugga här
+            List<Card> cardsOfSpecValue = new List<Card>();
+            cardsOfSpecValue = Deck.Where(card => card.CardValue == cardValue).ToList();
+            Random rnd = new Random();
+            return cardsOfSpecValue[rnd.Next(0, (cardsOfSpecValue.Count + 1))];
+        }
+
+
     }
 }
 

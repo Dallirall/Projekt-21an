@@ -99,6 +99,8 @@ namespace Projekt_21an
             Console.WriteLine($"Ditt kort är {card.CardName}. ");
         }
 
+
+
         public enum Kortsviter
         {
             Spader,
