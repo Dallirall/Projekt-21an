@@ -23,7 +23,7 @@ namespace spel21an
             //sortedDeck.Deck = cardDeck.SortAwayUnwantedCards(cardDeck.Deck, new string[] { CardGames.CardConstants.CardSuits.Spades.ToString(), CardGames.CardConstants.CardSuits.Clubs.ToString() }, new int[] { 11, 12, 13 });
             //sortedDeck.DisplayDrawnCardValues();
 
-            Console.ReadKey();
+            //Console.ReadKey();
 
 
             Console.BackgroundColor = ConsoleColor.White;
@@ -64,7 +64,7 @@ namespace spel21an
                         break;
 
                     case EnumVärden.StartmenyVal.Val_inställningar:
-                        Spelinställningar.Inställningar();
+                        Spelinställningar.Inställningar(spelet);
                         break;
 
                     case EnumVärden.StartmenyVal.Val_avsluta_programmet:

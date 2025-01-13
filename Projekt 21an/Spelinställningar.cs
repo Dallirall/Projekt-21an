@@ -31,7 +31,7 @@ namespace Projekt_21an
         public static int DatornSlutarDraKortVid { get { return datornSlutarDraKortVid; } set { datornSlutarDraKortVid = value; } }
 
 
-        public static void Inställningar()
+        public static void Inställningar(IKonsolKortspel spelet)
         {
             Console.WriteLine("Skriv siffra för att välja svårighetsgrad: \r\n1. Lätt \r\n2. Medel \r\n3. Svår \r\n4. Mer eller mindre omöjlig \r\nVill du inte ha en förinställd nivå utan justera inställningar själv, skriv '0'. ");
 
@@ -54,6 +54,10 @@ namespace Projekt_21an
                         Console.WriteLine($"Input överskred maxvärdet. Ställs in till {(int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde}");
                         KortMaxVärde = (int)EnumVärden.SettingsMaxvärden.MaxLimit_KortMaxVärde;
                     }
+                    int[] kortAttSorteraBort;
+                    kortAttSorteraBort = Enumerable.Range((KortMaxVärde + 1),
+                                        (Enum.GetValues(typeof(ÖversattKortlek.Kortvalörer)).Length - KortMaxVärde)).ToArray();
+                    spelet.Kortspel.Kortlek = spelet.Kortspel.SortAwayUnwantedCards(spelet.Kortspel.Kortlek, new[] { "" }, kortAttSorteraBort);
 
                     Console.WriteLine($"Välj det värde då datorn ska sluta dra kort (default 21, max {(int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid})");
                     DatornSlutarDraKortVid = int.Parse(Console.ReadLine());
@@ -66,12 +70,10 @@ namespace Projekt_21an
                 case EnumVärden.Svårighetsgrader.Lätt:
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 18;
-                    KortMaxVärde = 10;
                     break;
                 case EnumVärden.Svårighetsgrader.Medel:
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 20;
-                    KortMaxVärde = 10;
                     break;
                 case EnumVärden.Svårighetsgrader.Svår:
                     AntalKortAttBörjaMed = 2;
@@ -98,9 +100,22 @@ namespace Projekt_21an
             Console.ReadKey();
         }
 
-        public void SorteraKortlekEfterSvårighetsgrad(EnumVärden.Svårighetsgrader svårighetsgrad, List<Card> nuvarandeKortlek)
-        {
+        //public static List<Card> SorteraKortlekEfterSvårighetsgrad(EnumVärden.Svårighetsgrader svårighetsgrad, ÖversattKortlek nuvarandeKortlek)
+        //{
+        //    List<Card> sorteradKortlek = new List<Card>();
+        //    switch (svårighetsgrad)
+        //    {
+        //        case Svårighetsgrader.Lätt:
+   
+        //        case Svårighetsgrader.Medel:
+        //            sorteradKortlek = nuvarandeKortlek.SortAwayUnwantedCards(nuvarandeKortlek.Kortlek, new[] { "" }, new[] { 11, 12, 13 });
+        //            break;
 
-        }
+        //        default:
+        //            break;
+        //    }
+
+        //    return sorteradKortlek;
+        //}
     }
 }

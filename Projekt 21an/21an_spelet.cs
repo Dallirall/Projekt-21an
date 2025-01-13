@@ -19,18 +19,23 @@ namespace Projekt_21an
         private string regler = $"I 21:an kommer du att spela mot datorn och försöka tvinga datorn att få över 21 poäng. Både du och datorn får poäng genom att dra kort. När spelet börjar dras kort till både dig och datorn. Därefter får du dra hur många kort som du vill tills du är nöjd med din totalpoäng, du vill komma så nära 21 som möjligt utan att få mer än 21 poäng. När du inte vill dra fler kort så kommer datorn att dra kort tills den har mer eller lika många poäng som dig.\n\nDu vinner om datorn får mer än totalt 21 poäng när den håller på att dra kort. Datorn vinner om den har mer poäng än dig när spelet är slut så länge som datorn inte har mer än 21 poäng. Om du får mer än 21 poäng när du drar kort så har du förlorat.\n";
         public string Regler { get { return regler; } }
 
-        public ÖversattKortlek Kortlek { get; set; }
+        public ÖversattKortlek Kortspel { get; set; }
 
 
         public _21an_spelet()
         {
-            Kortlek = new ÖversattKortlek();
-
+            Kortspel = new ÖversattKortlek();
+            
         }
 
         public void RunGame()
         {
-            Spelinställningar.SorteraKortlekEfterSvårighetsgrad();
+            if (Spelinställningar.Svårighetsgrad == EnumVärden.Svårighetsgrader.Lätt || Spelinställningar.Svårighetsgrad == EnumVärden.Svårighetsgrader.Medel)
+            {
+                Kortspel.Kortlek = Kortspel.SortAwayUnwantedCards(Kortspel.Kortlek, new[] { "" }, new[] { 11, 12, 13 });
+            }
+            //Kortspel.Kortlek = Spelinställningar.SorteraKortlekEfterSvårighetsgrad(Spelinställningar.Svårighetsgrad, Kortspel);
+            
             Spelare datorn = new Spelare("Datorn");
             Console.WriteLine("Skriv in ditt spelarnamn: ");
             Spelare spelare = new Spelare(Console.ReadLine());
