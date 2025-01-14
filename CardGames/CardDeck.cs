@@ -10,8 +10,10 @@ namespace CardGames
     {
 
         private List<Card> _deck;
-        public virtual List<Card> Deck { get { return _deck; } set { _deck = value; } }          
-        
+        public virtual List<Card> Deck { get { return _deck; } set { _deck = value; } }
+
+        protected virtual List<Card> DeckForVirtualMethods => Deck;
+
 
         public CardDeck()
         {
@@ -35,7 +37,7 @@ namespace CardGames
         public virtual Card DrawACardFromDeck()
         {
             Random rnd = new Random();
-            return Deck[rnd.Next(0, (Deck.Count + 1))];
+            return DeckForVirtualMethods[rnd.Next(0, (DeckForVirtualMethods.Count + 1))];
         }
 
         public virtual void DisplayDrawnCardValues()
@@ -57,9 +59,9 @@ namespace CardGames
         {
             //Debugga här
             List<Card> cardsOfSpecValue = new List<Card>();
-            cardsOfSpecValue = Deck.Where(card => card.CardValue == cardValue).ToList();
+            cardsOfSpecValue = DeckForVirtualMethods.Where(card => card.CardValue == cardValue).ToList();
             Random rnd = new Random();
-            return cardsOfSpecValue[rnd.Next(0, (cardsOfSpecValue.Count + 1))];
+            return cardsOfSpecValue[rnd.Next(0, cardsOfSpecValue.Count)];
         }
 
 

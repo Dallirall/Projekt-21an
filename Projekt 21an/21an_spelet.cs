@@ -22,10 +22,8 @@ namespace Projekt_21an
         public ÖversattKortlek Kortspel { get; set; }
 
 
-        public _21an_spelet()
-        {
-            Kortspel = new ÖversattKortlek();            
-        }
+        public _21an_spelet() => Kortspel = new ÖversattKortlek();
+
 
         public void RunGame()
         {
