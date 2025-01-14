@@ -14,19 +14,21 @@ namespace spel21an
     {
         static void Main(string[] args)
         {            
-            CardDeck cardDeck = new CardDeck();
-            //cardDeck.DisplayDrawnCardValues();
+            //CardDeck cardDeck = new CardDeck();
+            ////cardDeck.DisplayDrawnCardValues();
 
             //var kortlek = new ÖversattKortlek();
             //kortlek.DisplayDrawnCardValues();
-            //CardDeck sortedDeck = new();
-            //sortedDeck.Deck = cardDeck.SortAwayUnwantedCards(cardDeck.Deck, new string[] { CardGames.CardConstants.CardSuits.Spades.ToString(), CardGames.CardConstants.CardSuits.Clubs.ToString() }, new int[] { 11, 12, 13 });
-            //sortedDeck.DisplayDrawnCardValues();
-            Card card = new(1, "Hearts", "Ace of Hearts");
-            card = cardDeck.DrawCardOfSpecificValue(5);
-            Console.WriteLine(card.CardName);
-            card = cardDeck.DrawCardOfSpecificValue(6);
-            Console.WriteLine(card.CardName);
+            ////CardDeck sortedDeck = new();
+            ////sortedDeck.Deck = cardDeck.SortAwayUnwantedCards(cardDeck.Deck, new string[] { CardGames.CardConstants.CardSuits.Spades.ToString(), CardGames.CardConstants.CardSuits.Clubs.ToString() }, new int[] { 11, 12, 13 });
+            ////sortedDeck.DisplayDrawnCardValues();
+
+            //Card card = new(1, "Hearts", "Ace of Hearts");
+
+            //card = kortlek.DrawCardOfSpecificValues(new[] { 1, 2, 3 });
+            //Console.WriteLine(card.CardName);
+           
+
 
             Console.ReadKey();
 

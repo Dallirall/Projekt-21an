@@ -55,13 +55,17 @@ namespace CardGames
             return sortedDeck;
         }
 
-        public virtual Card DrawCardOfSpecificValue(int cardValue)
+        public virtual Card DrawCardOfSpecificValues(int[] cardValues)
         {
             //Debugga här
-            List<Card> cardsOfSpecValue = new List<Card>();
-            cardsOfSpecValue = DeckForVirtualMethods.Where(card => card.CardValue == cardValue).ToList();
+            List<Card> cardsOfSpecValues = new List<Card>();
+            foreach (int value in cardValues)
+            {
+                cardsOfSpecValues.AddRange(DeckForVirtualMethods.Where(card => card.CardValue == value));
+            }
+            
             Random rnd = new Random();
-            return cardsOfSpecValue[rnd.Next(0, cardsOfSpecValue.Count)];
+            return cardsOfSpecValues[rnd.Next(0, cardsOfSpecValues.Count)];
         }
 
 

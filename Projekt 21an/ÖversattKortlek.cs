@@ -12,6 +12,8 @@ namespace Projekt_21an
         private List<Card> _kortlek;
         public List<Card> Kortlek { get { return _kortlek; } set { _kortlek = value; } }
 
+        protected override List<Card> DeckForVirtualMethods => Kortlek;
+
         //public IDictionary<CardSuits, Kortsviter> SvitÖversättningDict { get; set; }
 
         //public IDictionary<int, Kortvalörer> ValörÖversättningDict { get; set; }
@@ -87,11 +89,11 @@ namespace Projekt_21an
         //    return
         //}
 
-        public override Card DrawACardFromDeck()
-        {
-            Random rnd = new Random();
-            return Kortlek[rnd.Next(0, Kortlek.Count + 1)];
-        }
+        //public override Card DrawACardFromDeck()
+        //{
+        //    Random rnd = new Random();
+        //    return Kortlek[rnd.Next(0, Kortlek.Count + 1)];
+        //}
 
         public override void DisplayDrawnCardValues()
         {

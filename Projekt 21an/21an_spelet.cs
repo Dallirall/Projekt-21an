@@ -224,7 +224,8 @@ namespace Projekt_21an
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (slumpKort.NextDouble() < 0.5)
                     {
-                        return slumpKort.Next(Spelinställningar.KortMinVärde, 3);
+                        //Kortspel.();
+                        //return 
                     }
                     return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
 
