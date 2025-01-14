@@ -207,39 +207,40 @@ namespace Projekt_21an
 
         public int RandomCardTillSpelaren()
         {
-            Random slumpKort = new Random();
-            
-            
-            //
-            //cw du har dragit Card.Name
-            //return Card.Value
+            Random rnd = new Random();
+            Card dragetKort = new();
+
+
             switch (Spelinställningar.Svårighetsgrad)
             {
                 case EnumVärden.Svårighetsgrader.Custom:
 
-                    Card dragetKort = Kortspel.DrawACardFromDeck();
+                    dragetKort = Kortspel.DrawACardFromDeck();
                     Console.WriteLine($"Du drog {dragetKort.CardName}. ");
                     return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Lätt:
-                    if (slumpKort.NextDouble() < 0.5)
+                    if (rnd.NextDouble() < 0.5)
                     {
-                        //Kortspel.();
-                        //return 
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });
+                        Console.WriteLine($"Du drog {dragetKort.CardName}. ");
+                        return dragetKort.CardValue;
                     }
-                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+                    dragetKort = Kortspel.DrawACardFromDeck();
+                    Console.WriteLine($"Du drog {dragetKort.CardName}. ");
+                    return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Medel:
                     return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
                 case EnumVärden.Svårighetsgrader.Svår:
-                    if (slumpKort.NextDouble() < 0.15)
+                    if (rnd.NextDouble() < 0.15)
                     {
                         return slumpKort.Next(6, (Spelinställningar.KortMaxVärde + 1));
                     }
                     return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
 
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
-                    double procent = slumpKort.NextDouble();
+                    double procent = rnd.NextDouble();
                     if (procent < 0.1)
                     {
                         return slumpKort.Next(8, (Spelinställningar.KortMaxVärde + 1));

@@ -18,5 +18,7 @@ namespace CardGames
             Suit = suit;
             CardName = cardName;
         }
+
+        public Card() { }   
     }
 }
