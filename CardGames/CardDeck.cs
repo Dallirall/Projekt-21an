@@ -37,7 +37,7 @@ namespace CardGames
         public virtual Card DrawACardFromDeck()
         {
             Random rnd = new Random();
-            return DeckForVirtualMethods[rnd.Next(0, (DeckForVirtualMethods.Count + 1))];
+            return DeckForVirtualMethods[rnd.Next(0, (DeckForVirtualMethods.Count))];
         }
 
         public virtual void DisplayDrawnCardValues()
