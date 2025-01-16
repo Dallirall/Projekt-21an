@@ -56,8 +56,7 @@ namespace CardGames
         }
 
         public virtual Card DrawCardOfSpecificValues(int[] cardValues)
-        {
-            //Debugga här
+        {            
             List<Card> cardsOfSpecValues = new List<Card>();
             foreach (int value in cardValues)
             {

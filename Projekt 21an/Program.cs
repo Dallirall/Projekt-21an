@@ -7,6 +7,7 @@ using Microsoft.Data.SqlClient;
 using Dapper;
 using CardGames;
 
+//ToDo: Borde jag ha en variable istället för att hardcoda kortvalue leveln för när man drar kort i svår/lätt svårighetsgrad? Och för procentsatserna?
 
 namespace spel21an
 {

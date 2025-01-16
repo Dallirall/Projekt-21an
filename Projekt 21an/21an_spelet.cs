@@ -214,7 +214,6 @@ namespace Projekt_21an
             switch (Spelinställningar.Svårighetsgrad)
             {
                 case EnumVärden.Svårighetsgrader.Custom:
-
                     dragetKort = Kortspel.DrawACardFromDeck();
                     Console.WriteLine($"Du drog {dragetKort.CardName}. ");
                     return dragetKort.CardValue;
@@ -222,36 +221,52 @@ namespace Projekt_21an
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (rnd.NextDouble() < 0.5)
                     {
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });
-                        Console.WriteLine($"Du drog {dragetKort.CardName}. ");
-                        return dragetKort.CardValue;
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });                        
                     }
-                    dragetKort = Kortspel.DrawACardFromDeck();
+                    else
+                    {
+                        dragetKort = Kortspel.DrawACardFromDeck();
+                    }
                     Console.WriteLine($"Du drog {dragetKort.CardName}. ");
                     return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Medel:
-                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+                    dragetKort = Kortspel.DrawACardFromDeck();
+                    Console.WriteLine($"Du drog {dragetKort.CardName}. ");
+                    return dragetKort.CardValue;
+
                 case EnumVärden.Svårighetsgrader.Svår:
                     if (rnd.NextDouble() < 0.15)
                     {
-                        return slumpKort.Next(6, (Spelinställningar.KortMaxVärde + 1));
+                        int[] svåraKort = Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)).ToArray();
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
-                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+                    else
+                    {
+                        dragetKort = Kortspel.DrawACardFromDeck();
+                    }
+                    Console.WriteLine($"Du drog {dragetKort.CardName}. ");
+                    return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     double procent = rnd.NextDouble();
                     if (procent < 0.1)
                     {
-                        return slumpKort.Next(8, (Spelinställningar.KortMaxVärde + 1));
+                        int[] svåraKort = Enumerable.Range(9, (Spelinställningar.KortMaxVärde - 9 + 1)).ToArray();
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
                     else if (procent < 0.5)
                     {
-                        return slumpKort.Next(6, (Spelinställningar.KortMaxVärde + 1));
+                        int[] svåraKort = Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)).ToArray();
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
-                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+                    Console.WriteLine($"Du drog {dragetKort.CardName}. ");
+                    return dragetKort.CardValue;
+
                 default:
-                    return slumpKort.Next(Spelinställningar.KortMinVärde, (Spelinställningar.KortMaxVärde + 1));
+                    dragetKort = Kortspel.DrawACardFromDeck();
+                    Console.WriteLine($"Du drog {dragetKort.CardName}. ");
+                    return dragetKort.CardValue;
             }
         }
         //svårighetsgrader: Lätt = 50% chans för mina kort att bli 1-2, 10% för datorn att bli över 3. Datorn drar kort till 18. Kortmaxvärde 10.
@@ -260,12 +275,13 @@ namespace Projekt_21an
         //Omöjlig = 50% mina kort över 5, 10% över 8, datorn 40% under 3, 70% under 5
         public int RandomCardTillDatorn()
         {
-            Random slumpKort = new Random();
+            Random rnd = new Random();
+            Card dragetKort = new();
 
             switch (Spelinställningar.Svårighetsgrad)
             {
                 case EnumVärden.Svårighetsgrader.Custom:
-                    Card dragetKort = Kortspel.DrawACardFromDeck();
+                    dragetKort = Kortspel.DrawACardFromDeck();
                     Console.WriteLine($"Datorn drog {dragetKort.CardName}. ");
                     return dragetKort.CardValue;
 
