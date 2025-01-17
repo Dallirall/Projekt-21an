@@ -131,6 +131,20 @@ namespace Projekt_21an
             Console.ReadKey();
         }
 
+        public static void PrintaDragetKort(string spelare, Card dragetKort)
+        {
+            if (spelare == "Datorn")
+            {
+                Console.Write($"{spelare} drog ");
+            }
+            else
+            {
+                Console.Write("Du drog ");
+            }
+            StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
+            Console.Write(". ");
+        }
+
         public static int RandomCardTillSpelaren(ÖversattKortlek kortspel)
         {
             Random rnd = new Random();
@@ -139,13 +153,7 @@ namespace Projekt_21an
 
             switch (Spelinställningar.Svårighetsgrad)
             {
-                case EnumVärden.Svårighetsgrader.Custom:
-                    dragetKort = kortspel.DrawACardFromDeck();
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
+                
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (rnd.NextDouble() < 0.5)
                     {
@@ -155,16 +163,14 @@ namespace Projekt_21an
                     {
                         dragetKort = kortspel.DrawACardFromDeck();
                     }
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
+
+                case EnumVärden.Svårighetsgrader.Custom:
 
                 case EnumVärden.Svårighetsgrader.Medel:
                     dragetKort = kortspel.DrawACardFromDeck();
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Svår:
@@ -177,9 +183,7 @@ namespace Projekt_21an
                     {
                         dragetKort = kortspel.DrawACardFromDeck();
                     }
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
@@ -194,16 +198,12 @@ namespace Projekt_21an
                         int[] svåraKort = Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)).ToArray();
                         dragetKort = kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
 
                 default:
                     dragetKort = kortspel.DrawACardFromDeck();
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
             }
         }
@@ -218,12 +218,6 @@ namespace Projekt_21an
 
             switch (Spelinställningar.Svårighetsgrad)
             {
-                case EnumVärden.Svårighetsgrader.Custom:
-                    dragetKort = kortspel.DrawACardFromDeck();
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (rnd.NextDouble() < 0.1)
@@ -235,18 +229,16 @@ namespace Projekt_21an
                     {
                         dragetKort = kortspel.DrawACardFromDeck();
                     }
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
+
+                case EnumVärden.Svårighetsgrader.Custom:
 
                 case EnumVärden.Svårighetsgrader.Medel:
 
                 case EnumVärden.Svårighetsgrader.Svår:
                     dragetKort = kortspel.DrawACardFromDeck();
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
 
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
@@ -263,16 +255,12 @@ namespace Projekt_21an
                     {
                         dragetKort = kortspel.DrawACardFromDeck();
                     }
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
 
                 default:
                     dragetKort = kortspel.DrawACardFromDeck();
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
+                    PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
             }
         }
