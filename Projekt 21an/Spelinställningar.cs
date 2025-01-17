@@ -98,24 +98,6 @@ namespace Projekt_21an
             }
             Console.WriteLine("Inställningar sparade!");
             Console.ReadKey();
-        }
-
-        //public static List<Card> SorteraKortlekEfterSvårighetsgrad(EnumVärden.Svårighetsgrader svårighetsgrad, ÖversattKortlek nuvarandeKortlek)
-        //{
-        //    List<Card> sorteradKortlek = new List<Card>();
-        //    switch (svårighetsgrad)
-        //    {
-        //        case Svårighetsgrader.Lätt:
-   
-        //        case Svårighetsgrader.Medel:
-        //            sorteradKortlek = nuvarandeKortlek.SortAwayUnwantedCards(nuvarandeKortlek.Kortlek, new[] { "" }, new[] { 11, 12, 13 });
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-
-        //    return sorteradKortlek;
-        //}
+        }        
     }
 }

@@ -31,7 +31,6 @@ namespace Projekt_21an
             {
                 Kortspel.Kortlek = Kortspel.SortAwayUnwantedCards(Kortspel.Kortlek, new[] { "" }, new[] { 11, 12, 13 });
             }
-            //Kortspel.Kortlek = Spelinställningar.SorteraKortlekEfterSvårighetsgrad(Spelinställningar.Svårighetsgrad, Kortspel);
             
             Spelare datorn = new Spelare("Datorn");
             Console.WriteLine("Skriv in ditt spelarnamn: ");
@@ -88,9 +87,7 @@ namespace Projekt_21an
                     Console.WriteLine("");
                     if (choice == "j")
                     {                       
-                        spelare.Poäng += _21an_Metoder.RandomCardTillSpelaren(Kortspel);
-                        //Console.Write($"Din totalpoäng är ");
-                        //StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
+                        spelare.Poäng += _21an_Metoder.RandomCardTillSpelaren(Kortspel);                        
                     }
                     else
                     {

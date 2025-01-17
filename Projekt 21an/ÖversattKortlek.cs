@@ -41,7 +41,6 @@ namespace Projekt_21an
         }
 
 
-
         public enum Kortsviter
         {
             Spader,
