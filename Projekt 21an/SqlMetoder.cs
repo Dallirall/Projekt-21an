@@ -31,8 +31,7 @@ namespace Projekt_21an
                 
                 if (spelareLista.Count > 1 )
                 {
-                    Console.WriteLine("\nVinststatistik\n\n");
-
+                    StringManipulationMethods.SkrivUtIFärg("\nVinststatistik\n\n", ConsoleColor.DarkMagenta);
                     foreach (string kolumn in kolumner)
                     {
                         StringManipulationMethods.SkrivUtIFärg($"{StringManipulationMethods.CapitalizeFirstLetter(kolumn)}\t\t", ConsoleColor.DarkBlue);
