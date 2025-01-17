@@ -71,6 +71,66 @@ namespace Projekt_21an
             return false;
         }
 
+        public static void RegistreraVinnaren(EnumVärden.Resultat resultat, Spelare vinnare, Spelare förlorare)
+        {
+            bool oavgjort = false;
+            switch (resultat)
+            {
+                case EnumVärden.Resultat.PoängÖverskridit21:
+                    if (förlorare.Namn == "Datorn")
+                    {
+                        Console.WriteLine("Datorns poäng har överskridit 21.");
+                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Din poäng har överskridit 21.");
+                        StringManipulationMethods.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    break;
+                case EnumVärden.Resultat.PoängNärmast21:
+                    if (vinnare.Namn == "Datorn")
+                    {
+                        Console.WriteLine("Datorns poäng är närmast 21. ");
+                        StringManipulationMethods.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Din poäng är närmast 21. ");
+                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    break;
+                case EnumVärden.Resultat.BådaÖver21:
+                    Console.WriteLine("Både din och datorns poäng har överskridit 21.");
+                    StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
+                    oavgjort = true;
+                    SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    break;
+                case EnumVärden.Resultat.BådaSammaPoäng:
+                    if (Spelinställningar.MöjligtMedOavgjort)
+                    {
+                        Console.WriteLine("Du och datorn har landat på samma poäng.");
+                        StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
+                        oavgjort = true;
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Samma poäng. Då vinner ");
+                        StringManipulationMethods.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
+                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            Console.ReadKey();
+        }
+
         public static int RandomCardTillSpelaren(ÖversattKortlek kortspel)
         {
             Random rnd = new Random();
@@ -217,64 +277,6 @@ namespace Projekt_21an
             }
         }
 
-        public static void RegistreraVinnaren(EnumVärden.Resultat resultat, Spelare vinnare, Spelare förlorare)
-        {
-            bool oavgjort = false;
-            switch (resultat)
-            {
-                case EnumVärden.Resultat.PoängÖverskridit21:
-                    if (förlorare.Namn == "Datorn")
-                    {
-                        Console.WriteLine("Datorns poäng har överskridit 21.");
-                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Din poäng har överskridit 21.");
-                        StringManipulationMethods.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    break;
-                case EnumVärden.Resultat.PoängNärmast21:
-                    if (vinnare.Namn == "Datorn")
-                    {
-                        Console.WriteLine("Datorns poäng är närmast 21. ");
-                        StringManipulationMethods.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Din poäng är närmast 21. ");
-                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    break;
-                case EnumVärden.Resultat.BådaÖver21:
-                    Console.WriteLine("Både din och datorns poäng har överskridit 21.");
-                    StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                    oavgjort = true;
-                    SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    break;
-                case EnumVärden.Resultat.BådaSammaPoäng:
-                    if (Spelinställningar.MöjligtMedOavgjort)
-                    {
-                        Console.WriteLine("Du och datorn har landat på samma poäng.");
-                        StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                        oavgjort = true;
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Samma poäng. Då vinner ");
-                        StringManipulationMethods.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            Console.ReadKey();
-        }
+        
     }
 }
