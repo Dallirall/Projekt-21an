@@ -49,20 +49,19 @@ namespace Projekt_21an
             datorn.Poäng = 0;
             for (int i = 0; i < Spelinställningar.AntalKortAttBörjaMed; i++)
             {
-                spelare.Poäng += RandomCardTillSpelaren();
+                spelare.Poäng += _21an_Metoder.RandomCardTillSpelaren(Kortspel);
                 Console.Write($"Din poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.WriteLine("");
                 Console.ReadKey();
 
-                datorn.Poäng += RandomCardTillDatorn();
+                datorn.Poäng += _21an_Metoder.RandomCardTillDatorn(Kortspel);
                 Console.Write($"Datorns poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 Console.WriteLine("");
                 Console.ReadKey();
             }
 
-            int nyttKort = 0;
             bool avgjort = false;
             bool duHarFörlorat = false;
             bool datornHarFörlorat = false;
@@ -77,7 +76,7 @@ namespace Projekt_21an
                 StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 duHarFörlorat = ärPoängenÖver21(spelare.Poäng);
                 datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
-                avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
+                avgjort = _21an_Metoder.HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
                 if (avgjort)
                 {
                     break;
@@ -89,7 +88,7 @@ namespace Projekt_21an
                     Console.WriteLine("");
                     if (choice == "j")
                     {                       
-                        spelare.Poäng += RandomCardTillSpelaren();
+                        spelare.Poäng += _21an_Metoder.RandomCardTillSpelaren(Kortspel);
                         //Console.Write($"Din totalpoäng är ");
                         //StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                     }
@@ -105,7 +104,7 @@ namespace Projekt_21an
             }
             else
             {
-                avgjort = checkaVinstConditions(datorn, spelare);
+                avgjort = _21an_Metoder.CheckaVinstConditions(datorn, spelare);
             }
 
             //Spelfas 3: Datorn drar kort
@@ -121,294 +120,26 @@ namespace Projekt_21an
                 Thread.Sleep(500);
                 Console.Write(".");
                 Thread.Sleep(500);
-                nyttKort = RandomCardTillDatorn();
-                datorn.Poäng += nyttKort;
-                Console.Write($"\n\nDatorn drog ett kort värt ");
-                StringManipulationMethods.SkrivUtIFärg($"{nyttKort}\n", ConsoleColor.DarkCyan);
+                Console.WriteLine("");
+                datorn.Poäng += _21an_Metoder.RandomCardTillDatorn(Kortspel);
                 Console.Write($"Din poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 Console.ReadKey();
                 datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
-                avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
+                avgjort = _21an_Metoder.HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
                 if (avgjort)
                 {
                     break;
                 }
                 else
                 {
-                    avgjort = checkaVinstConditions(datorn, spelare);
+                    avgjort = _21an_Metoder.CheckaVinstConditions(datorn, spelare);
                 }   
             }
         }
 
-        public bool HarÖverskridit21poäng(bool datornHarFörlorat, bool duHarFörlorat, Spelare spelaren, Spelare datorn)
-        {
-            if (duHarFörlorat && datornHarFörlorat)
-            {
-                if (Spelinställningar.MöjligtMedOavgjort)
-                {
-                    RegistreraVinnaren(EnumVärden.Resultat.BådaÖver21, spelaren, datorn);
-                }
-                else
-                {
-                    RegistreraVinnaren(EnumVärden.Resultat.PoängÖverskridit21, datorn, spelaren);
-                }
-                return true;
-            }
-            else if (duHarFörlorat)
-            {
-                RegistreraVinnaren(EnumVärden.Resultat.PoängÖverskridit21, datorn, spelaren);
-                return true;
-            }
-            else if (datornHarFörlorat)
-            {
-                RegistreraVinnaren(EnumVärden.Resultat.PoängÖverskridit21, spelaren, datorn);
-                return true;
-            }
-            return false;
-        }
-
-        public bool checkaVinstConditions(Spelare datorn, Spelare spelare)
-        {
-           
-            if (datorn.Poäng > spelare.Poäng)
-            {
-                RegistreraVinnaren(EnumVärden.Resultat.PoängNärmast21, datorn, spelare);
-                return true;
-            }
-            else if (datorn.Poäng < Spelinställningar.DatornSlutarDraKortVid)
-            {
-                return false;
-            }
-            else if (datorn.Poäng < spelare.Poäng)
-            {
-                Console.WriteLine("\nDatorn väljer att inte dra fler kort. \n");
-                RegistreraVinnaren(EnumVärden.Resultat.PoängNärmast21, spelare, datorn);
-                return true;
-            }
-            else if (datorn.Poäng == spelare.Poäng)
-            {
-                if (Spelinställningar.MöjligtMedOavgjort)
-                {
-                    RegistreraVinnaren(EnumVärden.Resultat.BådaSammaPoäng, spelare, datorn);
-                    return true; 
-                }
-                else
-                {
-                    RegistreraVinnaren(EnumVärden.Resultat.BådaSammaPoäng, datorn, spelare);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public int RandomCardTillSpelaren()
-        {
-            Random rnd = new Random();
-            Card dragetKort = new();
-
-
-            switch (Spelinställningar.Svårighetsgrad)
-            {
-                case EnumVärden.Svårighetsgrader.Custom:
-                    dragetKort = Kortspel.DrawACardFromDeck();
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                case EnumVärden.Svårighetsgrader.Lätt:
-                    if (rnd.NextDouble() < 0.5)
-                    {
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });                        
-                    }
-                    else
-                    {
-                        dragetKort = Kortspel.DrawACardFromDeck();
-                    }
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                case EnumVärden.Svårighetsgrader.Medel:
-                    dragetKort = Kortspel.DrawACardFromDeck();
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                case EnumVärden.Svårighetsgrader.Svår:
-                    if (rnd.NextDouble() < 0.15)
-                    {
-                        int[] svåraKort = Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)).ToArray();
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
-                    }
-                    else
-                    {
-                        dragetKort = Kortspel.DrawACardFromDeck();
-                    }
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
-                    double procent = rnd.NextDouble();
-                    if (procent < 0.1)
-                    {
-                        int[] svåraKort = Enumerable.Range(9, (Spelinställningar.KortMaxVärde - 9 + 1)).ToArray();
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
-                    }
-                    else if (procent < 0.5)
-                    {
-                        int[] svåraKort = Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)).ToArray();
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
-                    }
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                default:
-                    dragetKort = Kortspel.DrawACardFromDeck();
-                    Console.Write($"Du drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-            }
-        }
-        //svårighetsgrader: Lätt = 50% chans för mina kort att bli 1-2, 10% för datorn att bli över 3. Datorn drar kort till 18. Kortmaxvärde 10.
-        //Medel = Defaultläge, slutardrakortvid 20
-        //Svår = maxvärde kort: 13, slutardrakortvid 21,  15% chans för mina kort att bli över 5
-        //Omöjlig = 50% mina kort över 5, 10% över 8, datorn 40% under 3, 70% under 5
-        public int RandomCardTillDatorn()
-        {
-            Random rnd = new Random();
-            Card dragetKort = new();
-
-            switch (Spelinställningar.Svårighetsgrad)
-            {
-                case EnumVärden.Svårighetsgrader.Custom:
-                    dragetKort = Kortspel.DrawACardFromDeck();
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                case EnumVärden.Svårighetsgrader.Lätt:
-                    if (rnd.NextDouble() < 0.1)
-                    {
-                        int[] svåraKort = Enumerable.Range(4, (Spelinställningar.KortMaxVärde - 4 + 1)).ToArray();
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
-                    }
-                    else
-                    {
-                        dragetKort = Kortspel.DrawACardFromDeck();
-                    }
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                case EnumVärden.Svårighetsgrader.Medel:
-                    
-                case EnumVärden.Svårighetsgrader.Svår:
-                    dragetKort = Kortspel.DrawACardFromDeck();
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
-                    double procent = rnd.NextDouble();
-                    if (procent < 0.4)
-                    {
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });
-                    }
-                    else if (procent < 0.7)
-                    {
-                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2, 3, 4 });
-                    }
-                    else
-                    {
-                        dragetKort = Kortspel.DrawACardFromDeck();
-                    }
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-
-                default:
-                    dragetKort = Kortspel.DrawACardFromDeck();
-                    Console.Write($"Datorn drog ");
-                    StringManipulationMethods.SkrivUtIFärg($"{dragetKort.CardName}", ConsoleColor.DarkCyan);
-                    Console.Write(". ");
-                    return dragetKort.CardValue;
-            }
-        }
-
-        public void RegistreraVinnaren(EnumVärden.Resultat resultat, Spelare vinnare, Spelare förlorare)
-        {
-            bool oavgjort = false;  
-            switch (resultat)
-            {
-                case EnumVärden.Resultat.PoängÖverskridit21:
-                    if (förlorare.Namn == "Datorn")
-                    {
-                        Console.WriteLine("Datorns poäng har överskridit 21.");
-                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Din poäng har överskridit 21.");
-                        StringManipulationMethods.SkrivUtIFärg("Du har förlorat.\n", ConsoleColor.DarkRed);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    break;
-                case EnumVärden.Resultat.PoängNärmast21:
-                    if (vinnare.Namn == "Datorn")
-                    {
-                        Console.WriteLine("Datorns poäng är närmast 21. ");
-                        StringManipulationMethods.SkrivUtIFärg("Datorn har vunnit!", ConsoleColor.DarkRed);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Din poäng är närmast 21. ");
-                        StringManipulationMethods.SkrivUtIFärg($"Grattis {vinnare.Namn}! Du har vunnit!\n", ConsoleColor.DarkCyan);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    break;
-                case EnumVärden.Resultat.BådaÖver21:
-                    Console.WriteLine("Både din och datorns poäng har överskridit 21.");
-                    StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                    oavgjort = true;
-                    SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    break;
-                case EnumVärden.Resultat.BådaSammaPoäng:
-                    if (Spelinställningar.MöjligtMedOavgjort)
-                    {
-                        Console.WriteLine("Du och datorn har landat på samma poäng.");
-                        StringManipulationMethods.SkrivUtIFärg("Det blev oavgjort.\n", ConsoleColor.DarkGray);
-                        oavgjort = true;
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Samma poäng. Då vinner ");
-                        StringManipulationMethods.SkrivUtIFärg("datorn\n", ConsoleColor.DarkRed);
-                        SqlMetoder.RegistreraResultatIDatabasen(oavgjort, vinnare, förlorare);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            Console.ReadKey();
-        }
     }
 }
 
