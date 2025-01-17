@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Projekt_21an
+namespace Projekt_21an.Extraspel
 {
     public class Lyckohjul
     {
@@ -26,6 +26,6 @@ namespace Projekt_21an
                 Console.WriteLine("Tyvärr ingen vinst. ");
             }
         }
-        
+
     }
 }

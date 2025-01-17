@@ -8,4 +8,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.0-preview3.24332.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CardGames\CardGames.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ÖversattKortlek\" />
+  </ItemGroup>
+
 </Project>
