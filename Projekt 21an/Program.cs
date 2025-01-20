@@ -14,7 +14,7 @@ namespace spel21an
     public class Program
     {
         static void Main(string[] args)
-        {               
+        {           
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;

@@ -84,11 +84,11 @@ namespace Projekt_21an
         public static bool ExistsInDatabaseCheck(string spelarnamn)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                string selectQuery = "SELECT Namn FROM vinststatistik";
+            {                
+                string selectQuery = "SELECT COUNT(1) FROM vinststatistik WHERE namn = @Namn";
 
-                List<string> spelareNamn = connection.Query<string>(selectQuery).ToList();
-                return spelareNamn.Any(namn => namn == spelarnamn);
+                int count = connection.ExecuteScalar<int>(selectQuery, new {Namn = spelarnamn});
+                return count > 0;
             }                  
         }        
     }
