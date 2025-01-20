@@ -11,7 +11,7 @@ using CardGames;
 
 namespace Projekt_21an
 {
-    public class _21an_spelet : IKonsolKortspel
+    public partial class _21an_spelet : IKonsolKortspel
     {
         private string speletsNamn = "21an";
         public string SpeletsNamn { get { return speletsNamn; } }
@@ -48,13 +48,13 @@ namespace Projekt_21an
             datorn.Poäng = 0;
             for (int i = 0; i < Spelinställningar.AntalKortAttBörjaMed; i++)
             {
-                spelare.Poäng += _21an_Metoder.RandomCardTillSpelaren(Kortspel);
+                spelare.Poäng += RandomCardTillSpelaren();
                 Console.Write($"Din poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.WriteLine("");
                 Console.ReadKey();
 
-                datorn.Poäng += _21an_Metoder.RandomCardTillDatorn(Kortspel);
+                datorn.Poäng += RandomCardTillDatorn();
                 Console.Write($"Datorns poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 Console.WriteLine("");
@@ -75,7 +75,7 @@ namespace Projekt_21an
                 StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 duHarFörlorat = ärPoängenÖver21(spelare.Poäng);
                 datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
-                avgjort = _21an_Metoder.HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
+                avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
                 if (avgjort)
                 {
                     break;
@@ -87,7 +87,7 @@ namespace Projekt_21an
                     Console.WriteLine("");
                     if (choice == "j")
                     {                       
-                        spelare.Poäng += _21an_Metoder.RandomCardTillSpelaren(Kortspel);                        
+                        spelare.Poäng += RandomCardTillSpelaren();                        
                     }
                     else
                     {
@@ -101,7 +101,7 @@ namespace Projekt_21an
             }
             else
             {
-                avgjort = _21an_Metoder.CheckaVinstConditions(datorn, spelare);
+                avgjort = CheckaVinstConditions(datorn, spelare);
             }
 
             //Spelfas 3: Datorn drar kort
@@ -118,21 +118,22 @@ namespace Projekt_21an
                 Console.Write(".");
                 Thread.Sleep(500);
                 Console.WriteLine("");
-                datorn.Poäng += _21an_Metoder.RandomCardTillDatorn(Kortspel);
+                datorn.Poäng += RandomCardTillDatorn();
+                Console.WriteLine("");
                 Console.Write($"Din poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{spelare.Poäng}\n", ConsoleColor.Green);
                 Console.Write($"Datorns poäng: ");
                 StringManipulationMethods.SkrivUtIFärg($"{datorn.Poäng}\n", ConsoleColor.Red);
                 Console.ReadKey();
                 datornHarFörlorat = ärPoängenÖver21(datorn.Poäng);
-                avgjort = _21an_Metoder.HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
+                avgjort = HarÖverskridit21poäng(datornHarFörlorat, duHarFörlorat, spelare, datorn);
                 if (avgjort)
                 {
                     break;
                 }
                 else
                 {
-                    avgjort = _21an_Metoder.CheckaVinstConditions(datorn, spelare);
+                    avgjort = CheckaVinstConditions(datorn, spelare);
                 }   
             }
         }

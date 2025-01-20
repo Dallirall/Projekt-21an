@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Projekt_21an
 {
-    public static class _21an_Metoder
+    public partial class _21an_spelet
     {
 
-        public static bool HarÖverskridit21poäng(bool datornHarFörlorat, bool duHarFörlorat, Spelare spelaren, Spelare datorn)
+        public bool HarÖverskridit21poäng(bool datornHarFörlorat, bool duHarFörlorat, Spelare spelaren, Spelare datorn)
         {
             if (duHarFörlorat && datornHarFörlorat)
             {
@@ -37,7 +37,7 @@ namespace Projekt_21an
             return false;
         }
 
-        public static bool CheckaVinstConditions(Spelare datorn, Spelare spelare)
+        public bool CheckaVinstConditions(Spelare datorn, Spelare spelare)
         {
 
             if (datorn.Poäng > spelare.Poäng)
@@ -71,7 +71,7 @@ namespace Projekt_21an
             return false;
         }
 
-        public static void RegistreraVinnaren(EnumVärden.Resultat resultat, Spelare vinnare, Spelare förlorare)
+        public void RegistreraVinnaren(EnumVärden.Resultat resultat, Spelare vinnare, Spelare förlorare)
         {
             bool oavgjort = false;
             switch (resultat)
@@ -131,7 +131,7 @@ namespace Projekt_21an
             Console.ReadKey();
         }
 
-        public static void PrintaDragetKort(string spelare, Card dragetKort)
+        public void PrintaDragetKort(string spelare, Card dragetKort)
         {
             if (spelare == "Datorn")
             {
@@ -145,7 +145,7 @@ namespace Projekt_21an
             Console.Write(". ");
         }
 
-        public static int RandomCardTillSpelaren(ÖversattKortlek kortspel)
+        public int RandomCardTillSpelaren()
         {
             Random rnd = new Random();
             Card dragetKort = new();
@@ -157,11 +157,11 @@ namespace Projekt_21an
                 case EnumVärden.Svårighetsgrader.Lätt:
                     if (rnd.NextDouble() < 0.5)
                     {
-                        dragetKort = kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });
                     }
                     else
                     {
-                        dragetKort = kortspel.DrawACardFromDeck();
+                        dragetKort = Kortspel.DrawACardFromDeck();
                     }
                     PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
@@ -169,7 +169,7 @@ namespace Projekt_21an
                 case EnumVärden.Svårighetsgrader.Custom:
 
                 case EnumVärden.Svårighetsgrader.Medel:
-                    dragetKort = kortspel.DrawACardFromDeck();
+                    dragetKort = Kortspel.DrawACardFromDeck();
                     PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
 
@@ -177,11 +177,11 @@ namespace Projekt_21an
                     if (rnd.NextDouble() < 0.15)
                     {
                         int[] svåraKort = Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)).ToArray();
-                        dragetKort = kortspel.DrawCardOfSpecificValues(svåraKort);
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
                     else
                     {
-                        dragetKort = kortspel.DrawACardFromDeck();
+                        dragetKort = Kortspel.DrawACardFromDeck();
                     }
                     PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
@@ -191,18 +191,18 @@ namespace Projekt_21an
                     if (procent < 0.1)
                     {
                         int[] svåraKort = Enumerable.Range(9, (Spelinställningar.KortMaxVärde - 9 + 1)).ToArray();
-                        dragetKort = kortspel.DrawCardOfSpecificValues(svåraKort);
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
                     else if (procent < 0.5)
                     {
                         int[] svåraKort = Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)).ToArray();
-                        dragetKort = kortspel.DrawCardOfSpecificValues(svåraKort);
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
                     PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
 
                 default:
-                    dragetKort = kortspel.DrawACardFromDeck();
+                    dragetKort = Kortspel.DrawACardFromDeck();
                     PrintaDragetKort("Du", dragetKort);
                     return dragetKort.CardValue;
             }
@@ -211,7 +211,7 @@ namespace Projekt_21an
         //Medel = Defaultläge, slutardrakortvid 20
         //Svår = maxvärde kort: 13, slutardrakortvid 21,  15% chans för mina kort att bli över 5
         //Omöjlig = 50% mina kort över 5, 10% över 8, datorn 40% under 3, 70% under 5
-        public static int RandomCardTillDatorn(ÖversattKortlek kortspel)
+        public int RandomCardTillDatorn()
         {
             Random rnd = new Random();
             Card dragetKort = new();
@@ -223,11 +223,11 @@ namespace Projekt_21an
                     if (rnd.NextDouble() < 0.1)
                     {
                         int[] svåraKort = Enumerable.Range(4, (Spelinställningar.KortMaxVärde - 4 + 1)).ToArray();
-                        dragetKort = kortspel.DrawCardOfSpecificValues(svåraKort);
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(svåraKort);
                     }
                     else
                     {
-                        dragetKort = kortspel.DrawACardFromDeck();
+                        dragetKort = Kortspel.DrawACardFromDeck();
                     }
                     PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
@@ -237,7 +237,7 @@ namespace Projekt_21an
                 case EnumVärden.Svårighetsgrader.Medel:
 
                 case EnumVärden.Svårighetsgrader.Svår:
-                    dragetKort = kortspel.DrawACardFromDeck();
+                    dragetKort = Kortspel.DrawACardFromDeck();
                     PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
 
@@ -245,21 +245,21 @@ namespace Projekt_21an
                     double procent = rnd.NextDouble();
                     if (procent < 0.4)
                     {
-                        dragetKort = kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2 });
                     }
                     else if (procent < 0.7)
                     {
-                        dragetKort = kortspel.DrawCardOfSpecificValues(new[] { 1, 2, 3, 4 });
+                        dragetKort = Kortspel.DrawCardOfSpecificValues(new[] { 1, 2, 3, 4 });
                     }
                     else
                     {
-                        dragetKort = kortspel.DrawACardFromDeck();
+                        dragetKort = Kortspel.DrawACardFromDeck();
                     }
                     PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
 
                 default:
-                    dragetKort = kortspel.DrawACardFromDeck();
+                    dragetKort = Kortspel.DrawACardFromDeck();
                     PrintaDragetKort("Datorn", dragetKort);
                     return dragetKort.CardValue;
             }
