@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 using Projekt_21an;
@@ -6,6 +8,7 @@ using static Projekt_21an._21an_spelet;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using CardGames;
+using System.Runtime.InteropServices;
 
 //ToDo: Borde jag ha en variable istället för att hardcoda kortvalue leveln för när man drar kort i svår/lätt svårighetsgrad? Och för procentsatserna?
 
@@ -14,7 +17,17 @@ namespace spel21an
     public class Program
     {
         static void Main(string[] args)
-        {           
+        {
+            //string testPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+            //Console.WriteLine(testPath);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.WriteLine("Running on Windows!");
+            }
+
+            Console.ReadKey();
+
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;

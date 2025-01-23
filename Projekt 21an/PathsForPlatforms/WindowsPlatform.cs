@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Projekt_21an.PathsForPlatforms
+{
+    public class WindowsPlatform : IPlatformSpecifics
+    {
+        public string GetFilePath(string fileName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetBaseDirectoryPath()
+        {
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
+    }
+}

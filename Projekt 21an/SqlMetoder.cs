@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,53 @@ using System.Threading.Tasks;
 using Dapper;
 using static Projekt_21an.EnumVärden;
 using spel21an;
+using Projekt_21an.PathsForPlatforms;
 
 namespace Projekt_21an
 {
     public delegate bool CheckInDatabaseDel(string spelarnamn);
     public static class SqlMetoder
     {
+        private static string _databaseFileName = "Projekt_21an_sqliteDB.db";
+        public static string DatabaseFileName { get { return _databaseFileName; } }
+        public static string DatabaseLocationPath { get; private set; }
 
+        public static string ConnectionString { get; private set; }
 
-        private static string _connectionString = @"Server=.;Database=_21anDB;Trusted_Connection=True;TrustServerCertificate=True;";
-        public static string ConnectionString { get { return _connectionString; } }
+        static SqlMetoder()
+        {
+            if (DatabaseLocationPath == null)
+            {
+                InitializeDatabaseLocationPath();
+            }
+
+            if (ConnectionString == null)
+            {
+                try
+                {
+                    SqliteConnectionStringBuilder builder = new SqliteConnectionStringBuilder()
+                    {
+                        DataSource = DatabaseLocationPath,
+                        Mode = SqliteOpenMode.ReadWriteCreate,
+                        Cache = SqliteCacheMode.Shared
+                    };
+                    ConnectionString = builder.ToString();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error: " + ex.Message);
+                }
+
+                
+                //ConnectionString = 
+            }
+        }
+
+        private static void InitializeDatabaseLocationPath()
+        {
+            string databaseSourcePath = Path.Combine(PlatformPaths.CurrentPlatform.GetBaseDirectoryPath(), DatabaseFileName);
+
+        }
 
         public static void DisplayaVinststatistik()
         {
