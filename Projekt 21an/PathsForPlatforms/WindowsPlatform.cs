@@ -17,5 +17,10 @@ namespace Projekt_21an.PathsForPlatforms
         {
             return AppDomain.CurrentDomain.BaseDirectory;
         }
+
+        public string GetAppDataFolderPath()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        }
     }
 }

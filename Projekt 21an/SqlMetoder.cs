@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Data.Sqlite;
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,11 @@ namespace Projekt_21an
     {
         private static string _databaseFileName = "Projekt_21an_sqliteDB.db";
         public static string DatabaseFileName { get { return _databaseFileName; } }
+        
+        private static string _databaseFolderName = "21an_Data";
+        public static string DatabaseFolderName { get { return _databaseFolderName; } }
         public static string DatabaseLocationPath { get; private set; }
+        
 
         public static string ConnectionString { get; private set; }
 
@@ -45,24 +50,43 @@ namespace Projekt_21an
                     throw new Exception("Error: " + ex.Message);
                 }
 
-                
-                //ConnectionString = 
             }
         }
 
         private static void InitializeDatabaseLocationPath()
         {
-            string databaseSourcePath = Path.Combine(PlatformPaths.CurrentPlatform.GetBaseDirectoryPath(), DatabaseFileName);
+            string databaseSourceFilePath = Path.Combine(PlatformPaths.CurrentPlatform.GetBaseDirectoryPath(), DatabaseFileName);
+            string destinationFolder = Path.Combine(PlatformPaths.CurrentPlatform.GetAppDataFolderPath(), DatabaseFolderName);
 
+            if (!Directory.Exists(destinationFolder))
+            {
+                Directory.CreateDirectory(destinationFolder);
+            }
+            string destinationFilePath = Path.Combine(destinationFolder, DatabaseFileName);
+
+            if (!File.Exists(destinationFilePath))
+            {
+                if (File.Exists(databaseSourceFilePath))
+                {
+                    File.Copy(databaseSourceFilePath, destinationFilePath);
+                    Console.WriteLine("\nFile copied! \n");
+                }
+                else 
+                {
+                    Console.WriteLine("\nError: Source file not found. \n");
+                }
+            }
+
+            DatabaseLocationPath = destinationFilePath;
         }
 
         public static void DisplayaVinststatistik()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 
-                string selectQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'vinststatistik'";
-                string[] kolumner = connection.Query<string>(selectQuery).ToArray();
+                string selectQuery = "PRAGMA table_info(vinststatistik);";
+                string[] kolumner = connection.Query(selectQuery).Select(row => (string)row.name).ToArray();
                 
                 selectQuery = "SELECT * FROM vinststatistik";
                 List<Spelare> spelareLista = connection.Query<Spelare>(selectQuery).ToList();
@@ -89,7 +113,7 @@ namespace Projekt_21an
 
         public static void RegistreraNySpelareIDatabasen(Spelare nySpelare)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 string insertQuery = "INSERT INTO vinststatistik (Namn) VALUES (@Namn);";
 
@@ -99,7 +123,7 @@ namespace Projekt_21an
 
         public static void RegistreraResultatIDatabasen(bool oavgjort, Spelare vinnare, Spelare förlorare)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 string updateQuery = "";
 
@@ -121,7 +145,7 @@ namespace Projekt_21an
 
         public static bool ExistsInDatabaseCheck(string spelarnamn)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {                
                 string selectQuery = "SELECT COUNT(1) FROM vinststatistik WHERE namn = @Namn";
 

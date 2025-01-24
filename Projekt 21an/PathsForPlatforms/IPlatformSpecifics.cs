@@ -11,5 +11,7 @@ namespace Projekt_21an.PathsForPlatforms
         public string GetFilePath(string fileName);
 
         public string GetBaseDirectoryPath();
+
+        public string GetAppDataFolderPath();
     }
 }
