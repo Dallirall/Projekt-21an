@@ -8,29 +8,8 @@ using static Projekt_21an.EnumVärden;
 
 namespace Projekt_21an
 {
-    public static class Spelinställningar
+    public static partial class Spelinställningar
     {
-
-        private static int kortMaxVärde = 10;
-        public static int KortMaxVärde { get { return kortMaxVärde; } set { kortMaxVärde = value; } }
-
-        private static int kortMinVärde = 1;
-        public static int KortMinVärde { get { return kortMinVärde; } set { kortMinVärde = value; } }
-
-        private static EnumVärden.Svårighetsgrader svårighetsgrad = EnumVärden.Svårighetsgrader.Lätt;
-        public static EnumVärden.Svårighetsgrader Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
-
-        private static int antalKortAttBörjaMed = 2;
-        public static int AntalKortAttBörjaMed { get { return antalKortAttBörjaMed; } set { antalKortAttBörjaMed = value; } }
-
-        private static bool möjligtMedOavgjort = false;
-        public static bool MöjligtMedOavgjort { get { return möjligtMedOavgjort; } set { möjligtMedOavgjort = value; } }
-
-        public static int datornSlutarDraKortVid = 21;
-
-        public static int DatornSlutarDraKortVid { get { return datornSlutarDraKortVid; } set { datornSlutarDraKortVid = value; } }
-
-
         public static void Inställningar(IKonsolKortspel spelet)
         {
             Console.WriteLine("Skriv siffra för att välja svårighetsgrad: \r\n1. Lätt \r\n2. Medel \r\n3. Svår \r\n4. Mer eller mindre omöjlig \r\nVill du inte ha en förinställd nivå utan justera inställningar själv, skriv '0'. ");
