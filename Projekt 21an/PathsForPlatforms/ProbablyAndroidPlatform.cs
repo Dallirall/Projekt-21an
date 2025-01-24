@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Projekt_21an.PathsForPlatforms
 {
-    public class LinuxPlatform : IPlatformSpecifics
+    public class ProbablyAndroidPlatform : IPlatformSpecifics
     {
         public string GetAppDataFolderPath()
         {
-            return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            return System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
         }
 
         public string GetBaseDirectoryPath()
         {
-            return AppContext.BaseDirectory;
+            return System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
         }
 
         public string GetFilePath(string fileName)
