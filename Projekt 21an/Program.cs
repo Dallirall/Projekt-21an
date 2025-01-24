@@ -17,17 +17,7 @@ namespace spel21an
     public class Program
     {
         static void Main(string[] args)
-        {
-            //string testPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-
-            //Console.WriteLine(testPath);
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                Console.WriteLine("Running on Windows!");
-            }
-
-            Console.ReadKey();
-
+        {            
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;

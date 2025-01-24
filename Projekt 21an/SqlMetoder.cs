@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using System.IO;
 using System;
 using System.Collections.Generic;

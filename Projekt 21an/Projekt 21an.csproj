@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Remove="Projekt_21an_sqliteDB.db" />
+    <None Remove="_21anDB.mdf" />
+    <None Remove="_21anDB_log.ldf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,12 +33,6 @@
 
   <ItemGroup>
     <Folder Include="ÖversattKortlek\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="_21anDB.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
