@@ -17,7 +17,17 @@ namespace Projekt_21an
 
         private static void InitialiseraDefaultVärden()
         {
-            throw new NotImplementedException();
+            KortMaxVärde = 10;
+            KortMinVärde = 1;
+
+            Svårighetsgrad = EnumVärden.Svårighetsgrader.Lätt;
+            AntalKortAttBörjaMed = 2;
+            MöjligtMedOavgjort = false;
+            DatornSlutarDraKortVid = 21;
+
+            ProcentsatsLättTillSpelaren = 0.5;
+            ProcentsatsLättTillDatorn = 0.1;
+            
         }
 
         public static void Inställningar(IKonsolKortspel spelet)
@@ -68,11 +78,17 @@ namespace Projekt_21an
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
                     KortMaxVärde = 13;
+                    ProcentsatsSvårTillSpelaren = 0.15;
                     break;
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
                     AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
                     KortMaxVärde = 13;
+
+                    ProcentsatsOmöjligTillSpelarenLägre = 0.1;
+                    ProcentsatsOmöjligTillSpelarenHögre = 0.5;
+                    ProcentsatsOmöjligTillDatornLägre = 0.4;
+                    ProcentsatsOmöjligTillDatornHögre = 0.7;
                     break;
                 default: break;
             }
