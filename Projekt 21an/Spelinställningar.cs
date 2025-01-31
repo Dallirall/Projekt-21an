@@ -10,6 +10,16 @@ namespace Projekt_21an
 {
     public static partial class Spelinställningar
     {
+        static Spelinställningar()
+        {
+            InitialiseraDefaultVärden();
+        }
+
+        private static void InitialiseraDefaultVärden()
+        {
+            throw new NotImplementedException();
+        }
+
         public static void Inställningar(IKonsolKortspel spelet)
         {
             Console.WriteLine("Skriv siffra för att välja svårighetsgrad: \r\n1. Lätt \r\n2. Medel \r\n3. Svår \r\n4. Mer eller mindre omöjlig \r\nVill du inte ha en förinställd nivå utan justera inställningar själv, skriv '0'. ");
