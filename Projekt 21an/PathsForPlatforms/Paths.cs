@@ -23,6 +23,10 @@ namespace Projekt_21an.PathsForPlatforms
             {
                 CurrentPlatform = new LinuxPlatform();
             }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                CurrentPlatform = new MacOSPlatform();
+            }
             else
             {
                 CurrentPlatform = new ProbablyAndroidPlatform();
