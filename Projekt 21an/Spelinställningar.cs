@@ -27,7 +27,10 @@ namespace Projekt_21an
 
             ProcentsatsLättTillSpelaren = 0.5;
             ProcentsatsLättTillDatorn = 0.1;
-            
+
+            SpelarensLättaKortvärden.AddRange(new int[] { 1, 2 });
+            DatornsSvåraKortvärden.AddRange(Enumerable.Range(4, (Spelinställningar.KortMaxVärde - 4 + 1)));
+
         }
 
         public static void Inställningar(IKonsolKortspel spelet)
@@ -66,22 +69,23 @@ namespace Projekt_21an
                         DatornSlutarDraKortVid = (int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid;
                     }
                     break;
+
                 case EnumVärden.Svårighetsgrader.Lätt:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 18;
                     break;
+
                 case EnumVärden.Svårighetsgrader.Medel:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 20;
                     break;
+
                 case EnumVärden.Svårighetsgrader.Svår:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
-                    KortMaxVärde = 13;
+                    KortMaxVärde = 13;                    
                     ProcentsatsSvårTillSpelaren = 0.15;
+                    SpelarensSvåraKortvärden.AddRange(Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)));
                     break;
+
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
                     KortMaxVärde = 13;
 
@@ -89,7 +93,13 @@ namespace Projekt_21an
                     ProcentsatsOmöjligTillSpelarenHögre = 0.5;
                     ProcentsatsOmöjligTillDatornLägre = 0.4;
                     ProcentsatsOmöjligTillDatornHögre = 0.7;
+
+                    SpelarensSvåraKortvärden.AddRange(Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)));
+                    SpelarensOmöjligaKortvärden.AddRange(Enumerable.Range(9, (Spelinställningar.KortMaxVärde - 9 + 1)));
+                    DatornsLättaKortvärden.AddRange(new[] { 1, 2, 3, 4 });
+                    DatornsVäldigtLättaKortvärden.AddRange(new[] { 1, 2 });
                     break;
+
                 default: break;
             }
             Console.WriteLine("Skriv 'j' om du vill att det ska kunna bli oavgjort. Annars skriv 'n', så kommer datorn vinna vid lika resultat.");

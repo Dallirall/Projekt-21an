@@ -27,7 +27,12 @@ namespace Projekt_21an
         public static double ProcentsatsOmöjligTillDatornHögre { get; set; }
 
 
-        public static int[] SpelarensLättaKortvärden { get; set; }
+        public static List<int> SpelarensLättaKortvärden { get; set; } = new List<int>();
+        public static List<int> SpelarensSvåraKortvärden { get; set; } = new List<int>();
+        public static List<int> SpelarensOmöjligaKortvärden { get; set; } = new List<int>();
 
+        public static List<int> DatornsSvåraKortvärden { get; set; } = new List<int>();
+        public static List<int> DatornsLättaKortvärden { get; set; } = new List<int>();
+        public static List<int> DatornsVäldigtLättaKortvärden { get; set; } = new List<int>();
     }
 }
