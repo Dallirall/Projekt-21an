@@ -21,10 +21,7 @@ namespace Projekt_21an
 
         public ÖversattKortlek Kortspel { get; set; } = new ÖversattKortlek();
 
-
-        //public _21an_spelet() => Kortspel = new ÖversattKortlek();
-
-
+                
         public void RunGame()
         {
             if (Spelinställningar.Svårighetsgrad == EnumVärden.Svårighetsgrader.Lätt || Spelinställningar.Svårighetsgrad == EnumVärden.Svårighetsgrader.Medel)
@@ -42,7 +39,7 @@ namespace Projekt_21an
             }
 
             //Spelfas 1: Utdelning av starthand
-            Console.WriteLine($"\nNu kommer {Spelinställningar.AntalKortAttBörjaMed} kort dras per spelare.");
+            Console.WriteLine($"\nNu kommer {Spelinställningar.AntalKortAttBörjaMed} kort dras per spelare.\n");
             Console.ReadKey();
             spelare.Poäng = 0;
             datorn.Poäng = 0;

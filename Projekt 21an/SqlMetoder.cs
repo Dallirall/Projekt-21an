@@ -13,16 +13,12 @@ using Projekt_21an.PathsForPlatforms;
 namespace Projekt_21an
 {
     public delegate bool CheckInDatabaseDel(string spelarnamn);
-    public static class SqlMetoder
-    {
-        private static string _databaseFileName = "Projekt_21an_sqliteDB.db";
-        public static string DatabaseFileName { get { return _databaseFileName; } }
-        
-        private static string _databaseFolderName = "21an_Data";
-        public static string DatabaseFolderName { get { return _databaseFolderName; } }
-        public static string DatabaseLocationPath { get; private set; }
-        
 
+    public static class SqlMetoder
+    {        
+        public static string DatabaseFileName { get; } = "Projekt_21an_sqliteDB.db";               
+        public static string DatabaseFolderName { get; } = "21an_Data";
+        public static string DatabaseLocationPath { get; private set; }        
         public static string ConnectionString { get; private set; }
 
         static SqlMetoder()
@@ -48,9 +44,8 @@ namespace Projekt_21an
                 {
                     throw new Exception("Error: " + ex.Message);
                 }
-
             }
-        }
+        }   
 
         private static void InitializeDatabaseLocationPath()
         {
@@ -68,7 +63,6 @@ namespace Projekt_21an
                 if (File.Exists(databaseSourceFilePath))
                 {
                     File.Copy(databaseSourceFilePath, destinationFilePath);
-                    Console.WriteLine("\nFile copied! \n");
                 }
                 else 
                 {

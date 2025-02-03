@@ -8,17 +8,14 @@ using CardGames;
 namespace Projekt_21an
 {
     public class ÖversattKortlek : CardDeck
-    {
-        private List<Card> _kortlek;
-        public List<Card> Kortlek { get { return _kortlek; } set { _kortlek = value; } }
+    {        
+        public List<Card> Kortlek { get; set; }
 
         protected override List<Card> DeckForVirtualMethods => Kortlek;
                 
 
-        public ÖversattKortlek()
-        {
-            InitializeDeck();            
-        }
+        public ÖversattKortlek() => InitializeDeck();
+
 
         public override void InitializeDeck()
         {
