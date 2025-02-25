@@ -207,10 +207,10 @@ namespace Projekt_21an
                     return dragetKort.CardValue;
             }
         }
-        //svårighetsgrader: Lätt = 50% chans för mina kort att bli 1-2, 10% för datorn att bli över 3. Datorn drar kort till 18. Kortmaxvärde 10.
-        //Medel = Defaultläge, slutardrakortvid 20
-        //Svår = maxvärde kort: 13, slutardrakortvid 21,  15% chans för mina kort att bli över 5
-        //Omöjlig = 50% mina kort över 5, 10% över 8, datorn 40% under 3, 70% under 5
+        //Svårighetsgrader: Lätt = 50% chans för mina kort att bli 1-2, 10% för datorn att bli över 3. Datorn drar kort till 18. Kortmaxvärde 10.
+        //Medel = Defaultläge, slutar dra kort vid 20.
+        //Svår = Maxvärde kort: 13, slutar dra kort vid 21,  15% chans för mina kort att bli över 5.
+        //Omöjlig = 50% chans för mina kort att bli över 5, 10% chans för över 8. Datorn 40% chans för kort under 3, 70% chans för under 5.
         public int RandomCardTillDatorn()
         {
             Random rnd = new Random();

@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.IO;
 using System.Collections.Generic;
 using Projekt_21an;
@@ -10,7 +8,6 @@ using Dapper;
 using CardGames;
 using System.Runtime.InteropServices;
 
-//ToDo: Borde jag ha en variable istället för att hardcoda kortvalue leveln för när man drar kort i svår/lätt svårighetsgrad? Och för procentsatserna?
 
 namespace spel21an
 {
