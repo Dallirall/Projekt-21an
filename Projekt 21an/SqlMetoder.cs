@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.Sqlite;
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,24 +8,78 @@ using System.Threading.Tasks;
 using Dapper;
 using static Projekt_21an.EnumVärden;
 using spel21an;
+using Projekt_21an.PathsForPlatforms;
 
 namespace Projekt_21an
 {
     public delegate bool CheckInDatabaseDel(string spelarnamn);
+
     public static class SqlMetoder
-    {
+    {        
+        public static string DatabaseFileName { get; } = "Projekt_21an_sqliteDB.db";               
+        public static string DatabaseFolderName { get; } = "21an_Data";
+        public static string DatabaseLocationPath { get; private set; }        
+        public static string ConnectionString { get; private set; }
 
+        static SqlMetoder()
+        {
+            if (DatabaseLocationPath == null)
+            {
+                InitializeDatabaseLocationPath();
+            }
 
-        private static string _connectionString = @"Server=.;Database=_21anDB;Trusted_Connection=True;TrustServerCertificate=True;";
-        public static string ConnectionString { get { return _connectionString; } }
+            if (ConnectionString == null)
+            {
+                try
+                {
+                    SqliteConnectionStringBuilder builder = new SqliteConnectionStringBuilder()
+                    {
+                        DataSource = DatabaseLocationPath,
+                        Mode = SqliteOpenMode.ReadWriteCreate,
+                        Cache = SqliteCacheMode.Shared
+                    };
+                    ConnectionString = builder.ToString();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error: " + ex.Message);
+                }
+            }
+        }   
+
+        private static void InitializeDatabaseLocationPath()
+        {
+            string databaseSourceFilePath = Path.Combine(PlatformPaths.CurrentPlatform.GetBaseDirectoryPath(), DatabaseFileName);
+            string destinationFolder = Path.Combine(PlatformPaths.CurrentPlatform.GetAppDataFolderPath(), DatabaseFolderName);
+
+            if (!Directory.Exists(destinationFolder))
+            {
+                Directory.CreateDirectory(destinationFolder);
+            }
+            string destinationFilePath = Path.Combine(destinationFolder, DatabaseFileName);
+
+            if (!File.Exists(destinationFilePath))
+            {
+                if (File.Exists(databaseSourceFilePath))
+                {
+                    File.Copy(databaseSourceFilePath, destinationFilePath);
+                }
+                else 
+                {
+                    Console.WriteLine("\nError: Source file not found. \n");
+                }
+            }
+
+            DatabaseLocationPath = destinationFilePath;
+        }
 
         public static void DisplayaVinststatistik()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 
-                string selectQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'vinststatistik'";
-                string[] kolumner = connection.Query<string>(selectQuery).ToArray();
+                string selectQuery = "PRAGMA table_info(vinststatistik);";
+                string[] kolumner = connection.Query(selectQuery).Select(row => (string)row.name).ToArray();
                 
                 selectQuery = "SELECT * FROM vinststatistik";
                 List<Spelare> spelareLista = connection.Query<Spelare>(selectQuery).ToList();
@@ -51,7 +106,7 @@ namespace Projekt_21an
 
         public static void RegistreraNySpelareIDatabasen(Spelare nySpelare)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 string insertQuery = "INSERT INTO vinststatistik (Namn) VALUES (@Namn);";
 
@@ -61,7 +116,7 @@ namespace Projekt_21an
 
         public static void RegistreraResultatIDatabasen(bool oavgjort, Spelare vinnare, Spelare förlorare)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {
                 string updateQuery = "";
 
@@ -83,7 +138,7 @@ namespace Projekt_21an
 
         public static bool ExistsInDatabaseCheck(string spelarnamn)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqliteConnection connection = new SqliteConnection(ConnectionString))
             {                
                 string selectQuery = "SELECT COUNT(1) FROM vinststatistik WHERE namn = @Namn";
 

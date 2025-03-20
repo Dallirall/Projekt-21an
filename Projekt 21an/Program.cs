@@ -6,15 +6,15 @@ using static Projekt_21an._21an_spelet;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using CardGames;
+using System.Runtime.InteropServices;
 
-//ToDo: Borde jag ha en variable istället för att hardcoda kortvalue leveln för när man drar kort i svår/lätt svårighetsgrad? Och för procentsatserna?
 
 namespace spel21an
 {
     public class Program
     {
         static void Main(string[] args)
-        {           
+        {            
             Console.BackgroundColor = ConsoleColor.White;
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Black;

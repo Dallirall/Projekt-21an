@@ -8,28 +8,30 @@ using static Projekt_21an.EnumVärden;
 
 namespace Projekt_21an
 {
-    public static class Spelinställningar
+    public static partial class Spelinställningar
     {
+        static Spelinställningar()
+        {
+            InitialiseraDefaultVärden();
+        }
 
-        private static int kortMaxVärde = 10;
-        public static int KortMaxVärde { get { return kortMaxVärde; } set { kortMaxVärde = value; } }
+        private static void InitialiseraDefaultVärden()
+        {
+            KortMaxVärde = 10;
+            KortMinVärde = 1;
 
-        private static int kortMinVärde = 1;
-        public static int KortMinVärde { get { return kortMinVärde; } set { kortMinVärde = value; } }
+            Svårighetsgrad = EnumVärden.Svårighetsgrader.Lätt;
+            AntalKortAttBörjaMed = 2;
+            MöjligtMedOavgjort = false;
+            DatornSlutarDraKortVid = 21;
 
-        private static EnumVärden.Svårighetsgrader svårighetsgrad = EnumVärden.Svårighetsgrader.Lätt;
-        public static EnumVärden.Svårighetsgrader Svårighetsgrad { get { return svårighetsgrad; } set { svårighetsgrad = value; } }
+            ProcentsatsLättTillSpelaren = 0.5;
+            ProcentsatsLättTillDatorn = 0.1;
 
-        private static int antalKortAttBörjaMed = 2;
-        public static int AntalKortAttBörjaMed { get { return antalKortAttBörjaMed; } set { antalKortAttBörjaMed = value; } }
+            SpelarensLättaKortvärden.AddRange(new int[] { 1, 2 });
+            DatornsSvåraKortvärden.AddRange(Enumerable.Range(4, (Spelinställningar.KortMaxVärde - 4 + 1)));
 
-        private static bool möjligtMedOavgjort = false;
-        public static bool MöjligtMedOavgjort { get { return möjligtMedOavgjort; } set { möjligtMedOavgjort = value; } }
-
-        public static int datornSlutarDraKortVid = 21;
-
-        public static int DatornSlutarDraKortVid { get { return datornSlutarDraKortVid; } set { datornSlutarDraKortVid = value; } }
-
+        }
 
         public static void Inställningar(IKonsolKortspel spelet)
         {
@@ -67,24 +69,37 @@ namespace Projekt_21an
                         DatornSlutarDraKortVid = (int)EnumVärden.SettingsMaxvärden.MaxLimit_DatornSlutarDraKortVid;
                     }
                     break;
+
                 case EnumVärden.Svårighetsgrader.Lätt:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 18;
                     break;
+
                 case EnumVärden.Svårighetsgrader.Medel:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 20;
                     break;
+
                 case EnumVärden.Svårighetsgrader.Svår:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
-                    KortMaxVärde = 13;
+                    KortMaxVärde = 13;                    
+                    ProcentsatsSvårTillSpelaren = 0.15;
+                    SpelarensSvåraKortvärden.AddRange(Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)));
                     break;
+
                 case EnumVärden.Svårighetsgrader.Mer_eller_mindre_omöjlig:
-                    AntalKortAttBörjaMed = 2;
                     DatornSlutarDraKortVid = 21;
                     KortMaxVärde = 13;
+
+                    ProcentsatsOmöjligTillSpelarenLägre = 0.1;
+                    ProcentsatsOmöjligTillSpelarenHögre = 0.5;
+                    ProcentsatsOmöjligTillDatornLägre = 0.4;
+                    ProcentsatsOmöjligTillDatornHögre = 0.7;
+
+                    SpelarensSvåraKortvärden.AddRange(Enumerable.Range(6, (Spelinställningar.KortMaxVärde - 6 + 1)));
+                    SpelarensOmöjligaKortvärden.AddRange(Enumerable.Range(9, (Spelinställningar.KortMaxVärde - 9 + 1)));
+                    DatornsLättaKortvärden.AddRange(new[] { 1, 2, 3, 4 });
+                    DatornsVäldigtLättaKortvärden.AddRange(new[] { 1, 2 });
                     break;
+
                 default: break;
             }
             Console.WriteLine("Skriv 'j' om du vill att det ska kunna bli oavgjort. Annars skriv 'n', så kommer datorn vinna vid lika resultat.");

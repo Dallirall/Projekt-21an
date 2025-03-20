@@ -55,7 +55,7 @@ namespace CardGames
             return sortedDeck;
         }
 
-        public virtual Card DrawCardOfSpecificValues(int[] cardValues)
+        public virtual Card DrawCardOfSpecificValues(IEnumerable<int> cardValues)
         {            
             List<Card> cardsOfSpecValues = new List<Card>();
             foreach (int value in cardValues)
@@ -66,6 +66,7 @@ namespace CardGames
             Random rnd = new Random();
             return cardsOfSpecValues[rnd.Next(0, cardsOfSpecValues.Count)];
         }
+
 
     }
 }
