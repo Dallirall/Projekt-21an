@@ -29,7 +29,7 @@ namespace Projekt_21an.PathsForPlatforms
             }
             else
             {
-                CurrentPlatform = new ProbablyAndroidPlatform();
+                CurrentPlatform = new OtherPlatform();
             }
         }
 

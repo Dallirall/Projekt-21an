@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projekt_21an.PathsForPlatforms
 {
-    public class ProbablyAndroidPlatform : IPlatformSpecifics
+    public class OtherPlatform : IPlatformSpecifics
     {
         public string GetAppDataFolderPath()
         {

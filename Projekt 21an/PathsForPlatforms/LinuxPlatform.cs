@@ -8,19 +8,21 @@ namespace Projekt_21an.PathsForPlatforms
 {
     public class LinuxPlatform : IPlatformSpecifics
     {
-        public string GetAppDataFolderPath()
-        {
-            return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        }
-
+        
         public string GetBaseDirectoryPath()
         {
-            return AppContext.BaseDirectory;
+            return AppDomain.CurrentDomain.BaseDirectory;
         }
 
         public string GetFilePath(string fileName)
         {
             throw new NotImplementedException();
         }
+
+        public string GetAppDataFolderPath()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        }
+
     }
 }
